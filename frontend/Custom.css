@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+
+.border-beige {
+    --bs-border-opacity: 1;
+    border-color: #F1E3D7 !important;
+}
+
+.font-montserrat {
+    font-family: 'Montserrat';
+}
+
+.font-logo {
+    font-size: 220%;
+    font-weight: bold;
+    color: #29524A;
+}
