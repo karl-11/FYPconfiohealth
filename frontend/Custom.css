@@ -1,9 +1,12 @@
 @charset "UTF-8";
 
-
 .border-beige {
     --bs-border-opacity: 1;
     border-color: #F1E3D7 !important;
+}
+
+.bg-beige {
+    background-color: #F1E3D7 !important;
 }
 
 .font-montserrat {
@@ -14,4 +17,30 @@
     font-size: 220%;
     font-weight: bold;
     color: #29524A;
+}
+
+.bg-footer {
+    background-color: #FDEEE2;
+}
+
+.footerposition
+{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    min-width: 100%;
+    padding-left: 0%;
+    margin-left: 0%;
+}
+
+.body{
+    position: relative;
+}
+
+.pb-170px{
+    padding-bottom: 170px;
+}
+
+.shadow-bottom{
+    box-shadow: 0 4px 4px -2px gray;
 }
