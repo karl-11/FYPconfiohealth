@@ -46,18 +46,17 @@
                 </h1>
                 <form id="login-form">
                     <div class="m-3 form-group">
-                        <label for="EMAIL" class="form-label">EMAIL</label>
-                        <input type="text" class="form-control" id="email" placeholder="Enter EMAIL" name="email">
+                        <label for="EMAIL" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="email" placeholder="Enter Email" name="email">
                     </div>
                     <div class="m-3 form-group">
                         <label for="pwd" class="form-label">Password</label>
                         <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
                     </div>
                     <div class="text-center">
-                    <button type="submit" class="btn text-white rounded-3 px-5"
-                        style="background-color: #43AEA1 ;">
-                        Login
-                    </button>
+                        <button type="submit" class="btn text-white rounded-3 px-5" style="background-color: #43AEA1 ;">
+                            Login
+                        </button>
                 </form>
             </div>
         </div>
@@ -91,9 +90,14 @@
                     const token = response.data.token;
                     console.log("========= login response ==========")
                     console.log(response.data)
+
                     const loggedInUserID = response.data.user_id;
+                    const loggedInUserType = response.data.user_role;
+
                     localStorage.setItem("token", token);
                     localStorage.setItem("loggedInUserID", loggedInUserID);
+                    localStorage.setItem("loggedInUserType", loggedInUserType);
+
                     window.location.href = "/";
                 })
                 .catch((error) => {

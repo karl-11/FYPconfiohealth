@@ -134,7 +134,8 @@ app.post("/login", (req, res) => {
 
                 res.status(200).send({
                     token: token,
-                    user_id: result.id
+                    user_id: result.id,     
+                    user_role: result.type
                 });
             })
     });
