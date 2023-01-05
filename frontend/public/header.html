@@ -27,7 +27,7 @@
                 <a class="nav-link mx-1 border text-white rounded-3" href="Login.html" id="Loginpage"
                     style="background-color: #43AEA1 ;">Sign in</a>
 
-                <button onclick="logOut()">Log out</button>
+                <button class="nav-link mx-1 border text-white rounded-3" id= "logOutBtn" onclick="logOut()">Log out</button>
             </li>
         </ul>
     </div>
@@ -35,7 +35,7 @@
 
 
 <!-- top navbar 2 (sticky)-->
-<nav class="navbar navbar-expand-sm bg-white sticky-top border-bottom  border-3 border-beige">
+<nav id="navbar2" class="navbar navbar-expand-sm bg-white sticky-top border-bottom border-3 border-beige">
 
     <div class="container-fluid justify-content-center">
 
@@ -57,12 +57,18 @@
     </div>
 </nav>
 
+<nav id="navbarline" class="border-bottom  border-3 border-beige"></nav>
+
 <script>
     if (localStorage.getItem("loggedInUserType") === null) {
         document.getElementById("UserProfile").style.display = "none";
+        document.getElementById("logOutBtn").style.display = "none";
+        document.getElementById("navbar2").style.display = "none";
 
     } else {
         document.getElementById("Loginpage").style.display = "none";
+        document.getElementById("navbarline").style.display = "none";
+
     }
 
     function logOut() {
