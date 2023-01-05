@@ -362,17 +362,13 @@
     <script>
 
         if (localStorage.getItem("loggedInUserType") === null) {
-            document.getElementsByClassName("feature") = "none";
-
+            document.getElementById("healthProfileButton").href = "Login.html";
+            document.getElementById("vitalSignsButton").href = "Login.html";
+            document.getElementById("healthReportsButton").href = "Login.html";
+            document.getElementById("healthRisksButton").href = "Login.html";
+            document.getElementById("medicationOptimisationButton").href = "Login.html";
         }
 
-        if (localStorage.getItem("loggedInUserType") === null) {
-            document.getElementById("healthProfileButton").style.pointerEvents = "none";
-            document.getElementById("vitalSignsButton").style.pointerEvents = "none";
-            document.getElementById("healthReportsButton").style.pointerEvents = "none";
-            document.getElementById("healthRisksButton").style.pointerEvents = "none";
-            document.getElementById("medicationOptimisationButton").style.pointerEvents = "none";
-        }
 
     </script>
 
