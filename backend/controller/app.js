@@ -17,6 +17,7 @@ const app = express();
 const JWT_SECRET = require("../config/jwtconfig.js");
 
 var user = require('../model/user.js');
+var faq = require('../model/faqs.js');
 
 //-----------------------------------------
 // Middleware functions
@@ -157,6 +158,19 @@ app.post('/signup', printDebugInfo, function (req, res) {
             res.status(201).send(output);
         } else {
             res.status(500);
+        }
+    });
+});
+
+// end point for get all faqs 
+app.get('/faqs', function (req, res) {
+
+    faq.getAllFAQs(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
         }
     });
 });
