@@ -27,7 +27,7 @@
                 <a class="nav-link mx-1 border text-white rounded-3" href="Login.html" id="Loginpage"
                     style="background-color: #43AEA1 ;">Sign in</a>
 
-                <button onclick="logOut()">Log out</button>
+                <button id= "logOutBtn" onclick="logOut()">Log out</button>
             </li>
         </ul>
     </div>
@@ -60,7 +60,7 @@
 <script>
     if (localStorage.getItem("loggedInUserType") === null) {
         document.getElementById("UserProfile").style.display = "none";
-
+        
     } else {
         document.getElementById("Loginpage").style.display = "none";
     }
