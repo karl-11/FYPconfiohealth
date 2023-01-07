@@ -46,3 +46,11 @@ axios.get(`${baseUrl}/faqs`)
     .catch((error) => {
         console.log(error);
     });
+
+function openChat() {
+    document.getElementById("chatPage").style.display = "block";
+}
+
+function closeChat() {
+    document.getElementById("chatPage").style.display = "none";
+}
