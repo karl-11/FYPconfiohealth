@@ -23,9 +23,9 @@
 
 .flex-child {
   padding: 30px;
-    flex: 1;
-    border: 2px solid black;
-    height: 1000px;  
+  flex: 1;
+  border: 2px solid black;
+  height: 1000px;  
 }  
 
 .flex-child:first-child {
