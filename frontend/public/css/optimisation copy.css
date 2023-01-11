@@ -1,0 +1,60 @@
+.button {
+    background-color: #FDEEE2;
+    border: white;
+    color: black;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+
+  article {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    background: #ccc;
+    padding: 20px;
+    
+  }
+  
+  .div1 {
+    width: 300px;
+    height: 250px;
+    border: 1px solid blue;
+    box-sizing: border-box;
+  }
+  
+  .div2 {
+    width: 300px;
+    height: 600px;  
+    padding: 50px;
+    padding-top: 15px;
+    border: 1px solid blue;
+    box-sizing: border-box;
+    align-self: right  ;
+  }
+
+  .div3 {
+    width: 300px;
+    height: 250px;
+    border: 1px solid blue;
+    box-sizing: border-box;
+    align-self: flex-end  ;
+  }
+
+  .flex-container {
+    display: flex;
+    height: 600px;
+
+  }
+  
+  .flex-container > div {
+    background-color: #f1f1f1;
+    width: 600px;
+    margin: 10px;
+    text-align: left;
+    overflow: auto;
+  }
+  
