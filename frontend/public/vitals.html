@@ -27,20 +27,33 @@
     </script>
 
     <style>
+        /* Horzontial scroll menu */
         div.scrollmenu {
             overflow: auto;
             white-space: nowrap;
         }
 
-        div.scrollmenu a {
-            display: inline-block;
-            text-align: center;
-            padding: 14px;
-            text-decoration: none;
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .hidescroll::-webkit-scrollbar {
+            display: none;
         }
-        label>img{
+
+        .hidescroll {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        label>img {
             width: 80px;
             height: 80px;
+        }
+
+        label {
+            height: 150px;
+            width: 125px;
+            margin-top: 10px;
         }
     </style>
 
@@ -53,111 +66,111 @@
         <span id="header"></span>
 
 
-        <div onclick="displayRadioValue()" class="scrollmenu">
-            <div class="form-check form-check-inline ">
+        <div class="scrollmenu hidescroll" onclick="displayRadioValue()">
+            <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="vitals" id="heartrate" value="heartrate">
-                <label class="form-check-label card border-0 p-2  text-center" for="heartrate">
-                    <img src="images/icons8-heartwithpulse.png" alt="">
+                <label class="form-check-label card border-0 p-2 text-center " for="heartrate">
+                    <img src="images/icons8-heartwithpulse.png" class="align-self-center" alt="">
                     Heart Rate
                 </label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="vitals" id="bloodpressure" value="bloodpressure">
                 <label class="form-check-label flex-column card border-0 p-2 text-center" for="bloodpressure">
-                    <img src="images/icons8-bloodpressure.png" alt="">
+                    <img src="images/icons8-bloodpressure.png" class="align-self-center" alt="">
                     Blood Pressure
                 </label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="vitals" id="glucoselevel" value="glucoselevel">
                 <label class="form-check-label flex-column card border-0 p-2 text-center" for="glucoselevel">
-                    <img src="images/icons8-monitoringglucose.png" alt="">
+                    <img src="images/icons8-monitoringglucose.png" class="align-self-center" alt="">
                     Glucose Level
                 </label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="glucoselevel" value="glucoselevel">
-                <label class="form-check-label flex-column card border-0 p-2 text-center" for="glucoselevel">
-                    <img src="images/icons8-monitoringglucose.png" alt="">
-                    Glucose Level
+                <input class="form-check-input" type="radio" name="vitals" id="HDL" value="HDL">
+                <label class="form-check-label flex-column card border-0 p-2 text-center" for="HDL">
+                    <img src="images/icons8-cholesterolHDL.png" class="align-self-center" alt="">
+                    HDL
                 </label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="glucoselevel" value="glucoselevel">
-                <label class="form-check-label flex-column card border-0 p-2 text-center" for="glucoselevel">
-                    <img src="images/icons8-monitoringglucose.png" alt="">
-                    Glucose Level
+                <input class="form-check-input" type="radio" name="vitals" id="LDL" value="LDL">
+                <label class="form-check-label flex-column card border-0 p-2 text-center" for="LDL">
+                    <img src="images/icons8-cholesterolLDL.png" class="align-self-center" alt="">
+                    LDL
                 </label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="glucoselevel" value="glucoselevel">
-                <label class="form-check-label flex-column card border-0 p-2 text-center" for="glucoselevel">
-                    <img src="images/icons8-monitoringglucose.png" alt="">
-                    Glucose Level
+                <input class="form-check-input" type="radio" name="vitals" id="LDL" value="LDL">
+                <label class="form-check-label flex-column card border-0 p-2 text-center" for="LDL">
+                    <img src="images/icons8-cholesterolLDL.png" class="align-self-center" alt="">
+                    LDL
                 </label>
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="glucoselevel" value="glucoselevel">
-                <label class="form-check-label flex-column card border-0 p-2 text-center" for="glucoselevel">
-                    <img src="images/icons8-monitoringglucose.png" alt="">
-                    Glucose Level
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="glucoselevel" value="glucoselevel">
-                <label class="form-check-label flex-column card border-0 p-2 text-center" for="glucoselevel">
-                    <img src="images/icons8-monitoringglucose.png" alt="">
-                    Glucose Level
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="glucoselevel" value="glucoselevel">
-                <label class="form-check-label flex-column card border-0 p-2 text-center" for="glucoselevel">
-                    <img src="images/icons8-monitoringglucose.png" alt="">
-                    Glucose Level
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="glucoselevel" value="glucoselevel">
-                <label class="form-check-label flex-column card border-0 p-2 text-center" for="glucoselevel">
-                    <img src="images/icons8-monitoringglucose.png" alt="">
-                    Glucose Level
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="glucoselevel" value="glucoselevel">
-                <label class="form-check-label flex-column card border-0 p-2 text-center" for="glucoselevel">
-                    <img src="images/icons8-monitoringglucose.png" alt="">
-                    Glucose Level
-                </label>
-            </div>
-
-            <!--Footer section-->
-            <span id="footer"></span>
+        </div>
+        <!--Footer section-->
+        <span id="footer"></span>
     </section>
 
     <!--bootstrap bundle script-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         var vitals = document.getElementsByName("vitals");
-        console.log(vitals);
+        //console.log(vitals);
+
+        // Hide Radio Button
         for (let i = 0; i < vitals.length; i++) {
             vitals[i].style.display = "none";
         }
+        // too see the value of selected radio
         function displayRadioValue() {
-
             for (i = 0; i < vitals.length; i++) {
                 if (vitals[i].checked)
                     console.log("vital: " + vitals[i].value)
-
             }
+
         }
+
+
+
+        // Add border and background to Selected Radio
         $(document).ready(function () {
             $('label').click(function () {
                 $('label').removeClass(' shadow-bottom bg-cards border rounded-4 p-0 m-0');
                 $(this).addClass(' shadow-bottom bg-cards border rounded-4 p-0 m-0');
+
             });
         });
+
+        // Make Vitals scrollable by dragging
+        const slider = document.querySelector('.scrollmenu');
+        let mouseDown = false;
+        let startX, scrollLeft;
+
+        let startDragging = function (e) {
+            mouseDown = true;
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        };
+        let stopDragging = function (event) {
+            mouseDown = false;
+        };
+
+        slider.addEventListener('mousemove', (e) => {
+            e.preventDefault();
+            if (!mouseDown) { return; }
+            const x = e.pageX - slider.offsetLeft;
+            const scroll = x - startX;
+            slider.scrollLeft = scrollLeft - scroll;
+        });
+
+        // Add the event listeners
+        slider.addEventListener('mousedown', startDragging, false);
+        slider.addEventListener('mouseup', stopDragging, false);
+        slider.addEventListener('mouseleave', stopDragging, false);
+
     </script>
 </body>
 
