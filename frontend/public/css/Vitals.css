@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+/* Horzontial scroll menu */
+div.scrollmenu {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hidescroll::-webkit-scrollbar {
+    display: none;
+}
+
+.hidescroll {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+label>img {
+    width: 80px;
+    height: 80px;
+}
+
+label {
+    height: 150px;
+    width: 125px;
+    margin-top: 10px;
+}
+
+#overlay {
+    position: fixed;
+    /* Sit on top of the page content */
+    display: none;
+    /* Hidden by default */
+    width: 100%;
+    /* Full width (cover the whole page) */
+    height: 100%;
+    /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black background with opacity */
+    z-index: 1021;
+    /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer;
+    /* Add a pointer on hover */
+}
+
+#overlaycontent {
+    position: fixed;
+    /* Sit on top of the page content */
+    display: none;
+    /* Hidden by default */
+    width: 50%;
+    /* Full width (cover the whole page) */
+    min-height: 100%;
+    /* Full height (cover the whole page) */
+    z-index: 1022;
+    /* Specify a stack order in case you're using a different order for other elements */
+    left: 50%;
+    top: 0;
+}

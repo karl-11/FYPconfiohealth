@@ -11,6 +11,7 @@
 
     <!--Custom CSS-->
     <link rel="stylesheet" type="text/css" href="./css/Custom.css">
+    <link rel="stylesheet" type="text/css" href="./css/Vitals.css">
 
     <!--Font import-->
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
@@ -26,37 +27,6 @@
         });
     </script>
 
-    <style>
-        /* Horzontial scroll menu */
-        div.scrollmenu {
-            overflow: auto;
-            white-space: nowrap;
-        }
-
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        .hidescroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .hidescroll {
-            -ms-overflow-style: none;
-            /* IE and Edge */
-            scrollbar-width: none;
-            /* Firefox */
-        }
-
-        label>img {
-            width: 80px;
-            height: 80px;
-        }
-
-        label {
-            height: 150px;
-            width: 125px;
-            margin-top: 10px;
-        }
-    </style>
-
 </head>
 
 <body class="font-montserrat body">
@@ -68,8 +38,9 @@
 
         <div class="scrollmenu hidescroll" onclick="displayRadioValue()">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="heartrate" value="heartrate">
-                <label class="form-check-label card border-0 p-2 text-center " for="heartrate">
+                <input class="form-check-input" type="radio" name="vitals" id="heartrate" value="heartrate" checked>
+                <label class="form-check-label card border-0 p-2 text-center shadow-bottom bg-cards border rounded-4"
+                    for="heartrate">
                     <img src="images/icons8-heartwithpulse.png" class="align-self-center" alt="">
                     Heart Rate
                 </label>
@@ -103,12 +74,36 @@
                 </label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="LDL" value="LDL">
-                <label class="form-check-label flex-column card border-0 p-2 text-center" for="LDL">
-                    <img src="images/icons8-cholesterolLDL.png" class="align-self-center" alt="">
-                    LDL
+                <input class="form-check-input" type="button" name="vitals" id="custom" value="custom" onclick="on()">
+                <label class="form-check-label flex-column card border-0 p-2 text-center" for="custom">
+                    <img src="images/icons8-plus.png" class="align-self-center" alt="">
                 </label>
             </div>
+        </div>
+
+        <div id="overlay" onclick="off()">
+
+        </div>
+
+        <div id="overlaycontent" class="bg-beige">
+            <div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Default checkbox
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Checked checkbox
+                    </label>
+                </div>
+            </div>
+
+            <button onclick="off()">
+                Off
+            </button>
         </div>
         <!--Footer section-->
         <span id="footer"></span>
@@ -133,14 +128,12 @@
 
         }
 
-
-
         // Add border and background to Selected Radio
         $(document).ready(function () {
-            $('label').click(function () {
-                $('label').removeClass(' shadow-bottom bg-cards border rounded-4 p-0 m-0');
-                $(this).addClass(' shadow-bottom bg-cards border rounded-4 p-0 m-0');
-
+            $('.form-check-inline>label').click(function () { 
+                console.log("clicked")
+                $('label').removeClass(' shadow-bottom bg-cards border rounded-4');
+                $(this).addClass(' shadow-bottom bg-cards border rounded-4');
             });
         });
 
@@ -170,6 +163,17 @@
         slider.addEventListener('mousedown', startDragging, false);
         slider.addEventListener('mouseup', stopDragging, false);
         slider.addEventListener('mouseleave', stopDragging, false);
+
+        // Overlay On
+        function on() {
+            document.getElementById("overlay").style.display = "block";
+            document.getElementById("overlaycontent").style.display = "block";
+        }
+        // Overlay Off
+        function off() {
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("overlaycontent").style.display = "none";
+        }
 
     </script>
 </body>
