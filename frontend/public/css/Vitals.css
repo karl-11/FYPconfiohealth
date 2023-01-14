@@ -23,6 +23,11 @@ label>img {
     height: 80px;
 }
 
+button>img {
+    width: 80px;
+    height: 80px;
+}
+
 label {
     height: 150px;
     width: 125px;

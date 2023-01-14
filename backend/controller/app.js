@@ -18,6 +18,7 @@ const JWT_SECRET = require("../config/jwtconfig.js");
 
 var user = require('../model/user.js');
 var faq = require('../model/faqs.js');
+var vital = require('../model/vitals');
 
 //-----------------------------------------
 // Middleware functions
@@ -135,7 +136,7 @@ app.post("/login", (req, res) => {
 
                 res.status(200).send({
                     token: token,
-                    user_id: result.id,     
+                    user_id: result.id,
                     user_role: result.type
                 });
             })
@@ -166,6 +167,19 @@ app.post('/signup', printDebugInfo, function (req, res) {
 app.get('/faqs', function (req, res) {
 
     faq.getAllFAQs(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for get all vitals
+app.get('/vitals', function (req, res) {
+
+    vital.getAllvitals(function (err, result) {
         if (!err) {
             res.status(200).send(result);
         } else {

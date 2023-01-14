@@ -18,6 +18,8 @@
 
     <!--JQuery-->
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <!--Axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <!--Include Header & Footer-->
     <script>
@@ -36,9 +38,10 @@
         <span id="header"></span>
 
 
-        <div class="scrollmenu hidescroll" onclick="displayRadioValue()">
+        <div class="scrollmenu hidescroll" onchange="displayRadioValue()">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="heartrate" value="heartrate" checked>
+                <input class="form-check-input" type="radio" name="vitalsradio" id="heartrate" value="heartrate"
+                    checked>
                 <label class="form-check-label card border-0 p-2 text-center shadow-bottom bg-cards border rounded-4"
                     for="heartrate">
                     <img src="images/icons8-heartwithpulse.png" class="align-self-center" alt="">
@@ -46,38 +49,38 @@
                 </label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="bloodpressure" value="bloodpressure">
+                <input class="form-check-input" type="radio" name="vitalsradio" id="bloodpressure"
+                    value="bloodpressure">
                 <label class="form-check-label flex-column card border-0 p-2 text-center" for="bloodpressure">
                     <img src="images/icons8-bloodpressure.png" class="align-self-center" alt="">
                     Blood Pressure
                 </label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="glucoselevel" value="glucoselevel">
+                <input class="form-check-input" type="radio" name="vitalsradio" id="glucoselevel" value="glucoselevel">
                 <label class="form-check-label flex-column card border-0 p-2 text-center" for="glucoselevel">
                     <img src="images/icons8-monitoringglucose.png" class="align-self-center" alt="">
                     Glucose Level
                 </label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="HDL" value="HDL">
+                <input class="form-check-input" type="radio" name="vitalsradio" id="HDL" value="HDL">
                 <label class="form-check-label flex-column card border-0 p-2 text-center" for="HDL">
                     <img src="images/icons8-cholesterolHDL.png" class="align-self-center" alt="">
                     HDL
                 </label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="vitals" id="LDL" value="LDL">
+                <input class="form-check-input" type="radio" name="vitalsradio" id="LDL" value="LDL">
                 <label class="form-check-label flex-column card border-0 p-2 text-center" for="LDL">
                     <img src="images/icons8-cholesterolLDL.png" class="align-self-center" alt="">
                     LDL
                 </label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="button" name="vitals" id="custom" value="custom" onclick="on()">
-                <label class="form-check-label flex-column card border-0 p-2 text-center" for="custom">
-                    <img src="images/icons8-plus.png" class="align-self-center" alt="">
-                </label>
+                <button type="button" class="btn flex-column card border-0 p-2 text-center" onclick="on()">
+                    <img src="images/icons8-plus.png" alt="">
+                </button>
             </div>
         </div>
 
@@ -85,22 +88,22 @@
 
         </div>
 
-        <div id="overlaycontent" class="bg-beige">
+        <div id="overlaycontent" class="bg-beige" onchange="displayCheckValue()">
             <div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Default checkbox
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                    <label class="form-check-label" for="flexCheckChecked">
-                        Checked checkbox
-                    </label>
+                <div>
+                    <div class="container">
+                        <h3>Selected</h3>
+                        <div id="selected" class="row">
+
+                        </div>
+
+                        <h3>Not Selected</h3>
+                        <div id="notselected" class="row">
+
+                        </div>
+                    </div>
                 </div>
             </div>
-
             <button onclick="off()">
                 Off
             </button>
@@ -112,26 +115,90 @@
     <!--bootstrap bundle script-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        var vitals = document.getElementsByName("vitals");
+        // Get vitals from table and put into html
+        const baseUrl = "http://localhost:3000";
+        
+                axios.get(`${baseUrl}/vitals`)
+                    .then((response) => {
+        
+                        var vitalsStringSelected = "";
+                        var vitalsStringNotSelected = "";
+        
+                        for (i = 0; i < response.data.length; i++) {
+        
+                            //  console.log("printing vitals get response.data" + i);
+                            var data = response.data[i];
+                            // console.log(data);
+                            if (data.checked == "yes") {
+                                var vitalsStringSelected = vitalsStringSelected +
+                                    `<div class="form-check col">
+                                                <input class="form-check-input" type="checkbox" value="" name="vitalscheck" id="${data.vital_sign_type.toLowerCase()}" checked>
+                                                <label class="form-check-label" for="${data.vital_sign_type.toLowerCase()}">
+                                                    <img src="${data.vital_sign_img}" class="align-self-center" alt="">
+                                                    ${data.vital_sign_type}
+                                                </label>
+                                            </div>`
+                            }
+                            else if (data.checked == "no") {
+                                var vitalsStringNotSelected = vitalsStringNotSelected +
+                                    `<div class="form-check col">
+                                                <input class="form-check-input" type="checkbox" value="" name="vitalscheck" id="${data.vital_sign_type.toLowerCase()}" >
+                                                <label class="form-check-label" for="${data.vital_sign_type.toLowerCase()}">
+                                                    <img src="${data.vital_sign_img}" class="align-self-center" alt="">
+                                                    ${data.vital_sign_type}
+                                                </label>
+                                            </div>`
+                            }
+                        }
+                        document.getElementById("selected").innerHTML = vitalsStringSelected;
+                        document.getElementById("notselected").innerHTML = vitalsStringNotSelected;
+                        
+                                        // Hide check Button
+                                         for (let i = 0; i < vitalscheck.length; i++) {
+                                             console.log("test");
+                                             vitalscheck[i].style.display = "none";
+                                         }
+                    
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+        
         //console.log(vitals);
+        var vitalsradio = document.getElementsByName("vitalsradio");
+        var vitalscheck = document.getElementsByName("vitalscheck");
 
+        console.log(vitalsradio);
+        console.log(vitalscheck);
         // Hide Radio Button
-        for (let i = 0; i < vitals.length; i++) {
-            vitals[i].style.display = "none";
+        for (let i = 0; i < vitalsradio.length; i++) {
+            vitalsradio[i].style.display = "none";
         }
+
+
+
         // too see the value of selected radio
         function displayRadioValue() {
-            for (i = 0; i < vitals.length; i++) {
-                if (vitals[i].checked)
-                    console.log("vital: " + vitals[i].value)
+            console.log(vitalsradio)
+            for (i = 0; i < vitalsradio.length; i++) {
+                if (vitalsradio[i].checked) {
+                    console.log("vital: " + vitalsradio[i].value)
+                }
             }
+        }
 
+        function displayCheckValue() {
+            console.log(vitalscheck)
+            for (i = 0; i < vitalscheck.length; i++) {
+                if (vitalscheck[i].checked) {
+                    console.log("checked: " + vitalscheck[i].id)
+                }
+            }
         }
 
         // Add border and background to Selected Radio
         $(document).ready(function () {
-            $('.form-check-inline>label').click(function () { 
-                console.log("clicked")
+            $('.form-check-inline>label').click(function () {
                 $('label').removeClass(' shadow-bottom bg-cards border rounded-4');
                 $(this).addClass(' shadow-bottom bg-cards border rounded-4');
             });
@@ -174,8 +241,8 @@
             document.getElementById("overlay").style.display = "none";
             document.getElementById("overlaycontent").style.display = "none";
         }
-
     </script>
+
 </body>
 
 
