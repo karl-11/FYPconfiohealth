@@ -2,7 +2,7 @@
 
 /* Horzontial scroll menu */
 div.scrollmenu {
-    overflow: auto;
+    overflow: scroll;
     white-space: nowrap;
 }
 

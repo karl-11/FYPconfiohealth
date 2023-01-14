@@ -78,6 +78,48 @@
                 </label>
             </div>
             <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vitalsradio" id="LDL" value="LDL">
+                <label class="form-check-label flex-column card border-0 p-2 text-center" for="LDL">
+                    <img src="images/icons8-cholesterolLDL.png" class="align-self-center" alt="">
+                    LDL
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vitalsradio" id="LDL" value="LDL">
+                <label class="form-check-label flex-column card border-0 p-2 text-center" for="LDL">
+                    <img src="images/icons8-cholesterolLDL.png" class="align-self-center" alt="">
+                    LDL
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vitalsradio" id="LDL" value="LDL">
+                <label class="form-check-label flex-column card border-0 p-2 text-center" for="LDL">
+                    <img src="images/icons8-cholesterolLDL.png" class="align-self-center" alt="">
+                    LDL
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vitalsradio" id="LDL" value="LDL">
+                <label class="form-check-label flex-column card border-0 p-2 text-center" for="LDL">
+                    <img src="images/icons8-cholesterolLDL.png" class="align-self-center" alt="">
+                    LDL
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vitalsradio" id="LDL" value="LDL">
+                <label class="form-check-label flex-column card border-0 p-2 text-center" for="LDL">
+                    <img src="images/icons8-cholesterolLDL.png" class="align-self-center" alt="">
+                    LDL
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vitalsradio" id="LDL" value="LDL">
+                <label class="form-check-label flex-column card border-0 p-2 text-center" for="LDL">
+                    <img src="images/icons8-cholesterolLDL.png" class="align-self-center" alt="">
+                    LDL
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
                 <button type="button" class="btn flex-column card border-0 p-2 text-center" onclick="on()">
                     <img src="images/icons8-plus.png" alt="">
                 </button>
@@ -117,53 +159,60 @@
     <script>
         // Get vitals from table and put into html
         const baseUrl = "http://localhost:3000";
-        
-                axios.get(`${baseUrl}/vitals`)
-                    .then((response) => {
-        
-                        var vitalsStringSelected = "";
-                        var vitalsStringNotSelected = "";
-        
-                        for (i = 0; i < response.data.length; i++) {
-        
-                            //  console.log("printing vitals get response.data" + i);
-                            var data = response.data[i];
-                            // console.log(data);
-                            if (data.checked == "yes") {
-                                var vitalsStringSelected = vitalsStringSelected +
-                                    `<div class="form-check col">
-                                                <input class="form-check-input" type="checkbox" value="" name="vitalscheck" id="${data.vital_sign_type.toLowerCase()}" checked>
-                                                <label class="form-check-label" for="${data.vital_sign_type.toLowerCase()}">
-                                                    <img src="${data.vital_sign_img}" class="align-self-center" alt="">
-                                                    ${data.vital_sign_type}
-                                                </label>
-                                            </div>`
-                            }
-                            else if (data.checked == "no") {
-                                var vitalsStringNotSelected = vitalsStringNotSelected +
-                                    `<div class="form-check col">
-                                                <input class="form-check-input" type="checkbox" value="" name="vitalscheck" id="${data.vital_sign_type.toLowerCase()}" >
-                                                <label class="form-check-label" for="${data.vital_sign_type.toLowerCase()}">
-                                                    <img src="${data.vital_sign_img}" class="align-self-center" alt="">
-                                                    ${data.vital_sign_type}
-                                                </label>
-                                            </div>`
-                            }
-                        }
-                        document.getElementById("selected").innerHTML = vitalsStringSelected;
-                        document.getElementById("notselected").innerHTML = vitalsStringNotSelected;
-                        
-                                        // Hide check Button
-                                         for (let i = 0; i < vitalscheck.length; i++) {
-                                             console.log("test");
-                                             vitalscheck[i].style.display = "none";
-                                         }
-                    
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-        
+
+        axios.get(`${baseUrl}/vitals`)
+            .then((response) => {
+
+                var vitalsStringSelected = "";
+                var vitalsStringNotSelected = "";
+
+                for (i = 0; i < response.data.length; i++) {
+
+                    //  console.log("printing vitals get response.data" + i);
+                    var data = response.data[i];
+                    // console.log(data);
+                    if (data.checked == "yes") {
+                        var vitalsStringSelected = vitalsStringSelected +
+                            `
+                                    <div class="form-check col-4">
+                                        <input class="form-check-input" type="checkbox" value="" name="vitalscheck" id="${data.vital_sign_type.toLowerCase()}" checked>
+                                         <label class="form-check-label text-center" for="${data.vital_sign_type.toLowerCase()}">
+                                            <img src="${data.vital_sign_img}" class="align-self-center" alt="">
+                                            <p>
+                                                ${data.vital_sign_type}
+                                            </p>
+                                         </label>
+                                    </div>
+                                    `
+                    }
+                    else if (data.checked == "no") {
+                        var vitalsStringNotSelected = vitalsStringNotSelected +
+                            `
+                                    <div class="form-check col-4">
+                                        <input class="form-check-input" type="checkbox" value="" name="vitalscheck" id="${data.vital_sign_type.toLowerCase()}">
+                                         <label class="form-check-label text-center" for="${data.vital_sign_type.toLowerCase()}">
+                                            <img src="${data.vital_sign_img}" class="align-self-center" alt="">
+                                            <p>
+                                                ${data.vital_sign_type}
+                                            </p>
+                                         </label>
+                                    </div>
+                                    `
+                    }
+                }
+                document.getElementById("selected").innerHTML = vitalsStringSelected;
+                document.getElementById("notselected").innerHTML = vitalsStringNotSelected;
+
+                // Hide check Button
+                for (let i = 0; i < vitalscheck.length; i++) {
+                    console.log("test");
+                    vitalscheck[i].style.display = "none";
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
         //console.log(vitals);
         var vitalsradio = document.getElementsByName("vitalsradio");
         var vitalscheck = document.getElementsByName("vitalscheck");
