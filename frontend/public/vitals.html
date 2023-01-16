@@ -174,7 +174,7 @@
                     if (data.checked == "yes") {
                         var vitalsStringSelected = vitalsStringSelected +
                             `
-                                    <div class="form-check col-4">
+                                    <div class="form-check col-lg-3 col-md-4 m-0 p-0">
                                         <input class="form-check-input" type="checkbox" value="" name="vitalscheck" id="${data.vital_sign_type.toLowerCase()}" checked>
                                          <label class="form-check-label text-center" for="${data.vital_sign_type.toLowerCase()}">
                                             <img src="${data.vital_sign_img}" class="align-self-center" alt="">
@@ -188,7 +188,7 @@
                     else if (data.checked == "no") {
                         var vitalsStringNotSelected = vitalsStringNotSelected +
                             `
-                                    <div class="form-check col-4">
+                                    <div class="form-check col-lg-3 col-md-4 m-0 p-0">
                                         <input class="form-check-input" type="checkbox" value="" name="vitalscheck" id="${data.vital_sign_type.toLowerCase()}">
                                          <label class="form-check-label text-center" for="${data.vital_sign_type.toLowerCase()}">
                                             <img src="${data.vital_sign_img}" class="align-self-center" alt="">
@@ -282,13 +282,13 @@
 
         // Overlay On
         function on() {
-            document.getElementById("overlay").style.display = "block";
-            document.getElementById("overlaycontent").style.display = "block";
+            document.getElementById("overlay").style.width = "100%";
+            document.getElementById("overlaycontent").style.width = "50%";
         }
         // Overlay Off
         function off() {
-            document.getElementById("overlay").style.display = "none";
-            document.getElementById("overlaycontent").style.display = "none";
+            document.getElementById("overlay").style.width = "0%";
+            document.getElementById("overlaycontent").style.width = "0%";
         }
     </script>
 
