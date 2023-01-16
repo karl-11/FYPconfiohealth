@@ -10,7 +10,18 @@
     font-size: 16px;
     border-radius: 4px;
   }
-
+  .submit {
+    margin-top: 10px;
+    background-color: #04AA6D;
+    border: white;
+    color: black;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+  }
   .div1 {
   text-align: center;
   margin: auto;
