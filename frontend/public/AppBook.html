@@ -39,13 +39,24 @@
      <button  class="button" type="button" onclick="location.href='optimisation.html'"><a>Back</a></button>
      <div class="div1">
          <h1>Book Appointments</h1>
+         <div class="div2">
          <label for="date">Date:</label>
          <input type="date" id="bookdate">
          <label for="time">Time:</label>
          <input type="time" id="booktime">
+        </div>
+         <div>
+
          <label for="location">Location:</label>
-         <input type="text" id="booklocation">
+
+            <select type="location" id="location" name="location">
+               <option value="Telemedicine">Telemedicine</option>
+               <option value="Blk 108 Depot Road #01-10 Singapore 100108">Blk 108 Depot Road #01-10 Singapore 100108</option>
+             </select>
+            </div>
+        <div class="div5">
          <button  class="submit" type="button" onclick="bookingfunction()"><a>Submit</a></button>
+        </div>
       </div>
 
 
