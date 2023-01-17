@@ -15,8 +15,39 @@
 
 .font-logo {
     font-size: 220%;
-    font-weight: bold;
+    font-weight: bolder;
     color: #29524A;
+}
+
+.font-pageheader {
+    font-size: 170%;
+    font-weight: bolder;
+    color: #3f3e3e;
+}
+
+.font-cardheader {
+    font-size: 140%;
+    font-weight: bolder;
+    color: #575555;
+    text-decoration: underline;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.tab {
+    tab-size: 2;
+}
+
+.font-kerning {
+    letter-spacing: 0.1rem;
+}
+
+.profilepic {
+    max-width: 40%;
+    max-height: 40%;
+    border-style: solid
 }
 
 .bg-footer {
@@ -190,7 +221,8 @@ body {
 }
 
 /* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
+.form-container .btn:hover,
+.open-button:hover {
     opacity: 1;
 }
 
