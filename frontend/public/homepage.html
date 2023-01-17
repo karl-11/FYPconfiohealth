@@ -32,9 +32,11 @@
             //document.getElementById("UserProfile").innterHTML = "abc"
 
         });
-
-
     </script>
+
+    <!-- chat stuff -->
+    <script src="/socket.io/socket.io.js"></script>
+
 </head>
 
 <body class="font-montserrat body">
@@ -72,7 +74,7 @@
                     </div>
                 </div>
             </a>
-            <a href="risks.html" id="healthRisksButton" class="feature text-decoration-none col-2 p-0 m-0">
+            <a href="risk_identification.html" id="healthRisksButton" class="feature text-decoration-none col-2 p-0 m-0">
                 <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                     <img src="./images/Wallet-bro (1) 2 (1).png" alt="Avatar Logo"
                         class="card-img-top align-self-center p-2">
@@ -226,57 +228,51 @@
             </button>
 
         </div>
-
         <!-- End of carousel -->
 
         <!-- Start of FAQ -->
-
         <div>
             <h3 class="pt-5 pb-3"><strong>Frequently Asked Questions</strong></h3>
             <div class="row p-0 m-0">
-
                 <div class="col-md-4 mh-100 px-0">
                     <img src="./images/Medical prescription-bro 1.png" class="w-100" alt="">
                 </div>
-
-
                 <div class="col-md-8 ps-5 p-0">
-
                     <div class="d-flex flex-column flex-nowrap" style="min-height: 100%;" id="accordion">
-
-
                     </div>
                 </div>
             </div>
         </div>
-
         <!-- End of FAQ -->
-
     </section>
 
-
-
     <!--Footer section-->
-    <!-- <span id="footer"></span> --> 
+    <!-- <span id="footer"></span> -->
 
     <!-- Chat button -->
     <button type="button" class="btn p-0 m-0 chatbutton bg-beige rounded-circle shadow-bottom"><img
-            src="./images/chat.png" alt="chat icon" onclick="openChat()"></button>
+            src="./images/chat.png" alt="chat icon" onclick="openChat(), loadMessages()"></button>
 
+    <!-- Chat section -->
     <div class="chatPopup" id="chatPage">
-        <!-- <form action="/chat.js" class="form-container"> -->
-        <form class="form-container">
-            <label for="msg"><b>Message</b></label>
-            <textarea placeholder="Type message.." name="msg" required></textarea>
-
-            <button type="submit" class="btn">Send</button>
-            <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
-        </form>
+        <div class="overflow-auto" style="max-height: 500px;">
+            <!-- <form action="/chat.js" class="form-container"> -->
+            <!-- <form class="form-container">
+                <div>
+                    <label for="msg"><b>Message</b></label>
+                </div>
+                <p>
+                    LOREMIPSUMLOREMIPSUMLOREMIPSUMLOREMIPSUMLOREMIPSUMLOREMIPSUMLOREMIPSUMLOREMIPSUM   
+                </p>
+                <textarea placeholder="Type message.." name="msg" required></textarea>
+                <button type="submit" class="btn">Send</button>
+                <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
+            </form> -->
+        </div>
     </div>
 
     <!--bootstrap bundle script-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
     <script src="./homepage.js"></script>
 </body>
 
