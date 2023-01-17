@@ -86,6 +86,51 @@ var vitalsDB = {
         });
     },
 
+    addSelectedVitals: function (userid, vitalid, callback) {
+        var conn = db;
+
+        var sql = ` 
+        INSERT INTO 
+            vitalsSelected (userid, vitalsid, selectedVitals,vital_sign_img)
+        SELECT 
+            ?,id,vital_sign_type,vital_sign_img from vitalsigns v
+        WHERE 
+            v.id = ? ;
+                `;
+
+        conn.query(sql, [userid, vitalid], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    
+    removeSelectedVitals: function (userid, vitalid, callback) {
+        var conn = db;
+
+        var sql = ` 
+        DELETE FROM 
+            vitalsSelected 
+        WHERE 
+            userid = ? and vitalsid = ?;
+                `;
+
+        conn.query(sql, [userid, vitalid], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
 }
 
 //-----------------------------------------

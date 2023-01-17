@@ -193,7 +193,6 @@ app.get('/vitals', printDebugInfo, function (req, res) {
 app.post('/selectedVitals', printDebugInfo, function (req, res) {
 
     var userid = req.body.userid;
-    console.log(userid);
 
     vital.getSelectedvitals(userid, function (err, result) {
         if (!err) {
@@ -211,6 +210,38 @@ app.post('/notSelectedVitals', printDebugInfo, function (req, res) {
     var userid = req.body.userid;
 
     vital.getNotSelectedvitals(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for add Selected vitals
+app.post('/addSelectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+
+    vital.addSelectedVitals(userid, vitalid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for renove Selected vitals
+app.post('/removeSelectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+
+    vital.removeSelectedVitals(userid, vitalid, function (err, result) {
         if (!err) {
             res.status(200).send(result);
         } else {
