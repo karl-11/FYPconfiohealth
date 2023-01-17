@@ -164,7 +164,7 @@ app.post('/signup', printDebugInfo, function (req, res) {
 });
 
 // end point for get all faqs 
-app.get('/faqs', function (req, res) {
+app.get('/faqs', printDebugInfo, function (req, res) {
 
     faq.getAllFAQs(function (err, result) {
         if (!err) {
@@ -177,7 +177,7 @@ app.get('/faqs', function (req, res) {
 });
 
 // End point for get all vitals
-app.get('/vitals', function (req, res) {
+app.get('/vitals', printDebugInfo, function (req, res) {
 
     vital.getAllvitals(function (err, result) {
         if (!err) {
@@ -188,5 +188,37 @@ app.get('/vitals', function (req, res) {
         }
     });
 });
+
+// End point for get all Selected vitals
+app.post('/selectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    console.log(userid);
+
+    vital.getSelectedvitals(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for get all Not Selected vitals
+app.post('/notSelectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+
+    vital.getNotSelectedvitals(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
 
 module.exports = app;

@@ -33,7 +33,58 @@ var vitalsDB = {
                 return callback(null, result);
             }
         });
-    }
+    },
+
+    getSelectedvitals: function (userid, callback) {
+        var conn = db;
+
+        var sql = ` 
+            SELECT 
+                * 
+            from 
+                vitalsSelected 
+            WHERE 
+                userid = ?
+                `;
+
+        conn.query(sql, [userid], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    getNotSelectedvitals: function (userid, callback) {
+        var conn = db;
+
+        var sql = ` 
+        SELECT 
+            id, vital_sign_type,vital_sign_img 
+        From 
+            vitalsigns v 
+        WHERE NOT EXISTS 
+            (Select 
+                * 
+            from 
+                vitalsSelected vs 
+            WHERE 
+                v.id = vs.vitalsid AND vs.userid = ?);
+                `;
+
+        conn.query(sql, [userid], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
 
 }
 
