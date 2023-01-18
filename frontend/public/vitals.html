@@ -61,9 +61,6 @@
                     </div>
                 </div>
             </div>
-            <button onclick="off()">
-                Off
-            </button>
         </div>
         <!--Footer section-->
         <span id="footer"></span>
@@ -76,7 +73,7 @@
         const baseUrl = "http://localhost:3000";
 
         // Data extraction from localstorage
-        const loggedinid = localStorage.getItem('loggedInUserID')
+        const loggedinid = localStorage.getItem('loggedInUserID');
 
         // data compilation
         var requestBody = {
@@ -86,7 +83,7 @@
         // console.log(requestBody);
 
         window.addEventListener('DOMContentLoaded', selectedvitals());
-        window.addEventListener('DOMContentLoaded', notSelectedVitals())
+        window.addEventListener('DOMContentLoaded', notSelectedVitals());
 
         function selectedvitals() {
             axios.post(`${baseUrl}/selectedvitals`, requestBody)
