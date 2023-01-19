@@ -13,21 +13,15 @@ var jwtconfig = require('../config/jwtconfig.js')
 //-----------------------------------------
 // objects / functions
 //-----------------------------------------
-var riskQuestionnaireDB = {
+var questionnairesDB = {
 
-    getAllFAQs: function (callback) {
+    //for testing purposes
+    getAllQuestionnaires: function (callback) {
         var conn = db;
 
-        var sql = ` SELECT
-                        *
-                    FROM 
-                        questionnaires 
-                    Where 
-                        user_id=?
-                `;
+        var sql = `SELECT * FROM questionnaires;`;
 
         conn.query(sql, function (err, result) {
-
             if (err) {
                 console.log(err);
                 return callback(err, null);
@@ -35,10 +29,26 @@ var riskQuestionnaireDB = {
                 return callback(null, result);
             }
         });
-    }
+    },
+
+    getQuestionnairesByUserID: function (user_id, callback) {
+        var conn = db;
+        var sql = `SELECT id, name, num_of_questions, user_score, max_score, date_Taken, image_url FROM questionnaires WHERE user_id=?;`;
+        conn.query(sql, [user_id], function (err, result) {
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+
 }
+
 
 //-----------------------------------------
 // exports
 //-----------------------------------------
-module.exports = riskQuestionnaireDB;
+module.exports = questionnairesDB;

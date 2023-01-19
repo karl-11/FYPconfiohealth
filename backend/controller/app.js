@@ -18,6 +18,7 @@ const JWT_SECRET = require("../config/jwtconfig.js");
 
 var user = require('../model/user.js');
 var faq = require('../model/faqs.js');
+var riskQuestionnaire = require('../model/riskQuestionnaireModel.js')
 
 //-----------------------------------------
 // Middleware functions
@@ -166,6 +167,33 @@ app.post('/signup', printDebugInfo, function (req, res) {
 app.get('/faqs', function (req, res) {
 
     faq.getAllFAQs(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//endpoint for get all questionnaires (this returns for all users)
+//for testing purposes only
+app.get('/getAllQn', function (req, res) {
+
+    riskQuestionnaire.getAllQuestionnaires(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//endpoint to get by specific user
+app.post('/getQnByUser', function (req, res) {
+    var user_id = req.body.user_id;
+    riskQuestionnaire.getQuestionnairesByUserID(user_id, function (err, result) {
         if (!err) {
             res.status(200).send(result);
         } else {
