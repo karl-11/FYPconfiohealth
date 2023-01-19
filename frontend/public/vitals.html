@@ -20,6 +20,9 @@
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <!--Axios-->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!--Google Chart-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 
     <!--Include Header & Footer-->
     <script>
@@ -37,9 +40,14 @@
     <section class="w-75 min-vh-100 mx-auto pb-170px">
         <span id="header"></span>
 
-        <div class="scrollmenu hidescroll" id="vitalnav" onchange="displayRadioValue()">
+        <div class="scrollmenu hidescroll" id="vitalnav" onchange="loadchart(),displayRadioValue()">
 
         </div>
+
+        <div id="chart_div">
+
+        </div>
+
 
         <div id="overlay" onclick="off()">
 
@@ -125,7 +133,7 @@
                         var vitalsStringNav = vitalsStringNav +
                             `
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="vitalsradio" id="${data.selectedVitals.toLowerCase() + "selected"}" value="${data.selectedVitals.toLowerCase() + "selected"}">
+                                <input class="form-check-input" type="radio" name="vitalsradio" id="${data.selectedVitals.toLowerCase() + "selected"}" value="${data.vitalsid}">
                                 <label class="form-check-label card border-0 p-2 text-center" for="${data.selectedVitals.toLowerCase() + "selected"}">
                                     <img src="${data.vital_sign_img}" class="align-self-center" alt="">
                                     ${data.selectedVitals}                            
@@ -208,7 +216,8 @@
             console.log(vitalsradio)
             for (i = 0; i < vitalsradio.length; i++) {
                 if (vitalsradio[i].checked) {
-                    console.log("vital: " + vitalsradio[i].value)
+                    console.log("id: " + vitalsradio[i].value);
+                    console.log("Vital: " + vitalsradio[i].id.replace("selected", ""));
                 }
             }
         };
@@ -316,6 +325,52 @@
         function off() {
             document.getElementById("overlay").style.width = "0%";
             document.getElementById("overlaycontent").style.width = "0%";
+        }
+
+        function loadchart() {
+
+            console.log("load chart");
+
+            //Google Chart
+            google.charts.load('current', { packages: ['corechart', 'line'] });
+
+            google.charts.setOnLoadCallback(drawBackgroundColor);
+
+
+            function drawBackgroundColor() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('number', 'X');
+                data.addColumn('number', 'Dogs');
+
+                data.addRows([
+                    [0, 0], [1, 10], [2, 23], [3, 17], [4, 18], [5, 9],
+                    [6, 11], [7, 27], [8, 33], [9, 40], [10, 32], [11, 35],
+                    [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
+                    [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
+                    [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
+                    [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
+                    [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
+                    [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
+                    [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
+                    [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
+                    [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
+                    [66, 70], [67, 72], [68, 75], [69, 80]
+                ]);
+
+                var options = {
+                    hAxis: {
+                        title: 'Time'
+                    },
+                    vAxis: {
+                        title: 'Popularity'
+                    },
+                    backgroundColor: '#ffffff',
+                    legend: 'none'
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            }
         }
     </script>
 
