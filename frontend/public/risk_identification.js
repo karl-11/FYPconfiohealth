@@ -23,20 +23,22 @@ $(document).ready(function () {
             }
 
             $('#questionnaireContent').append(`
-            <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0 col-3 mb-5 me-1">
-            <a href="risk_identification.html" id="questionnaire" class="text-decoration-none">
-            </a>
-            <p class="text-start text-black p-0 mx-3 mt-3 fs-5">${name}</p>
-            <img src="${image_url}" alt="questionnaire image"
-                class="card-img-top align-self-center p-3">
-            <div class="card-body p-0 m-0 mb-2">
-                <p class="text-start text-black p-0 mx-3 mb-2 fw-light">Result: ${user_score}/${max_score}</p>
-                <div class="progress mx-3 mb-2">
-                    <div class="progress-bar bg-${barColor} progress-bar-striped progress-bar-animated" role="progressbar"
-                        aria-valuenow="${user_score}" aria-valuemin="0" aria-valuemax="${max_score}" style="width: ${resultPercentage}%"></div>
+            <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0 mb-4"
+                style="width: 290px; height:310px;">
+                <a href="detailQuestionnaire.html" id=${id} class="text-decoration-none stretched-link">
+                </a>
+                <p class="text-start text-black p-0 mx-3 mt-3 mb-0 fs-5">${name}</p>
+                <img src="${image_url}" alt="questionnaire image"
+                    class="img-fluid align-self-center p-3 mt-0" style="height:200px;">
+                <div class="card-body p-0 m-0 mb-2">
+                    <p class="text-start text-black p-0 mx-3 mb-2 fw-light">Result: ${user_score}/${max_score}</p>
+                    <div class="progress mx-3 mb-2">
+                        <div class="progress-bar bg-${barColor} progress-bar-striped progress-bar-animated" role="progressbar"
+                            aria-valuenow="${user_score}" aria-valuemin="0" aria-valuemax="${max_score}" style="width: ${resultPercentage}%">
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
             `)
         }
     })
