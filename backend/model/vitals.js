@@ -131,6 +131,31 @@ var vitalsDB = {
         });
     },
 
+    getVitalsValue: function (userid,vitalid,callback) {
+        var conn = db;
+
+        var sql = ` 
+        SELECT 
+            * 
+        from 
+            Vital_Signs_value 
+        Where 
+            userid = ? and vitalid = ? 
+        Order by 
+            datetimecreated asc;
+                `;
+
+        conn.query(sql,[userid,vitalid], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
 }
 
 //-----------------------------------------

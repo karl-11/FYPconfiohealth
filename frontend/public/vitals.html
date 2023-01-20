@@ -113,9 +113,9 @@
 
                     for (i = 0; i < response.data.length; i++) {
 
-                        console.log("select vitals");
+                        //console.log("select vitals");
                         var data = response.data[i];
-                        console.log(data);
+                        //console.log(data);
 
                         var vitalsStringSelected = vitalsStringSelected +
                             `
@@ -174,9 +174,9 @@
 
                     for (i = 0; i < response.data.length; i++) {
 
-                        console.log("Not selected vitals");
+                        //console.log("Not selected vitals");
                         var data = response.data[i];
-                        console.log(data);
+                        //console.log(data);
 
                         var vitalsStringNotSelected = vitalsStringNotSelected +
                             `
@@ -325,52 +325,85 @@
         function off() {
             document.getElementById("overlay").style.width = "0%";
             document.getElementById("overlaycontent").style.width = "0%";
-        }
+        };
+
+
 
         function loadchart() {
-
-            console.log("load chart");
-
-            //Google Chart
-            google.charts.load('current', { packages: ['corechart', 'line'] });
-
-            google.charts.setOnLoadCallback(drawBackgroundColor);
-
-
-            function drawBackgroundColor() {
-                var data = new google.visualization.DataTable();
-                data.addColumn('number', 'X');
-                data.addColumn('number', 'Dogs');
-
-                data.addRows([
-                    [0, 0], [1, 10], [2, 23], [3, 17], [4, 18], [5, 9],
-                    [6, 11], [7, 27], [8, 33], [9, 40], [10, 32], [11, 35],
-                    [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
-                    [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
-                    [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
-                    [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
-                    [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
-                    [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
-                    [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
-                    [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
-                    [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
-                    [66, 70], [67, 72], [68, 75], [69, 80]
-                ]);
-
-                var options = {
-                    hAxis: {
-                        title: 'Time'
-                    },
-                    vAxis: {
-                        title: 'Popularity'
-                    },
-                    backgroundColor: '#ffffff',
-                    legend: 'none'
-                };
-
-                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-                chart.draw(data, options);
+            for (i = 0; i < vitalsradio.length; i++) {
+                if (vitalsradio[i].checked) {
+                    var requestBody = {
+                        userid: loggedinid,
+                        vitalid: vitalsradio[i].value
+                    };
+                    console.log(requestBody);
+                }
             }
+            axios.post(`${baseUrl}/getVitalValue`, requestBody)
+                .then((response) => {
+                    console.log("get vitals value");
+                    var res = response.data;
+                    console.log(res);
+
+                    console.log("load chart");
+
+                    //Google Chart
+                    google.charts.load('current', { packages: ['corechart', 'line'] });
+
+                    google.charts.setOnLoadCallback(drawBackgroundColor);
+                    console.log(res)
+
+
+                    function drawBackgroundColor() {
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('datetime', 'date/time');
+                        data.addColumn('number', 'beats/min');
+
+                        var test = []
+
+                        for (i = 0; i < res.length; i++) {
+
+                            // Split timestamp into [ Y, M, D, h, m, s ]
+                            var t = res[i].datetimecreated.split(/[- : T Z]/);
+
+                            // Apply each element to the Date function
+                            var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
+                            test.push([d, res[i].vitalvalue])
+                            console.log(t);
+                            console.log(d);
+                            // -> Wed Jun 09 2010 14:12:01 GMT+0100 (BST)
+                            console.log(res[i]);
+                        }
+
+
+
+                        console.log(test);
+
+                        data.addRows(
+                            test
+                        );
+
+                        var options = {
+                            hAxis: {
+                                title: 'date'
+                            },
+                            vAxis: {
+                                title: 'beats/min'
+                            },
+                            backgroundColor: '#ffffff',
+                            legend: 'none'
+                        };
+
+                        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                        chart.draw(data, options);
+                    }
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+
         }
     </script>
 
