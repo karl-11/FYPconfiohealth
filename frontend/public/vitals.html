@@ -361,21 +361,25 @@
 
                         var test = []
 
-                        for (i = 0; i < res.length; i++) {
+                        if (res.length != 0) {
+                            for (i = 0; i < res.length; i++) {
 
-                            // Split timestamp into [ Y, M, D, h, m, s ]
-                            var t = res[i].datetimecreated.split(/[- : T Z]/);
+                                // Split timestamp into [ Y, M, D, h, m, s ]
+                                var t = res[i].datetimecreated.split(/[- : T Z]/);
 
-                            // Apply each element to the Date function
-                            var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
-                            test.push([d, res[i].vitalvalue])
-                            console.log(t);
-                            console.log(d);
-                            // -> Wed Jun 09 2010 14:12:01 GMT+0100 (BST)
-                            console.log(res[i]);
+                                // Apply each element to the Date function
+                                var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
+                                test.push([d, res[i].vitalvalue])
+                                console.log(t);
+                                console.log(d);
+
+                                console.log(res[i]);
+                            }
                         }
-
-
+                        else{
+                            var d = new Date
+                            test.push([d, 0])
+                        }
 
                         console.log(test);
 
