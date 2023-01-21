@@ -376,7 +376,7 @@
                                 console.log(res[i]);
                             }
                         }
-                        else{
+                        else {
                             var d = new Date
                             test.push([d, 0])
                         }
@@ -389,13 +389,22 @@
 
                         var options = {
                             hAxis: {
-                                title: 'date'
+                                title: 'date',
+                                gridlines: {
+                                    count: -1,
+                                    units: {
+                                        days: { format: ['MMM dd'] },
+                                        hours: { format: ['HH:mm', 'ha'] },
+                                    }
+                                },
                             },
                             vAxis: {
-                                title: 'beats/min'
+                                title: 'beats/min',
                             },
                             backgroundColor: '#ffffff',
-                            legend: 'none'
+                            legend: 'none',
+                            pointSize: 10,
+                            height: 400
                         };
 
                         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
