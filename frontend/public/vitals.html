@@ -48,6 +48,10 @@
 
         </div>
 
+        <div id="valuebtn">
+
+        </div>
+
 
         <div id="overlay" onclick="off()">
 
@@ -344,20 +348,20 @@
                     console.log("get vitals value");
                     var res = response.data;
                     console.log(res);
-
+                    var number = res[0].vital_value
+                    console.log("-----------number-----------");
+                    console.log(number);
                     console.log("load chart");
 
                     //Google Chart
                     google.charts.load('current', { packages: ['corechart', 'line'] });
 
                     google.charts.setOnLoadCallback(drawBackgroundColor);
-                    console.log(res)
-
 
                     function drawBackgroundColor() {
                         var data = new google.visualization.DataTable();
                         data.addColumn('datetime', 'date/time');
-                        data.addColumn('number', 'beats/min');
+                        data.addColumn('number', number);
 
                         var test = []
 
@@ -368,13 +372,13 @@
                                 var t = res[i].datetimecreated.split(/[- : T Z]/);
 
                                 // Apply each element to the Date function
-                                var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
+                                var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
                                 test.push([d, res[i].vitalvalue])
                                 console.log(t);
                                 console.log(d);
-
                                 console.log(res[i]);
                             }
+
                         }
                         else {
                             var d = new Date
@@ -399,13 +403,22 @@
                                 },
                             },
                             vAxis: {
-                                title: 'beats/min',
+                                title: number,
                             },
                             backgroundColor: '#ffffff',
                             legend: 'none',
                             pointSize: 10,
                             height: 400
                         };
+                        var valuebtn = 
+                        `
+                        <div class="text-center fixed-bottom " style="bottom: 25%;">
+                            <button type="button" class="btn bg-beige ">
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitals.html">Add Value</a>
+                            </button>
+                        </div>
+                        `
+                        document.getElementById("valuebtn").innerHTML = valuebtn;
 
                         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
                         chart.draw(data, options);
@@ -415,7 +428,6 @@
                 .catch((error) => {
                     console.log(error);
                 });
-
 
         }
     </script>

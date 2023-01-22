@@ -136,11 +136,11 @@ var vitalsDB = {
 
         var sql = ` 
         SELECT 
-            * 
+            vv.vitalid, vv.userid, vv.datetimecreated, vs.vital_sign_type, vs.vital_value, vv.vitalvalue
         from 
-            Vital_Signs_value 
+            Vital_Signs_value vv, vitalsigns vs
         Where 
-            userid = ? and vitalid = ? 
+            userid = ? and vitalid = ? and vitalid = vs.id
         Order by 
             datetimecreated asc;
                 `;
