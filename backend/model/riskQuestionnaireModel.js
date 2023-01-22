@@ -33,7 +33,7 @@ var questionnairesDB = {
 
     getQuestionnairesByUserID: function (user_id, callback) {
         var conn = db;
-        var sql = `SELECT id, name, num_of_questions, user_score, max_score, date_Taken, image_url FROM questionnaireResults WHERE user_id=?;`;
+        var sql = `SELECT id, name, user_score, max_score, date_Taken, image_url FROM questionnaireResults WHERE user_id=?;`;
         conn.query(sql, [user_id], function (err, result) {
             if (err) {
                 console.log(err);
