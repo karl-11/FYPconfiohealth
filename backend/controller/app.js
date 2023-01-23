@@ -203,4 +203,22 @@ app.post('/getQnByUser', function (req, res) {
     });
 });
 
+//endpoint to get all questions from a questionnaire
+//for testing only
+app.get('/getAllQn', function (req, res) {
+
+    riskQuestionnaire.getAllQuestionnaires(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+
+
+
+
 module.exports = app;
