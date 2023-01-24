@@ -35,22 +35,30 @@
 </head>
 
 <body class="font-montserrat body">
-    <!--Header section-->
 
     <section class="w-75 min-vh-100 mx-auto pb-170px">
+        <!--Header section-->
         <span id="header"></span>
 
-        <div class="scrollmenu hidescroll" id="vitalnav" onchange="displayRadioValue(),loadchart()">
+        <div class="scrollmenu hidescroll" id="vitalnav" onchange="displayRadioValue(),getAllVitals()">
 
         </div>
 
-        <div id="chart_div">
-
-        </div>
-
-        <div id="valuebtn">
-
-        </div>
+        <form id="inputvalue">
+            <!-- <form id="login-form">
+                <div class="m-3 form-group">
+                    <label for="value" class="form-label">value</label>
+                    <input type="text" class="form-control" id="value" placeholder="value" name="value">
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn bg-beige rounded-3 px-5">
+                        <a class="text-decoration-none text-dark" href="vitals.html">Back</a>
+                    </button>
+                    <button type="submit" class="btn text-white rounded-3 px-5" style="background-color: #43AEA1 ;">
+                        Login
+                    </button>
+            </form> -->
+        </form>
 
 
         <div id="overlay" onclick="off()">
@@ -74,6 +82,7 @@
                 </div>
             </div>
         </div>
+
         <!--Footer section-->
         <span id="footer"></span>
     </section>
@@ -106,12 +115,12 @@
                     // overlay button to add to end of nav
                     var overlayButtonString =
                         `
-                        <div class="form-check form-check-inline">
-                            <button type="button" class="btn flex-column card border-0 p-2 text-center" onclick="on()">
-                            <img src="images/icons8-plus.png" alt="">
-                            </button>
-                        </div>
-                        `;
+                         <div class="form-check form-check-inline">
+                             <button type="button" class="btn flex-column card border-0 p-2 text-center" onclick="on()">
+                             <img src="images/icons8-plus.png" alt="">
+                             </button>
+                         </div>
+                         `;
 
                     //console.log(response.data);
 
@@ -123,27 +132,27 @@
 
                         var vitalsStringSelected = vitalsStringSelected +
                             `
-                            <div class="form-check col-lg-3 col-md-4 m-0 p-0">
-                                <input class="form-check-input" type="checkbox" value="${data.vitalsid}" name="vitalscheck" id="${data.selectedVitals.toLowerCase()}">
-                                <label class="form-check-label text-center" for="${data.selectedVitals.toLowerCase()}">
-                                     <img src="${data.vital_sign_img}" class="align-self-center" alt="">
-                                     <p>
-                                      ${data.selectedVitals}
-                                     </p>
-                                </label>
-                            </div>
-                     `
+                             <div class="form-check col-lg-3 col-md-4 m-0 p-0">
+                                 <input class="form-check-input" type="checkbox" value="${data.vitalsid}" name="vitalscheck" id="${data.selectedVitals.toLowerCase()}">
+                                 <label class="form-check-label text-center" for="${data.selectedVitals.toLowerCase()}">
+                                      <img src="${data.vital_sign_img}" class="align-self-center" alt="">
+                                      <p>
+                                       ${data.selectedVitals}
+                                      </p>
+                                 </label>
+                             </div>
+                      `
 
                         var vitalsStringNav = vitalsStringNav +
                             `
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="vitalsradio" id="${data.selectedVitals.toLowerCase() + "selected"}" value="${data.vitalsid}">
-                                <label class="form-check-label card border-0 p-2 text-center" for="${data.selectedVitals.toLowerCase() + "selected"}">
-                                    <img src="${data.vital_sign_img}" class="align-self-center" alt="">
-                                    ${data.selectedVitals}                            
-                                </label>
-                            </div>
-                            `
+                             <div class="form-check form-check-inline">
+                                 <input class="form-check-input" type="radio" name="vitalsradio" id="${data.selectedVitals.toLowerCase() + "selected"}" value="${data.vitalsid}">
+                                 <label class="form-check-label card border-0 p-2 text-center" for="${data.selectedVitals.toLowerCase() + "selected"}">
+                                     <img src="${data.vital_sign_img}" class="align-self-center" alt="">
+                                     ${data.selectedVitals}                            
+                                 </label>
+                             </div>
+                             `
                     }
                     document.getElementById("selected").innerHTML = vitalsStringSelected;
                     document.getElementById("vitalnav").innerHTML = vitalsStringNav + overlayButtonString;
@@ -184,16 +193,16 @@
 
                         var vitalsStringNotSelected = vitalsStringNotSelected +
                             `
-                                <div class="form-check col-lg-3 col-md-4 m-0 p-0">
-                                    <input class="form-check-input" type="checkbox" value="${data.id}" name="vitalscheck" id="${data.vital_sign_type.toLowerCase()}">
-                                        <label class="form-check-label text-center" for="${data.vital_sign_type.toLowerCase()}">
-                                            <img src="${data.vital_sign_img}" class="align-self-center" alt="">
-                                            <p>
-                                             ${data.vital_sign_type}
-                                            </p>
-                                        </label>
-                                </div>
-                                `
+                                 <div class="form-check col-lg-3 col-md-4 m-0 p-0">
+                                     <input class="form-check-input" type="checkbox" value="${data.id}" name="vitalscheck" id="${data.vital_sign_type.toLowerCase()}">
+                                         <label class="form-check-label text-center" for="${data.vital_sign_type.toLowerCase()}">
+                                             <img src="${data.vital_sign_img}" class="align-self-center" alt="">
+                                             <p>
+                                              ${data.vital_sign_type}
+                                             </p>
+                                         </label>
+                                 </div>
+                                 `
                     }
                     document.getElementById("notselected").innerHTML = vitalsStringNotSelected;
 
@@ -215,6 +224,7 @@
         console.log(vitalsradio);
         console.log(vitalscheck);
         var radioid;
+        var vitalvalue;
 
         // too see the value of selected radio
         function displayRadioValue() {
@@ -332,159 +342,74 @@
             document.getElementById("overlaycontent").style.width = "0%";
         };
 
-
-
-        function loadchart() {
-            for (i = 0; i < vitalsradio.length; i++) {
-                if (vitalsradio[i].checked) {
-                    var requestBody = {
-                        userid: loggedinid,
-                        vitalid: vitalsradio[i].value
-                    };
-                    console.log(requestBody);
-                }
-            }
-            axios.post(`${baseUrl}/getVitalValue`, requestBody)
+        const form = document.getElementById('inputvalue');
+        function getAllVitals() {
+            axios.get(`${baseUrl}/vitals`)
                 .then((response) => {
-                    console.log("get vitals value");
-                    var res = response.data;
-                    console.log(res);
-                    var number;
-                    console.log("load chart");
-
-                    //Google Chart
-                    google.charts.load('current', { packages: ['corechart', 'line'] });
-
-                    google.charts.setOnLoadCallback(drawBackgroundColor);
-
-                    function drawBackgroundColor() {
-                        var data = new google.visualization.DataTable();
-                        data.addColumn('datetime', 'date/time');
-                        data.addColumn('number', number);
-
-                        var test = [];
-
-                        if (res.length != 0) {
-                            for (i = 0; i < res.length; i++) {
-
-                                // Split timestamp into [ Y, M, D, h, m, s ]
-                                var t = res[i].datetimecreated.split(/[- : T Z]/);
-
-                                // Apply each element to the Date function
-                                var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
-                                number = res[0].vital_value;
-                                test.push([d, res[i].vitalvalue]);
-                                console.log(t);
-                                console.log(d);
-                                console.log(res[i]);
-                            }
-
+                    for (i = 0; i < response.data.length; i++) {
+                        if (radioid == response.data[i].id) {
+                            vitalvalue = response.data[i].vital_value;
+                            console.log("-----------vitalvalue-----------");
+                            console.log(vitalvalue);
                         }
-                        else {
-                            axios.get(`${baseUrl}/vitals`)
-                                .then((response) => {
-                                    for (i = 0; i < vitalsradio.length; i++) {
-                                        if (vitalsradio[i].checked) {
-                                            //console.log("id: " + vitalsradio[i].value);
-                                            //console.log("Vital: " + vitalsradio[i].id.replace("selected", ""));
-                                            var radioid = vitalsradio[i].value;
-
-                                        }
-                                    }
-                                    for (i = 0; i < response.data.length; i++) {
-                                        //console.log("printing vital get response.data" + i);
-                                        //console.log(response.data[i]);
-                                        if (radioid == response.data[i].id) {
-                                            number = response.data[i].vital_value;
-                                            console.log("-----------number-----------");
-                                            console.log(number);
-                                        }
-                                    }
-                                    console.log(test);
-
-                                    data.addRows(
-                                        test
-                                    );
-
-                                    var options = {
-                                        hAxis: {
-                                            title: 'date',
-                                            gridlines: {
-                                                count: -1,
-                                                units: {
-                                                    days: { format: ['MMM dd'] },
-                                                    hours: { format: ['HH:mm', 'ha'] },
-                                                }
-                                            },
-                                        },
-                                        vAxis: {
-                                            title: number,
-                                        },
-                                        backgroundColor: '#ffffff',
-                                        legend: 'none',
-                                        pointSize: 10,
-                                        height: 400
-                                    };
-
-                                    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-                                    chart.draw(data, options);
-
-                                })
-                                .catch((error) => {
-                                    console.log(error);
-                                });
-                            var d = new Date
-                            test.push([d, 0])
-                        }
-
-                        console.log(test);
-
-                        data.addRows(
-                            test
-                        );
-
-                        var options = {
-                            hAxis: {
-                                title: 'date',
-                                gridlines: {
-                                    count: -1,
-                                    units: {
-                                        days: { format: ['MMM dd'] },
-                                        hours: { format: ['HH:mm', 'ha'] },
-                                    }
-                                },
-                            },
-                            vAxis: {
-                                title: number,
-                            },
-                            backgroundColor: '#ffffff',
-                            legend: 'none',
-                            pointSize: 10,
-                            height: 400
-                        };
-                        var valuebtn =
-                            `
-                        <div class="text-center">
-                            <button type="button" class="btn bg-beige ">
-                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
-                            </button>
-                        </div>
-                        `
-                        document.getElementById("valuebtn").innerHTML = valuebtn;
-
-                        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-                        chart.draw(data, options);
                     }
+                    var valuestring =
+                        `
+                        <div class="m-3 form-group">
+                            <label for="${vitalvalue}" class="form-label">${vitalvalue}</label>
+                            <input type="text" class="form-control" id="${vitalvalue}" placeholder="" name="${vitalvalue}">
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn bg-beige rounded-3 px-5">
+                                <a class="text-decoration-none text-dark" href="vitals.html">Back</a>
+                            </button>
+                            <button type="submit" class="btn text-white rounded-3 px-5" style="background-color: #43AEA1 ;">
+                                Save
+                            </button>
+                    `
+                    document.getElementById("inputvalue").innerHTML = valuestring;
 
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-
         }
+
+        form.addEventListener('submit', (event) => {
+            // handle the form data
+            // prevent page reload
+            event.preventDefault();
+
+            // data extraction
+            var userid = localStorage.getItem('loggedInUserID');
+            var vitalid = radioid;
+            var vital_value = document.getElementById(`${vitalvalue}`).value;
+
+            // data compilation
+            const requestBody = {
+                userid: userid,
+                vitalid: vitalid,
+                vital_value: vital_value
+            };
+
+            console.log("---------------- compiled data -----------");
+            console.log(requestBody);
+
+            axios.post(`${baseUrl}/addVitalValue`, requestBody)
+                .then((response) => {
+                    console.log("========= Add Vital Value response ==========")
+                    console.log(response.data)
+
+                    window.location.href = "/vitals.html";
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        });
+
+
     </script>
 
 </body>
-
 
 </html>

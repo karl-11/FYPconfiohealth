@@ -109,7 +109,7 @@ var vitalsDB = {
         });
     },
 
-    
+
     removeSelectedVitals: function (userid, vitalid, callback) {
         var conn = db;
 
@@ -131,7 +131,7 @@ var vitalsDB = {
         });
     },
 
-    getVitalsValue: function (userid,vitalid,callback) {
+    getVitalsValue: function (userid, vitalid, callback) {
         var conn = db;
 
         var sql = ` 
@@ -145,7 +145,28 @@ var vitalsDB = {
             datetimecreated asc;
                 `;
 
-        conn.query(sql,[userid,vitalid], function (err, result) {
+        conn.query(sql, [userid, vitalid], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    addVitalValue: function (userid, vitalid, vitalvalue, callback) {
+        var conn = db;
+
+        var sql = ` 
+        INSERT INTO
+            Vital_Signs_value(userid, vitalid, vitalvalue,datetimecreated)
+        VALUE
+            (?,?,?,DATE_ADD(now(),INTERVAL 8 HOUR));
+                `;
+
+        conn.query(sql, [userid, vitalid, vitalvalue], function (err, result) {
 
             if (err) {
                 console.log(err);

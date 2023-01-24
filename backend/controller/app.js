@@ -267,5 +267,22 @@ app.post('/getVitalValue', printDebugInfo, function (req, res) {
     });
 });
 
+// End point for add Vital Value
+app.post('/addVitalValue', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+    var vitalvalue = req.body.vital_value;
+
+    vital.addVitalValue(userid, vitalid,vitalvalue, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
 
 module.exports = app;
