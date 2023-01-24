@@ -25,7 +25,7 @@ $(document).ready(function () {
             $('#questionnaireContent').append(`
             <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0 mb-4"
                 style="width: 290px; height:310px;">
-                <a href="detailQuestionnaire.html" id=${id} class="text-decoration-none stretched-link">
+                <a href="detailQuestionnaire.html" id=${id} class="text-decoration-none stretched-link" onclick="sendID(this.id)">
                 </a>
                 <p class="text-start text-black p-0 mx-3 mt-3 mb-0 fs-5">${name}</p>
                 <img src="${image_url}" alt="questionnaire image"
@@ -46,3 +46,9 @@ $(document).ready(function () {
             console.log(error);
         });
 })
+
+function sendID(clickedQnr) {
+    localStorage.setItem('SelectedQnr', clickedQnr);
+      console.log(clickedQnr);
+}
+

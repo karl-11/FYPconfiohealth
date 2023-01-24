@@ -2,12 +2,12 @@
 const baseUrl = "http://localhost:3000";
 
 $(document).ready(function () {
-    const user_id = localStorage.getItem('loggedInUserID')
-    console.log("the user id is: " + user_id);
-    var requestBody = {
-        user_id: user_id
-    };
-    axios.post(`${baseUrl}/getQnByUser`, requestBody).then(function (response) {
+    const QnrID = localStorage.getItem('SelectedQnr')
+    console.log("the questionnaire id is: " + QnrID);
+    // var requestBody = {
+    //     QnrID: user_id
+    // };
+    axios.post(`${baseUrl}/getQnsByQnr`, requestBody).then(function (response) {
 
         for (i = 0; i < response.data.length; i++) {
             const { id, name, user_score, max_score, date_Taken, image_url } = response.data[i]

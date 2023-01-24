@@ -16,13 +16,14 @@ var jwtconfig = require('../config/jwtconfig.js')
 
 //-----------------------------------------
 // getting the questionnaires by a specific user and displaying them
+// taking from the questionnaire results table 
 //-----------------------------------------
 var questionnairesDB = {
     //for testing purposes
     getAllQuestionnaires: function (callback) {
         var conn = db;
 
-        var sql = `SELECT * FROM questionnaires;`;
+        var sql = `SELECT * FROM questionnaireResults;`;
 
         conn.query(sql, function (err, result) {
             if (err) {
@@ -46,14 +47,16 @@ var questionnairesDB = {
             }
         });
     },
-}
 
-var questionsDB = {
+
+    //-----------------------------------------
+    // questions table
+    //-----------------------------------------
     //for testing purposes
-    getAllQuestionnaires: function (callback) {
+    getAllQuestions: function (callback) {
         var conn = db;
 
-        var sql = `SELECT * FROM questionnaires;`;
+        var sql = `SELECT * FROM questions;`;
 
         conn.query(sql, function (err, result) {
             if (err) {
@@ -65,9 +68,10 @@ var questionsDB = {
         });
     },
 
-    getQuestionnairesByUserID: function (user_id, callback) {
+    // Qnr = Questionnaire
+    getQuestionsByQnrID: function (user_id, callback) {
         var conn = db;
-        var sql = `SELECT id, name, user_score, max_score, date_Taken, image_url FROM questionnaireResults WHERE user_id=?;`;
+        var sql = `SELECT id, content, max_score FROM questions WHERE questionnaireID=?;`;
         conn.query(sql, [user_id], function (err, result) {
             if (err) {
                 console.log(err);
@@ -77,10 +81,10 @@ var questionsDB = {
             }
         });
     },
-}
 
+}
 
 //-----------------------------------------
 // exports
 //-----------------------------------------
-module.exports = questionnairesDB, questionsDB;
+module.exports = questionnairesDB;
