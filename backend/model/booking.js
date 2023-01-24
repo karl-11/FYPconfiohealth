@@ -1,5 +1,5 @@
 console.log("----------------------------");
-console.log("user.js");
+console.log("booking.js");
 console.log("----------------------------");
 
 //-----------------------------------------
@@ -15,17 +15,38 @@ var jwtconfig = require('../config/jwtconfig.js')
 //-----------------------------------------
 var bookingDB = {
 
-    getAllbookings: function (callback) {
+    getbooking: function (callback) {
         var conn = db;
 
         var sql = ` SELECT 
-                        *
+                      (date, time, location)
                     FROM 
-                        booking;
+                        booking
+                    WHERE
+                        userid = ? ;
                 `;
 
         conn.query(sql, function (err, result) {
 
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    AddBooking: function (date, time, location, userid, callback) {
+        var conn = db;
+
+        var sql = ` INSERT INTO booking
+                        (date, time, location, userid)
+                    VALUES 
+                        (?, ?, ?, ?);
+                    `;
+
+        conn.query(sql, [date, time, location, userid], function (err, result) {
             if (err) {
                 console.log(err);
                 return callback(err, null);

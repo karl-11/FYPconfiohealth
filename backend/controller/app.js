@@ -18,6 +18,7 @@ const JWT_SECRET = require("../config/jwtconfig.js");
 
 var user = require('../model/user.js');
 var faq = require('../model/faqs.js');
+var booking = require('../model/booking.js');
 
 //-----------------------------------------
 // Middleware functions
@@ -171,6 +172,60 @@ app.get('/faqs', function (req, res) {
         } else {
             res.status(500);
             console.log("error");
+        }
+    });
+});
+
+//  end point to insert new booking record
+app.post('/booking', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var date = req.body.date;
+    var time = req.body.time;
+    var location = req.body.location;
+    var userid = req.body.userid;
+
+    booking.AddBooking(date, time, location,userid, function (err, result) {
+        if (!err) {
+            var output = {
+                "inserted booking": result
+            };
+            res.status(201).send(output);
+        } else {
+            res.status(500);
+        }
+    });
+});
+
+// end point for get user booking 
+app.get('/booking', function (req, res) {
+
+    booking.getbooking(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//  end point to insert new report 
+app.post('/report', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var date = req.body.date;
+    var time = req.body.time;
+    var location = req.body.location;
+
+    booking.AddBooking(date, time, location, function (err, result) {
+        if (!err) {
+            var output = {
+                "inserted booking": result
+            };
+            res.status(201).send(output);
+        } else {
+            res.status(500);
         }
     });
 });
