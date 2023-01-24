@@ -156,17 +156,17 @@ var vitalsDB = {
         });
     },
 
-    addVitalValue: function (userid, vitalid, vitalvalue, callback) {
+    addVitalValue: function (userid, vitalid, vitalvalue, datetimecreated, callback) {
         var conn = db;
 
         var sql = ` 
         INSERT INTO
-            Vital_Signs_value(userid, vitalid, vitalvalue,datetimecreated)
+	        Vital_Signs_value(userid, vitalid, vitalvalue,datetimecreated)
         VALUE
-            (?,?,?,DATE_ADD(now(),INTERVAL 8 HOUR));
+	        (?,?,?,?);
                 `;
 
-        conn.query(sql, [userid, vitalid, vitalvalue], function (err, result) {
+        conn.query(sql, [userid, vitalid, vitalvalue, datetimecreated], function (err, result) {
 
             if (err) {
                 console.log(err);

@@ -273,8 +273,9 @@ app.post('/addVitalValue', printDebugInfo, function (req, res) {
     var userid = req.body.userid;
     var vitalid = req.body.vitalid;
     var vitalvalue = req.body.vital_value;
+    var datetimecreated = req.body.datetime;
 
-    vital.addVitalValue(userid, vitalid,vitalvalue, function (err, result) {
+    vital.addVitalValue(userid, vitalid, vitalvalue, datetimecreated, function (err, result) {
         if (!err) {
             res.status(200).send(result);
         } else {
