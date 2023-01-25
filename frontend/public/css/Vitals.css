@@ -30,6 +30,7 @@ button>img {
 
 label {
     width: 125px;
+    height: max-content;
     margin-top: 10px;
 }
 
