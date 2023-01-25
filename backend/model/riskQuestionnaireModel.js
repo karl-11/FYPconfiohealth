@@ -69,10 +69,12 @@ var questionnairesDB = {
     },
 
     // Qnr = Questionnaire
-    getQuestionsByQnrID: function (user_id, callback) {
+    getQuestionsByQnrID: function (questionnaireID, callback) {
         var conn = db;
+
         var sql = `SELECT id, content, max_score FROM questions WHERE questionnaireID=?;`;
-        conn.query(sql, [user_id], function (err, result) {
+        
+        conn.query(sql, [questionnaireID], function (err, result) {
             if (err) {
                 console.log(err);
                 return callback(err, null);

@@ -217,9 +217,9 @@ app.get('/getAllQnsByQnr', function (req, res) {
     });
 });
 
-app.post('/getQnByUser', function (req, res) {
-    var user_id = req.body.user_id;
-    riskQuestionnaire.getQuestionnairesByUserID(user_id, function (err, result) {
+app.post('/getQnsByQnr', function (req, res) {
+    var questionnaireID = req.body.questionnaireID;
+    riskQuestionnaire.getQuestionsByQnrID(questionnaireID, function (err, result) {
         if (!err) {
             res.status(200).send(result);
         } else {

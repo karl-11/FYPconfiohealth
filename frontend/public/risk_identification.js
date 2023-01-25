@@ -51,4 +51,5 @@ function sendID(clickedQnr) {
     localStorage.setItem('SelectedQnr', clickedQnr);
       console.log(clickedQnr);
 }
-
+const questionnaireID = localStorage.getItem('SelectedQnr')
+console.log("the questionnaire id is: " + questionnaireID);
