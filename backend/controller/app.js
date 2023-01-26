@@ -136,7 +136,7 @@ app.post("/login", (req, res) => {
 
                 res.status(200).send({
                     token: token,
-                    user_id: result.id,     
+                    user_id: result.id,
                     user_role: result.type
                 });
             })
@@ -185,7 +185,7 @@ app.post('/booking', printDebugInfo, function (req, res) {
     var location = req.body.location;
     var userid = req.body.userid;
 
-    booking.AddBooking(date, time, location,userid, function (err, result) {
+    booking.AddBooking(date, time, location, userid, function (err, result) {
         if (!err) {
             var output = {
                 "inserted booking": result
@@ -198,9 +198,10 @@ app.post('/booking', printDebugInfo, function (req, res) {
 });
 
 // end point for get user booking 
-app.get('/booking', function (req, res) {
-
-    booking.getbooking(function (err, result) {
+app.post('/viewbooking',printDebugInfo, function (req, res) {
+    //extract data from request body
+    var userid = req.body.userid;
+    booking.viewbooking(userid, function (err, result) {
         if (!err) {
             res.status(200).send(result);
         } else {

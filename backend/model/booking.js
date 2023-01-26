@@ -15,18 +15,19 @@ var jwtconfig = require('../config/jwtconfig.js')
 //-----------------------------------------
 var bookingDB = {
 
-    getbooking: function (callback) {
+    viewbooking: function (userid, callback) {
         var conn = db;
 
-        var sql = ` SELECT 
-                      (date, time, location)
-                    FROM 
-                        booking
-                    WHERE
-                        userid = ? ;
+        var sql = `                         
+        SELECT 
+        date, time, location
+      FROM 
+          booking
+      WHERE
+          userid = ? ;
                 `;
 
-        conn.query(sql, function (err, result) {
+        conn.query(sql,[userid], function (err, result) {
 
             if (err) {
                 console.log(err);
@@ -56,8 +57,7 @@ var bookingDB = {
         });
     },
 
-}
-
+}  
 //-----------------------------------------
 // exports
 //-----------------------------------------

@@ -19,11 +19,15 @@
     <!--JQuery-->
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 
+    <!--Axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <!--Include Header & Footer-->
     <script>
         $(function () {
             $("#header").load("header.html");
             $("#footer").load("footer.html");
+            document.addEventListener("DOMContentLoaded", viewbooking())
         });
     </script>
 </head>
@@ -33,32 +37,23 @@
 
     <section class="w-75 min-vh-100 mx-auto pb-170px">
         <span id="header"></span>
-    <!--Footer section-->
-    <span id="footer"></span>
+        <!--Footer section-->
+        <span id="footer"></span>
 
-     <!--Main section-->
-     <button  class="button" type="button" onclick="location.href='optimisation.html'"><a>Back</a></button>
-     <div class="div1">
-         <h1>View Appointments</h1>
-            <div class="div">
-            <label for="date">Date:</label>
-            <input type="text" id="bookdate">
+        <!--Main section-->
+        <button class="button" type="button" onclick="location.href='optimisation.html'"><a>Back</a></button>
+        <div class="div1">
 
-            <label for="time">Time:</label>
-            <input type="text" id="booktime">
-           </div>
-           <div class="div3">
+            <h1>View Appointments</h1>
+            <div id="arrPrint">
 
-            <label for="location">Location:</label>
-
-            <input type="text" id="location" size="40%">
-           </div>
-      </div>
+            </div>
+        </div>
 
 
-    <!--bootstrap bundle script-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./booking.js"></script>
+        <!--bootstrap bundle script-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="./booking.js"></script>
 </body>
 
 
