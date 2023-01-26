@@ -177,5 +177,113 @@ app.get('/faqs', printDebugInfo, function (req, res) {
     });
 });
 
-//test test
+// End point for get all vitals
+app.get('/vitals', printDebugInfo, function (req, res) {
+
+    vital.getAllvitals(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for get all Selected vitals
+app.post('/selectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+
+    vital.getSelectedvitals(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for get all Not Selected vitals
+app.post('/notSelectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+
+    vital.getNotSelectedvitals(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for add Selected vitals
+app.post('/addSelectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+
+    vital.addSelectedVitals(userid, vitalid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for renove Selected vitals
+app.post('/removeSelectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+
+    vital.removeSelectedVitals(userid, vitalid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for renove Selected vitals
+app.post('/getVitalValue', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+
+    vital.getVitalsValue(userid, vitalid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for add Vital Value
+app.post('/addVitalValue', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+    var vitalvalue = req.body.vital_value;
+    var datetimecreated = req.body.datetime;
+
+    vital.addVitalValue(userid, vitalid, vitalvalue, datetimecreated, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
 module.exports = app;
