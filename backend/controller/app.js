@@ -18,6 +18,7 @@ const JWT_SECRET = require("../config/jwtconfig.js");
 
 var user = require('../model/user.js');
 var faq = require('../model/faqs.js');
+var vital = require('../model/vitals');
 
 //-----------------------------------------
 // Middleware functions
@@ -135,7 +136,7 @@ app.post("/login", (req, res) => {
 
                 res.status(200).send({
                     token: token,
-                    user_id: result.id,     
+                    user_id: result.id,
                     user_role: result.type
                 });
             })
@@ -163,7 +164,7 @@ app.post('/signup', printDebugInfo, function (req, res) {
 });
 
 // end point for get all faqs 
-app.get('/faqs', function (req, res) {
+app.get('/faqs', printDebugInfo, function (req, res) {
 
     faq.getAllFAQs(function (err, result) {
         if (!err) {
@@ -174,5 +175,115 @@ app.get('/faqs', function (req, res) {
         }
     });
 });
+
+// End point for get all vitals
+app.get('/vitals', printDebugInfo, function (req, res) {
+
+    vital.getAllvitals(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for get all Selected vitals
+app.post('/selectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+
+    vital.getSelectedvitals(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for get all Not Selected vitals
+app.post('/notSelectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+
+    vital.getNotSelectedvitals(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for add Selected vitals
+app.post('/addSelectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+
+    vital.addSelectedVitals(userid, vitalid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for renove Selected vitals
+app.post('/removeSelectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+
+    vital.removeSelectedVitals(userid, vitalid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for renove Selected vitals
+app.post('/getVitalValue', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+
+    vital.getVitalsValue(userid, vitalid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for add Vital Value
+app.post('/addVitalValue', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+    var vitalvalue = req.body.vital_value;
+    var datetimecreated = req.body.datetime;
+
+    vital.addVitalValue(userid, vitalid, vitalvalue, datetimecreated, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
 
 module.exports = app;
