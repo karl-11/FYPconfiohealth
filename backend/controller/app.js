@@ -18,6 +18,7 @@ const JWT_SECRET = require("../config/jwtconfig.js");
 
 var user = require('../model/user.js');
 var faq = require('../model/faqs.js');
+var vital = require('../model/vitals');
 var booking = require('../model/booking.js');
 
 //-----------------------------------------
@@ -164,7 +165,7 @@ app.post('/signup', printDebugInfo, function (req, res) {
 });
 
 // end point for get all faqs 
-app.get('/faqs', function (req, res) {
+app.get('/faqs', printDebugInfo, function (req, res) {
 
     faq.getAllFAQs(function (err, result) {
         if (!err) {
@@ -172,61 +173,6 @@ app.get('/faqs', function (req, res) {
         } else {
             res.status(500);
             console.log("error");
-        }
-    });
-});
-
-//  end point to insert new booking record
-app.post('/booking', printDebugInfo, function (req, res) {
-
-    //extract data from request body
-    var date = req.body.date;
-    var time = req.body.time;
-    var location = req.body.location;
-    var userid = req.body.userid;
-
-    booking.AddBooking(date, time, location, userid, function (err, result) {
-        if (!err) {
-            var output = {
-                "inserted booking": result
-            };
-            res.status(201).send(output);
-        } else {
-            res.status(500);
-        }
-    });
-});
-
-// end point for get user booking 
-app.post('/viewbooking',printDebugInfo, function (req, res) {
-    //extract data from request body
-    var userid = req.body.userid;
-    booking.viewbooking(userid, function (err, result) {
-        if (!err) {
-            res.status(200).send(result);
-        } else {
-            res.status(500);
-            console.log("error");
-        }
-    });
-});
-
-//  end point to insert new report 
-app.post('/report', printDebugInfo, function (req, res) {
-
-    //extract data from request body
-    var date = req.body.date;
-    var time = req.body.time;
-    var location = req.body.location;
-
-    booking.AddBooking(date, time, location, function (err, result) {
-        if (!err) {
-            var output = {
-                "inserted booking": result
-            };
-            res.status(201).send(output);
-        } else {
-            res.status(500);
         }
     });
 });

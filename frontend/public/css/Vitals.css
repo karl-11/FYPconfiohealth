@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+/* Horzontial scroll menu */
+div.scrollmenu {
+    overflow: scroll;
+    white-space: nowrap;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hidescroll::-webkit-scrollbar {
+    display: none;
+}
+
+.hidescroll {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+label>img {
+    width: 80px;
+    height: 80px;
+}
+
+button>img {
+    width: 80px;
+    height: 80px;
+}
+
+label {
+    width: 125px;
+    height: max-content;
+    margin-top: 10px;
+}
+
+#overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1021;
+    top: 0;
+    right: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+#overlaycontent {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1022;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
