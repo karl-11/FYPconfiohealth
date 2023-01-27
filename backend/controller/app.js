@@ -300,5 +300,24 @@ app.post('/addVitalValue', printDebugInfo, function (req, res) {
     });
 });
 
+// End point for add blood pressure Value
+app.post('/addBloodPressureValue', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+    var systolic = req.body.systolic;
+    var diastolic = req.body.diastolic;
+    var datetimecreated = req.body.datetime;
+
+    vital.addBloodPressureValue(userid, vitalid, systolic, diastolic, datetimecreated, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
 
 module.exports = app;

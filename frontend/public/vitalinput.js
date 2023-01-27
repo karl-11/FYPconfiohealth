@@ -254,17 +254,18 @@ function off() {
 
 const form = document.getElementById('inputvalue');
 function getAllVitals() {
-    axios.get(`${baseUrl}/vitals`)
-        .then((response) => {
-            for (i = 0; i < response.data.length; i++) {
-                if (radioid == response.data[i].id) {
-                    vitalvalue = response.data[i].vital_value;
-                    console.log("-----------vitalvalue-----------");
-                    console.log(vitalvalue);
+    if (radioid != 3) {
+        axios.get(`${baseUrl}/vitals`)
+            .then((response) => {
+                for (i = 0; i < response.data.length; i++) {
+                    if (radioid == response.data[i].id) {
+                        vitalvalue = response.data[i].vital_value;
+                        console.log("-----------vitalvalue-----------");
+                        console.log(vitalvalue);
+                    }
                 }
-            }
-            var valuestring =
-                `
+                var valuestring =
+                    `
                 <div class="m-3 form-group">
                     <label for="${vitalvalue}" class="form-label">${vitalvalue}</label>
                     <input type="text" class="form-control" id="${vitalvalue}" placeholder="" name="${vitalvalue}">
@@ -287,44 +288,118 @@ function getAllVitals() {
                         Save
                     </button>
             `
-            var today = new Date();
-            var year = today.getFullYear();
-            var month = (today.getMonth() + 1);
-            var day = today.getDate();
-            var hour = today.getHours();
-            var minute = today.getMinutes();
-            if (month < 10) {
-                month = '0' + month
-            };
-            if (day < 10) {
-                day = '0' + day
-            };
-            if (hour < 10) {
-                hour = '0' + hour
-            };
-            if (minute < 10) {
-                minute = '0' + minute
-            };
-            // console.log(today);
-            // console.log(year);
-            // console.log(month);
-            // console.log(day);
-            // console.log(hour);
-            // console.log(minute);
-            var time = hour + ":" + minute;
-            var date = year + '-' + month + '-' + day;
-            console.log(date);
-            console.log(time)
-            document.getElementById("inputvalue").innerHTML = valuestring;
-            document.getElementById('date').value = date;
-            document.getElementById('time').value = time;
+                var today = new Date();
+                var year = today.getFullYear();
+                var month = (today.getMonth() + 1);
+                var day = today.getDate();
+                var hour = today.getHours();
+                var minute = today.getMinutes();
+                if (month < 10) {
+                    month = '0' + month
+                };
+                if (day < 10) {
+                    day = '0' + day
+                };
+                if (hour < 10) {
+                    hour = '0' + hour
+                };
+                if (minute < 10) {
+                    minute = '0' + minute
+                };
+                // console.log(today);
+                // console.log(year);
+                // console.log(month);
+                // console.log(day);
+                // console.log(hour);
+                // console.log(minute);
+                var time = hour + ":" + minute;
+                var date = year + '-' + month + '-' + day;
+                console.log(date);
+                console.log(time)
+                document.getElementById("inputvalue").innerHTML = valuestring;
+                document.getElementById('date').value = date;
+                document.getElementById('time').value = time;
 
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    } else {
+        axios.get(`${baseUrl}/vitals`)
+            .then((response) => {
+                for (i = 0; i < response.data.length; i++) {
+                    if (radioid == response.data[i].id) {
+                        vitalvalue = response.data[i].vital_value;
+                        console.log("-----------vitalvalue-----------");
+                        console.log(vitalvalue);
+                    }
+                }
+                var valuestring =
+                    `
+                <div class="m-3 form-group">
+                    <label for="${vitalvalue + "1"}" class="form-label">${"Systolic (" + vitalvalue + ")"}</label>
+                    <input type="text" class="form-control" id="${vitalvalue + "1"}" placeholder="" name="${vitalvalue + "1"}">
+                </div>
+                <div class="m-3 form-group">
+                <label for="${vitalvalue + "2"}" class="form-label">${"Diastolic (" + vitalvalue + ")"}</label>
+                <input type="text" class="form-control" id="${vitalvalue + "2"}" placeholder="" name="${vitalvalue + "2"}">
+                </div>
+                <div class="m-3 form-group">
+                    <label for="date" class="form-label">date</label>
+                    <input type="date" class="form-control" id="date" placeholder="" name="date">
+                </div>
+                <div class="m-3 form-group">
+                    <label for="time" class="form-label">time</label>
+                    <input type="time" class="form-control" id="time" placeholder="" name="time">
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn bg-beige rounded-3 px-5">
+                        <a class="text-decoration-none text-dark" href="vitals.html">
+                            Back
+                        </a>
+                    </button>
+                    <button type="submit" class="btn text-white rounded-3 px-5" style="background-color: #43AEA1 ;">
+                        Save
+                    </button>
+            `
+                var today = new Date();
+                var year = today.getFullYear();
+                var month = (today.getMonth() + 1);
+                var day = today.getDate();
+                var hour = today.getHours();
+                var minute = today.getMinutes();
+                if (month < 10) {
+                    month = '0' + month
+                };
+                if (day < 10) {
+                    day = '0' + day
+                };
+                if (hour < 10) {
+                    hour = '0' + hour
+                };
+                if (minute < 10) {
+                    minute = '0' + minute
+                };
+                // console.log(today);
+                // console.log(year);
+                // console.log(month);
+                // console.log(day);
+                // console.log(hour);
+                // console.log(minute);
+                var time = hour + ":" + minute;
+                var date = year + '-' + month + '-' + day;
+                console.log(date);
+                console.log(time)
+                document.getElementById("inputvalue").innerHTML = valuestring;
+                document.getElementById('date').value = date;
+                document.getElementById('time').value = time;
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 }
-
 form.addEventListener('submit', (event) => {
     // handle the form data
     // prevent page reload
@@ -333,30 +408,56 @@ form.addEventListener('submit', (event) => {
     // data extraction
     var userid = localStorage.getItem('loggedInUserID');
     var vitalid = radioid;
-    var vital_value = document.getElementById(`${vitalvalue}`).value;
     var date = document.getElementById(`date`).value;
     var time = document.getElementById(`time`).value;
     var datetime = date + " " + time;
-    // data compilation
-    const requestBody = {
-        userid: userid,
-        vitalid: vitalid,
-        vital_value: vital_value,
-        datetime: datetime
-    };
+    console.log(radioid);
+    if (radioid != 3) {
+        var vital_value = document.getElementById(`${vitalvalue}`).value;
+        // data compilation
+        var requestBody = {
+            userid: userid,
+            vitalid: vitalid,
+            vital_value: vital_value,
+            datetime: datetime
+        };
+        axios.post(`${baseUrl}/addVitalValue`, requestBody)
+            .then((response) => {
+                console.log("========= Add Vital Value response ==========")
+                console.log(response.data)
+
+                window.location.href = "/vitals.html";
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    } else {
+        var systolic = document.getElementById(`${vitalvalue + "1"}`).value;
+        var diastolic = document.getElementById(`${vitalvalue + "2"}`).value;
+        // data compilation
+        var requestBody = {
+            userid: userid,
+            vitalid: vitalid,
+            systolic: systolic,
+            diastolic: diastolic,
+            datetime: datetime
+        };
+        axios.post(`${baseUrl}/addBloodPressureValue`, requestBody)
+            .then((response) => {
+                console.log("========= Add Vital Value response ==========")
+                console.log(response.data)
+
+                window.location.href = "/vitals.html";
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
 
     console.log("---------------- compiled data -----------");
     console.log(requestBody);
 
-    axios.post(`${baseUrl}/addVitalValue`, requestBody)
-        .then((response) => {
-            console.log("========= Add Vital Value response ==========")
-            console.log(response.data)
 
-            window.location.href = "/vitals.html";
-        })
-        .catch((error) => {
-            console.log(error);
-        });
 });
 
