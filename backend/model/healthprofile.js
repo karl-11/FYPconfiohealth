@@ -19,14 +19,18 @@ var hpDB = {
         var conn = db;
 
         var sql = ` SELECT 
-                        *
+                        HP_General.*, users.full_name
                     FROM 
-                        HP_General
+                        HP_General 
+                    INNER JOIN
+                        users 
+                    ON 
+                        HP_General.userid = users.id
                     WHERE
-                        userid = ?;
+                        HP_General.userid = ?;
                 `;
 
-        conn.query(sql, [userid],function (err, result) {
+        conn.query(sql, [userid], function (err, result) {
 
             if (err) {
                 console.log(err);
@@ -48,7 +52,7 @@ var hpDB = {
                         userid = ?;
                 `;
 
-        conn.query(sql, [userid],function (err, result) {
+        conn.query(sql, [userid], function (err, result) {
 
             if (err) {
                 console.log(err);
@@ -70,7 +74,7 @@ var hpDB = {
                         userid = ?;
                 `;
 
-        conn.query(sql, [userid],function (err, result) {
+        conn.query(sql, [userid], function (err, result) {
 
             if (err) {
                 console.log(err);
@@ -92,7 +96,7 @@ var hpDB = {
                         userid = ?;
                 `;
 
-        conn.query(sql, [userid],function (err, result) {
+        conn.query(sql, [userid], function (err, result) {
 
             if (err) {
                 console.log(err);
@@ -114,7 +118,7 @@ var hpDB = {
                         userid = ?;
                 `;
 
-        conn.query(sql, [userid],function (err, result) {
+        conn.query(sql, [userid], function (err, result) {
 
             if (err) {
                 console.log(err);
@@ -136,7 +140,7 @@ var hpDB = {
                         userid = ?;
                 `;
 
-        conn.query(sql, [userid],function (err, result) {
+        conn.query(sql, [userid], function (err, result) {
 
             if (err) {
                 console.log(err);
@@ -147,79 +151,249 @@ var hpDB = {
         });
     },
 
-    logIn: function (email, password, callback) {
+    insertHPGeneral: function (userid, gender, date_of_birth, weight, height, callback) {
         var conn = db;
 
-        var sql = ` SELECT 
-                            * 
-                        FROM 
-                            users
-                        WHERE 
-                            email=? 
-                    `;
+        var sql = `
+        INSERT INTO HP_General 
+        	(userid, gender, date_of_birth, weight, height)
+        VALUES
+        	(?, ?, ?, ?, ?)
+        `
 
-        conn.query(sql, [email], (error, results) => {
+        conn.query(sql, [userid, gender, date_of_birth, weight, height], function (err, result) {
 
-            if (error) {
-                callback(error, null);
-                return;
-            }
-
-            if (results.length === 0) {
-                return callback(null, null);
-
-            }
-            else {
-
-                console.log(results);
-
-                if (bcrypt.compareSync(password, results[0].password) == true) {
-
-                    let data = {
-                        user_id: results[0].id,
-                        role_name: results[0].type,
-                        token: jwt.sign({ id: results[0].id }, jwtconfig, {
-                            expiresIn: 86400 //Expires in 24 hrs
-                        })
-                    }; //End of data variable setup
-
-                    //return res.status(200).json(data);
-                    const user = results[0];
-                    return callback(null, user);
-                } else {
-                    // return res.status(500).json({ message: 'Login has failed.' });
-                    return res.status(500).json({ message: error });
-                }
-
-
-
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
             }
         });
     },
 
-    signUp: function (email, password, full_name, callback) {
+    updateHPGeneral: function (weight, height, userid, callback) {
         var conn = db;
 
-        bcrypt.hash(password, 10, async (err, hash) => {
+        var sql = `
+        UPDATE HP_General 
+        	SET weight = ?, height = ?
+        WHERE
+            userid = ?
+        `
+
+        conn.query(sql, [weight, height, userid], function (err, result) {
+
             if (err) {
-                console.log('Error on hashing password');
-                return res.status(500).json({ statusMessage: 'Unable to complete registration' });
+                console.log(err);
+                return callback(err, null);
             } else {
-                var sql = `
-                INSERT INTO
-                users
-                (email, password, full_name)
-                VALUES 
-                (?, ?, ?);
-                `;
-                conn.query(sql, [email, hash, full_name], function (err, result) {
-                    if (err) {
-                        console.log(err);
-                        return callback(err, null);
-                    } else {
-                        return callback(null, result);
-                    }
-                });
+                return callback(null, result);
+            }
+        });
+    },
+
+    insertHPMedical: function (userid, text, callback) {
+        var conn = db;
+
+        var sql = `
+        INSERT INTO HP_Medical 
+        	(userid, text)
+        VALUES
+        	(?, ?)
+        `
+
+        conn.query(sql, [userid, text], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    deleteHPMedical: function (id, callback) {
+        var conn = db;
+
+        var sql = `
+        DELETE FROM HP_Medical
+        WHERE
+             id = ?
+        `
+
+        conn.query(sql, [id], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    insertHPMedication: function (userid, text, callback) {
+        var conn = db;
+
+        var sql = `
+        INSERT INTO HP_Medication 
+        	(userid, text)
+        VALUES
+        	(?, ?)
+        `
+
+        conn.query(sql, [userid, text], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    deleteHPMedication: function (id, callback) {
+        var conn = db;
+
+        var sql = `
+        DELETE FROM HP_Medication
+        WHERE
+             id = ?
+        `
+
+        conn.query(sql, [id], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    insertHPSurgical: function (userid, text, callback) {
+        var conn = db;
+
+        var sql = `
+        INSERT INTO HP_Surgical 
+        	(userid, text)
+        VALUES
+        	(?, ?)
+        `
+
+        conn.query(sql, [userid, text], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    deleteHPSurgical: function (id, callback) {
+        var conn = db;
+
+        var sql = `
+        DELETE FROM HP_Surgical
+        WHERE
+             id = ?
+        `
+
+        conn.query(sql, [id], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    insertHPDrug: function (userid, text, callback) {
+        var conn = db;
+
+        var sql = `
+        INSERT INTO HP_Drug 
+        	(userid, text)
+        VALUES
+        	(?, ?)
+        `
+
+        conn.query(sql, [userid, text], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    deleteHPDrug: function (id, callback) {
+        var conn = db;
+
+        var sql = `
+        DELETE FROM HP_Drug
+        WHERE
+             id = ?
+        `
+
+        conn.query(sql, [id], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    insertHPVaccination: function (userid, text, callback) {
+        var conn = db;
+
+        var sql = `
+        INSERT INTO HP_Vaccination 
+        	(userid, text)
+        VALUES
+        	(?, ?)
+        `
+
+        conn.query(sql, [userid, text], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    deleteHPVaccination: function (id, callback) {
+        var conn = db;
+
+        var sql = `
+        DELETE FROM HP_Vaccination
+        WHERE
+             id = ?
+        `
+
+        conn.query(sql, [id], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
             }
         });
     }
@@ -228,4 +402,4 @@ var hpDB = {
 //-----------------------------------------
 // exports
 //-----------------------------------------
-module.exports = userDB;
+module.exports = hpDB;
