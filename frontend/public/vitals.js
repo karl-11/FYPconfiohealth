@@ -263,143 +263,284 @@ function loadchart() {
             console.log(requestBody);
         }
     }
-    axios.post(`${baseUrl}/getVitalValue`, requestBody)
-        .then((response) => {
-            console.log("get vitals value");
-            var res = response.data;
-            console.log(res);
-            var number;
-            console.log("load chart");
+    if (requestBody.vitalid != 3) {
+        axios.post(`${baseUrl}/getVitalValue`, requestBody)
+            .then((response) => {
+                console.log("get vitals value");
+                var res = response.data;
+                console.log(res);
+                var number;
+                console.log("load chart");
 
-            //Google Chart
-            google.charts.load('current', { packages: ['corechart', 'line'] });
+                //Google Chart
+                google.charts.load('current', { packages: ['corechart', 'line'] });
 
-            google.charts.setOnLoadCallback(drawBackgroundColor);
+                google.charts.setOnLoadCallback(drawBackgroundColor);
 
-            function drawBackgroundColor() {
-                var data = new google.visualization.DataTable();
-                data.addColumn('datetime', 'date/time');
-                data.addColumn('number', number);
+                function drawBackgroundColor() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('datetime', 'date/time');
+                    data.addColumn('number', number);
 
-                var test = [];
+                    var test = [];
 
-                if (res.length != 0) {
-                    for (i = 0; i < res.length; i++) {
+                    if (res.length != 0) {
+                        for (i = 0; i < res.length; i++) {
 
-                        // Split timestamp into [ Y, M, D, h, m, s ]
-                        var t = res[i].datetimecreated.split(/[- : T Z]/);
+                            // Split timestamp into [ Y, M, D, h, m, s ]
+                            var t = res[i].datetimecreated.split(/[- : T Z]/);
 
-                        // Apply each element to the Date function
-                        var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
-                        number = res[0].vital_value;
-                        test.push([d, res[i].vitalvalue]);
-                        console.log(t);
-                        console.log(d);
-                        console.log(res[i]);
-                    }
-                    console.log(test);
+                            // Apply each element to the Date function
+                            var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
+                            number = res[0].vital_value;
+                            test.push([d, res[i].vitalvalue]);
+                            console.log(t);
+                            console.log(d);
+                            console.log(res[i]);
+                        }
+                        console.log(test);
 
-                    data.addRows(
-                        test
-                    );
+                        data.addRows(
+                            test
+                        );
 
-                    var options = {
-                        hAxis: {
-                            title: 'Date / Time',
-                            gridlines: {
-                                count: -1,
-                                units: {
-                                    days: { format: ['MMM dd'] },
-                                    hours: { format: ['HH:mm', 'ha'] },
-                                }
+                        var options = {
+                            hAxis: {
+                                title: 'Date / Time',
+                                gridlines: {
+                                    count: -1,
+                                    units: {
+                                        days: { format: ['MMM dd'] },
+                                        hours: { format: ['HH:mm', 'ha'] },
+                                    }
+                                },
                             },
-                        },
-                        vAxis: {
-                            title: number,
-                        },
-                        backgroundColor: '#ffffff',
-                        legend: 'none',
-                        pointSize: 10,
-                        height: 400
-                    };
+                            vAxis: {
+                                title: number,
+                            },
+                            backgroundColor: '#ffffff',
+                            legend: 'none',
+                            pointSize: 10,
+                            height: 400
+                        };
 
-                }
-                else {
-                    axios.get(`${baseUrl}/vitals`)
-                        .then((response) => {
-                            for (i = 0; i < vitalsradio.length; i++) {
-                                if (vitalsradio[i].checked) {
-                                    //console.log("id: " + vitalsradio[i].value);
-                                    //console.log("Vital: " + vitalsradio[i].id.replace("selected", ""));
-                                    var radioid = vitalsradio[i].value;
+                    }
+                    else {
+                        axios.get(`${baseUrl}/vitals`)
+                            .then((response) => {
+                                for (i = 0; i < vitalsradio.length; i++) {
+                                    if (vitalsradio[i].checked) {
+                                        //console.log("id: " + vitalsradio[i].value);
+                                        //console.log("Vital: " + vitalsradio[i].id.replace("selected", ""));
+                                        var radioid = vitalsradio[i].value;
 
+                                    }
                                 }
-                            }
-                            for (i = 0; i < response.data.length; i++) {
-                                //console.log("printing vital get response.data" + i);
-                                //console.log(response.data[i]);
-                                if (radioid == response.data[i].id) {
-                                    number = response.data[i].vital_value;
-                                    console.log("-----------number-----------");
-                                    console.log(number);
+                                for (i = 0; i < response.data.length; i++) {
+                                    //console.log("printing vital get response.data" + i);
+                                    //console.log(response.data[i]);
+                                    if (radioid == response.data[i].id) {
+                                        number = response.data[i].vital_value;
+                                        console.log("-----------number-----------");
+                                        console.log(number);
+                                    }
                                 }
-                            }
-                            var d = new Date
-                            test.push([d, null])
-                            console.log(test);
+                                var d = new Date
+                                test.push([d, null])
+                                console.log(test);
 
-                            data.addRows(
-                                test
-                            );
+                                data.addRows(
+                                    test
+                                );
 
-                            var options = {
-                                hAxis: {
-                                    title: 'Date / Time',
-                                    gridlines: {
-                                        count: -1,
-                                        units: {
-                                            days: { format: ['MMM dd'] },
-                                            hours: { format: ['HH:mm', 'ha'] },
-                                        }
+                                var options = {
+                                    hAxis: {
+                                        title: 'Date / Time',
+                                        gridlines: {
+                                            count: -1,
+                                            units: {
+                                                days: { format: ['MMM dd'] },
+                                                hours: { format: ['HH:mm', 'ha'] },
+                                            }
+                                        },
                                     },
-                                },
-                                vAxis: {
-                                    title: number,
-                                },
-                                backgroundColor: '#ffffff',
-                                legend: 'none',
-                                pointSize: 10,
-                                height: 400
-                            };
+                                    vAxis: {
+                                        title: number,
+                                    },
+                                    backgroundColor: '#ffffff',
+                                    legend: 'none',
+                                    pointSize: 10,
+                                    height: 400
+                                };
 
-                            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-                            chart.draw(data, options);
+                                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                                chart.draw(data, options);
 
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        });
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
 
-                }
+                    }
 
-
-                var valuebtn =
-                    `
+                    var valuebtn =
+                        `
                  <div class="text-center">
                      <button type="button" class="btn bg-beige ">
                          <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
                      </button>
                  </div>
                  `
-                document.getElementById("valuebtn").innerHTML = valuebtn;
+                    document.getElementById("valuebtn").innerHTML = valuebtn;
 
-                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-                chart.draw(data, options);
-            }
+                    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                    chart.draw(data, options);
+                }
 
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+    else {
+        axios.post(`${baseUrl}/getBloodPressureValue`, requestBody)
+            .then((response) => {
+                console.log("get vitals value");
+                var res = response.data;
+                console.log(res);
+                var number;
+                var systolic;
+                var diastolic;
+                console.log("load chart");
+
+                //Google Chart
+                google.charts.load('current', { packages: ['corechart', 'line'] });
+
+                google.charts.setOnLoadCallback(drawBackgroundColor);
+
+                function drawBackgroundColor() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('datetime', 'date/time');
+                    data.addColumn('number', number);
+                    data.addColumn('number', number);
+                    var test = [];
+
+                    if (res.length != 0) {
+                        for (i = 0; i < res.length; i++) {
+
+                            // Split timestamp into [ Y, M, D, h, m, s ]
+                            var t = res[i].datetimecreated.split(/[- : T Z]/);
+
+                            // Apply each element to the Date function
+                            var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
+                            number = res[0].vital_value;
+                            test.push([d, res[i].diastolic,res[i].systolic]);
+                            console.log(t);
+                            console.log(d);
+                            console.log(res[i]);
+                        }
+                        console.log(test);
+
+                        data.addRows(
+                            test
+                        );
+
+                        var options = {
+                            hAxis: {
+                                title: 'Date / Time',
+                                gridlines: {
+                                    count: -1,
+                                    units: {
+                                        days: { format: ['MMM dd'] },
+                                        hours: { format: ['HH:mm', 'ha'] },
+                                    }
+                                },
+                            },
+                            vAxis: {
+                                title: number,
+                            },
+                            backgroundColor: '#ffffff',
+                            legend: 'none',
+                            pointSize: 10,
+                            height: 400
+                        };
+
+                    }
+                    else {
+                        axios.get(`${baseUrl}/vitals`)
+                            .then((response) => {
+                                for (i = 0; i < vitalsradio.length; i++) {
+                                    if (vitalsradio[i].checked) {
+                                        //console.log("id: " + vitalsradio[i].value);
+                                        //console.log("Vital: " + vitalsradio[i].id.replace("selected", ""));
+                                        var radioid = vitalsradio[i].value;
+
+                                    }
+                                }
+                                for (i = 0; i < response.data.length; i++) {
+                                    //console.log("printing vital get response.data" + i);
+                                    //console.log(response.data[i]);
+                                    if (radioid == response.data[i].id) {
+                                        number = response.data[i].vital_value;
+                                        console.log("-----------number-----------");
+                                        console.log(number);
+                                    }
+                                }
+                                var d = new Date
+                                test.push([d, null])
+                                console.log(test);
+
+                                data.addRows(
+                                    test
+                                );
+
+                                var options = {
+                                    hAxis: {
+                                        title: 'Date / Time',
+                                        gridlines: {
+                                            count: -1,
+                                            units: {
+                                                days: { format: ['MMM dd'] },
+                                                hours: { format: ['HH:mm', 'ha'] },
+                                            }
+                                        },
+                                    },
+                                    vAxis: {
+                                        title: number,
+                                    },
+                                    backgroundColor: '#ffffff',
+                                    legend: 'none',
+                                    pointSize: 10,
+                                    height: 400
+                                };
+
+                                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                                chart.draw(data, options);
+
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                    }
+
+                    var valuebtn =
+                        `
+             <div class="text-center">
+                 <button type="button" class="btn bg-beige ">
+                     <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
+                 </button>
+             </div>
+             `
+                    document.getElementById("valuebtn").innerHTML = valuebtn;
+
+                    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                    chart.draw(data, options);
+                }
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
 }
