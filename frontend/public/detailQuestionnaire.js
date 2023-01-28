@@ -60,6 +60,22 @@ $(document).ready(function () {
         .catch((error) => {
             console.log(error);
         });
+    $('#update').click(function () {
+        const questionnaireID = localStorage.getItem('SelectedQnr')
+        const max_score = new FormData();
+        totalScore.forEach((item) => {
+            max_score.append('totalScore[]', item);
+        });
+
+        var requestBody = {
+            questionnaireID: questionnaireID,
+            max_score: max_score
+        };
+
+        axios.post(`${baseUrl}/updateScore`, requestBody).then(function (response) {
+
+        })
+    })
 })
 const totalScore = [];
 function score1() {
@@ -131,6 +147,17 @@ function score10() {
     console.log(text)
     totalScore.push(text);
     console.log(totalScore);
+}
+
+function submitScore() {
+    const bodyFormData = new FormData();
+
+    product_id_list.forEach((item) => {
+        bodyFormData.append('totalScore[]', item);
+    });
+    axios.post(`${baseUrl}/updateScore`, bodyFormData).then(function (response) {
+
+    })
 }
 
 

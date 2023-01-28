@@ -229,6 +229,19 @@ app.post('/getQnsByQnr', function (req, res) {
     });
 });
 
+app.post('/updateScore', function (req, res) {
+    var questionnaireID = req.body.questionnaireID;
+    var max_score = req.body.max_score;
+    riskQuestionnaire.submitScore(max_score, questionnaireID, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
 
 
 module.exports = app;

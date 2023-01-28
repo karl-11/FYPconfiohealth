@@ -73,8 +73,23 @@ var questionnairesDB = {
         var conn = db;
 
         var sql = `SELECT id, content, max_score FROM questions WHERE questionnaireID=?;`;
-        
+
         conn.query(sql, [questionnaireID], function (err, result) {
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    updateScore: function (max_score, questionnaireID, callback) {
+        var conn = db;
+
+        var sql = `UPDATE questionnareResults SET user_score =? WHERE id=?`;
+
+        conn.query(sql, [max_score, questionnaireID], function (err, result) {
             if (err) {
                 console.log(err);
                 return callback(err, null);
