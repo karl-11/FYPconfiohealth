@@ -20,7 +20,6 @@
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-
     <!--Include Header & Footer-->
     <script>
         $(function () {
@@ -30,7 +29,7 @@
     </script>
 </head>
 
-<body class="font-montserrat body">
+<body class="font-montserrat body" onload="getAllInfo()">
 
     <section class="w-75 min-vh-100 mx-auto pb-170px">
 
@@ -68,16 +67,23 @@
 
                 </div>
             </div>
-            <div id="medical-history" class="col shadow-bottom bg-beige border rounded-4 p-3 m-3">
+            <div class="col shadow-bottom bg-beige border rounded-4 p-3 m-3">
                 <h5 class="font-cardheader text-center">Medical History</h5>
 
                 <!-- <button class="mx-1 border rounded-3" id= "editBtn" onclick="editMedicalHistory">Edit</button> -->
 
-                <ol id="HPMedical" class="p-0 ps-5 pe-3 m-0 pt-1">
+                <ol id="HPMedicalContent" class="p-0 ps-5 pe-3 m-0 pt-1">
 
                     <!-- added axios code for medical history health profile -->
 
                 </ol>
+
+                <div id="HPMedicalPlaceholder" class="p-0 ps-5 pe-3 m-0 pt-1">
+
+                    <button id="HPMedical" class="btnClearStyle" onclick="displayTextField(this.id)"><em>add a new line
+                            ...</em></button>
+
+                </div>
 
             </div>
         </div>
@@ -91,21 +97,35 @@
             <div id="medication-history" class="col shadow-bottom bg-beige border rounded-4 p-3 m-3">
                 <h5 class="font-cardheader text-center">Medication History</h5>
 
-                <ol id="HPMedication" class="p-0 ps-5 pe-3 m-0 pt-1">
-                    
+                <ol id="HPMedicationContent" class="p-0 ps-5 pe-3 m-0 pt-1">
+
                     <!-- added axios code for medical history health profile -->
 
                 </ol>
+
+                <div id="HPMedicationPlaceholder" class="p-0 ps-5 pe-3 m-0 pt-1">
+
+                    <button id="HPMedication" class="btnClearStyle" onclick="displayTextField(this.id)"><em>add a new
+                            line ...</em></button>
+
+                </div>
 
             </div>
             <div id="surgical-history" class="col shadow-bottom bg-cards border rounded-4 p-3 m-3">
                 <h5 class="font-cardheader text-center">Surgical History</h5>
 
-                <ol id="HPSurgical" class="p-0 ps-5 pe-3 m-0 pt-1">
+                <ol id="HPSurgicalContent" class="p-0 ps-5 pe-3 m-0 pt-1">
 
                     <!-- added axios code for medical history health profile -->
 
                 </ol>
+
+                <div id="HPSurgicalPlaceholder" class="p-0 ps-5 pe-3 m-0 pt-1">
+
+                    <button id="HPSurgical" class="btnClearStyle" onclick="displayTextField(this.id)"><em>add a new line
+                            ...</em></button>
+
+                </div>
 
             </div>
         </div>
@@ -118,22 +138,36 @@
             <div id="drug-allergies" class="col shadow-bottom bg-cards border rounded-4 p-3 m-3">
                 <h5 class="font-cardheader text-center">Drug Alleries</h5>
 
-                <ol id="HPDrug" class="p-0 ps-5 pe-3 m-0 pt-1">
+                <ol id="HPDrugContent" class="p-0 ps-5 pe-3 m-0 pt-1">
 
                     <!-- added axios code for medical history health profile -->
 
                 </ol>
+
+                <div id="HPDrugPlaceholder" class="p-0 ps-5 pe-3 m-0 pt-1">
+
+                    <button id="HPDrug" class="btnClearStyle" onclick="displayTextField(this.id)"><em>add a new line
+                            ...</em></button>
+
+                </div>
 
             </div>
             <div id="vaccination-history" class="col shadow-bottom bg-beige border rounded-4 p-3 m-3">
                 <h5 class="font-cardheader text-center">Vaccination History</h5>
 
-                <ol id="HPVaccination" class="p-0 ps-5 pe-3 m-0 pt-1">
+                <ol id="HPVaccinationContent" class="p-0 ps-5 pe-3 m-0 pt-1">
 
                     <!-- added axios code for medical history health profile -->
 
                 </ol>
 
+                <div id="HPVaccinationPlaceholder" class="p-0 ps-5 pe-3 m-0 pt-1">
+
+                    <button id="HPVaccination" class="btnClearStyle" onclick="displayTextField(this.id)"><em>add a new
+                            line
+                            ...</em></button>
+
+                </div>
             </div>
         </div>
 

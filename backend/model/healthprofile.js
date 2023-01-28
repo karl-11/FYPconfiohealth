@@ -19,7 +19,8 @@ var hpDB = {
         var conn = db;
 
         var sql = ` SELECT 
-                        HP_General.*, users.full_name
+                        HP_General.*, users.full_name, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(),HP_General.DATE_OF_BIRTH)), '%Y') 
+                        + 0 AS age
                     FROM 
                         HP_General 
                     INNER JOIN

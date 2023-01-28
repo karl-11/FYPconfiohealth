@@ -331,10 +331,12 @@ app.post('/insertHPMedical', printDebugInfo, function (req, res) {
     });
 });
 
-app.delete('/deleteHPMedical', printDebugInfo, function (req, res) {
+app.post('/deleteHPMedical', printDebugInfo, function (req, res) {
 
     //extract data from request body
     var id = req.body.id;
+
+    console.log(id)
 
     hp.deleteHPMedical(id, function (err, result) {
         if (!err) {
@@ -369,7 +371,7 @@ app.post('/insertHPMedication', printDebugInfo, function (req, res) {
     });
 });
 
-app.delete('/deleteHPMedication', printDebugInfo, function (req, res) {
+app.post('/deleteHPMedication', printDebugInfo, function (req, res) {
 
     //extract data from request body
     var id = req.body.id;
@@ -407,7 +409,7 @@ app.post('/insertHPSurgical', printDebugInfo, function (req, res) {
     });
 });
 
-app.delete('/deleteHPSurgical', printDebugInfo, function (req, res) {
+app.post('/deleteHPSurgical', printDebugInfo, function (req, res) {
 
     //extract data from request body
     var id = req.body.id;
@@ -445,7 +447,7 @@ app.post('/insertHPDrug', printDebugInfo, function (req, res) {
     });
 });
 
-app.delete('/deleteHPDrug', printDebugInfo, function (req, res) {
+app.post('/deleteHPDrug', printDebugInfo, function (req, res) {
 
     //extract data from request body
     var id = req.body.id;
@@ -483,7 +485,7 @@ app.post('/insertHPVaccination', printDebugInfo, function (req, res) {
     });
 });
 
-app.delete('/deleteHPVaccination', printDebugInfo, function (req, res) {
+app.post('/deleteHPVaccination', printDebugInfo, function (req, res) {
 
     //extract data from request body
     var id = req.body.id;
