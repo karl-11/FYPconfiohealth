@@ -36,7 +36,7 @@ function selectedvitals() {
 
                 //console.log("select vitals");
                 var data = response.data[i];
-                //console.log(data);
+                console.log(data);
 
                 var vitalsStringSelected = vitalsStringSelected +
                     `
