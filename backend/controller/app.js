@@ -176,6 +176,117 @@ app.get('/faqs', function (req, res) {
     });
 });
 
+<<<<<<< Updated upstream
+=======
+// End point for get all vitals
+app.get('/vitals', printDebugInfo, function (req, res) {
+
+    vital.getAllvitals(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for get all Selected vitals
+app.post('/selectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+
+    vital.getSelectedvitals(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for get all Not Selected vitals
+app.post('/notSelectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+
+    vital.getNotSelectedvitals(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for add Selected vitals
+app.post('/addSelectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+
+    vital.addSelectedVitals(userid, vitalid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for remove Selected vitals
+app.post('/removeSelectedVitals', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+
+    vital.removeSelectedVitals(userid, vitalid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for remove Selected vitals
+app.post('/getVitalValue', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+
+    vital.getVitalsValue(userid, vitalid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// End point for add Vital Value
+app.post('/addVitalValue', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+    var vitalvalue = req.body.vital_value;
+    var datetimecreated = req.body.datetime;
+
+    vital.addVitalValue(userid, vitalid, vitalvalue, datetimecreated, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+>>>>>>> Stashed changes
 //  end point to insert new booking record
 app.post('/booking', printDebugInfo, function (req, res) {
 
@@ -211,6 +322,20 @@ app.post('/viewbooking',printDebugInfo, function (req, res) {
     });
 });
 
+// end point for get reportfolder 
+app.post('/reportfolder',printDebugInfo, function (req, res) {
+    //extract data from request body
+    var userid = req.body.userid;
+    report.getreport(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
 //  end point to insert new report 
 app.post('/report', printDebugInfo, function (req, res) {
 
@@ -219,7 +344,7 @@ app.post('/report', printDebugInfo, function (req, res) {
     var time = req.body.time;
     var location = req.body.location;
 
-    booking.AddBooking(date, time, location, function (err, result) {
+    report.AddBooking(date, time, location, function (err, result) {
         if (!err) {
             var output = {
                 "inserted booking": result
@@ -231,4 +356,9 @@ app.post('/report', printDebugInfo, function (req, res) {
     });
 });
 
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 module.exports = app;

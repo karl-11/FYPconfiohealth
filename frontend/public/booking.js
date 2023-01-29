@@ -22,6 +22,7 @@ function AddBooking() {
       console.log("booking response")
       console.log(response.data)
       alert('Booking Successful!');
+      window.location.href = "/optimisation.html";
     })
     .catch((error) => {
       console.log(error);
