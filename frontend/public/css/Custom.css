@@ -142,7 +142,8 @@
 }
 
 /* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
+.form-container .btn:hover,
+.open-button:hover {
     opacity: 1;
 }
 
@@ -191,3 +192,21 @@
 
 /* END of chat styles */
 
+/* questionnaire button styles */
+
+.qnrSubmitBtn {
+    transition-duration: 0.4s;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+    float: right;
+    border-radius: 5px;
+}
+
+.qnrSubmitBtn:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* end of qnr button styles */
