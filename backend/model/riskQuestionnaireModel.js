@@ -84,12 +84,12 @@ var questionnairesDB = {
         });
     },
 
-    updateScore: function (max_score, questionnaireID, callback) {
+    submitScore: function (user_score, id, callback) {
         var conn = db;
 
-        var sql = `UPDATE questionnareResults SET user_score =? WHERE id=?`;
+        var sql = `UPDATE questionnaireResults SET user_score =? WHERE id=?`;
 
-        conn.query(sql, [max_score, questionnaireID], function (err, result) {
+        conn.query(sql, [user_score, id], function (err, result) {
             if (err) {
                 console.log(err);
                 return callback(err, null);

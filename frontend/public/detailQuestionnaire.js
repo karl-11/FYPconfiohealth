@@ -60,104 +60,97 @@ $(document).ready(function () {
         .catch((error) => {
             console.log(error);
         });
-    $('#update').click(function () {
-        const questionnaireID = localStorage.getItem('SelectedQnr')
-        const max_score = new FormData();
-        totalScore.forEach((item) => {
-            max_score.append('totalScore[]', item);
+    $('#submitScore').click(function () {
+        const id = localStorage.getItem('SelectedQnr')
+
+        let user_score = totalScore.reduce(function (a, b) {
+            return a + b;
         });
 
+        console.log(user_score);
+
         var requestBody = {
-            questionnaireID: questionnaireID,
-            max_score: max_score
+            id: id,
+            user_score: user_score
         };
 
         axios.post(`${baseUrl}/updateScore`, requestBody).then(function (response) {
 
         })
     })
+
 })
 const totalScore = [];
 function score1() {
     var button = document.getElementById('score_1');
     var text = button.innerText;
     console.log(text)
-    totalScore.push(text);
+    totalScore.push(parseInt(text));
     console.log(totalScore);
 }
 function score2() {
     var button = document.getElementById('score_2');
     var text = button.innerText;
     console.log(text)
-    totalScore.push(text);
+    totalScore.push(parseInt(text));
     console.log(totalScore);
 }
 function score3() {
     var button = document.getElementById('score_3');
     var text = button.innerText;
     console.log(text)
-    totalScore.push(text);
+    totalScore.push(parseInt(text));
     console.log(totalScore);
 }
 function score4() {
     var button = document.getElementById('score_4');
     var text = button.innerText;
     console.log(text)
-    totalScore.push(text);
+    totalScore.push(parseInt(text));
     console.log(totalScore);
 }
 function score5() {
     var button = document.getElementById('score_5');
     var text = button.innerText;
     console.log(text)
-    totalScore.push(text);
+    totalScore.push(parseInt(text));
     console.log(totalScore);
 }
 function score6() {
     var button = document.getElementById('score_6');
     var text = button.innerText;
     console.log(text)
-    totalScore.push(text);
+    totalScore.push(parseInt(text));
     console.log(totalScore);
 }
 function score7() {
     var button = document.getElementById('score_7');
     var text = button.innerText;
     console.log(text)
-    totalScore.push(text);
+    totalScore.push(parseInt(text));
     console.log(totalScore);
 }
 function score8() {
     var button = document.getElementById('score_8');
     var text = button.innerText;
     console.log(text)
-    totalScore.push(text);
+    totalScore.push(parseInt(text));
     console.log(totalScore);
 }
 function score9() {
     var button = document.getElementById('score_9');
     var text = button.innerText;
     console.log(text)
-    totalScore.push(text);
+    totalScore.push(parseInt(text));
     console.log(totalScore);
 }
 function score10() {
     var button = document.getElementById('score_10');
     var text = button.innerText;
     console.log(text)
-    totalScore.push(text);
+    totalScore.push(parseInt(text));
     console.log(totalScore);
 }
 
-function submitScore() {
-    const bodyFormData = new FormData();
-
-    product_id_list.forEach((item) => {
-        bodyFormData.append('totalScore[]', item);
-    });
-    axios.post(`${baseUrl}/updateScore`, bodyFormData).then(function (response) {
-
-    })
-}
 
 

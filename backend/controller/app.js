@@ -230,9 +230,9 @@ app.post('/getQnsByQnr', function (req, res) {
 });
 
 app.post('/updateScore', function (req, res) {
-    var questionnaireID = req.body.questionnaireID;
-    var max_score = req.body.max_score;
-    riskQuestionnaire.submitScore(max_score, questionnaireID, function (err, result) {
+    var id = req.body.id;
+    var user_score = req.body.user_score;
+    riskQuestionnaire.submitScore(user_score, id, function (err, result) {
         if (!err) {
             res.status(200).send(result);
         } else {
