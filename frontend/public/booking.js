@@ -92,7 +92,7 @@ function viewbooking() {
           `
     <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-10">
     ${"Date: " + date} <br>
-    ${"Time: " + time} <br>
+    ${"Time: " + response.data[i].time} <br>
     ${"Location: " + response.data[0].location}
     </p>
     `

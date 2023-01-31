@@ -176,8 +176,6 @@ app.get('/faqs', function (req, res) {
     });
 });
 
-<<<<<<< Updated upstream
-=======
 // End point for get all vitals
 app.get('/vitals', printDebugInfo, function (req, res) {
 
@@ -286,7 +284,6 @@ app.post('/addVitalValue', printDebugInfo, function (req, res) {
         }
     });
 });
->>>>>>> Stashed changes
 //  end point to insert new booking record
 app.post('/booking', printDebugInfo, function (req, res) {
 
@@ -356,9 +353,6 @@ app.post('/report', printDebugInfo, function (req, res) {
     });
 });
 
-<<<<<<< Updated upstream
-=======
 
 
->>>>>>> Stashed changes
 module.exports = app;
