@@ -43,14 +43,16 @@
     <section class="w-75 min-vh-100 mx-auto pb-170px">
         <!--Header section-->
         <span id="header"></span>
-        <div>
+        <div class="d-flex flex-row justify-content-between">
             <h4 class="ps-4 pt-3">
                 Patient List
             </h4>
-            <div>
-                search
+            <div class="m-3 form-group col-2">
+                <input type="text" class="form-control" id="search" placeholder="search" name="search">
             </div>
         </div>
+
+
 
         <div>
             <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
@@ -90,6 +92,12 @@
 
     <!--bootstrap bundle script-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get vitals from table and put into html
+        const baseUrl = "http://localhost:3000";
+
+        
+    </script>
 </body>
 
 </html>
