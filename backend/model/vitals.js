@@ -156,6 +156,31 @@ var vitalsDB = {
         });
     },
 
+    getBloodPressureValue: function (userid, vitalid, callback) {
+        var conn = db;
+
+        var sql = ` 
+        SELECT 
+            bv.vitalid, bv.userid, bv.datetimecreated, vs.vital_sign_type, vs.vital_value, bv.systolic, bv.diastolic
+        from 
+            bloodpressure_value bv, vitalsigns vs
+        Where 
+            userid = ? and vitalid = ? and vitalid = vs.id
+        Order by 
+            datetimecreated asc;
+                `;
+
+        conn.query(sql, [userid, vitalid], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
     addVitalValue: function (userid, vitalid, vitalvalue, datetimecreated, callback) {
         var conn = db;
 
@@ -167,6 +192,27 @@ var vitalsDB = {
                 `;
 
         conn.query(sql, [userid, vitalid, vitalvalue, datetimecreated], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    addBloodPressureValue: function (userid, vitalid, systolic, diastolic, datetimecreated, callback) {
+        var conn = db;
+
+        var sql = ` 
+		INSERT INTO
+	        bloodpressure_value(userid, vitalid, systolic, diastolic,datetimecreated)
+        VALUE
+	        (?,?,?,?,?);
+                `;
+
+        conn.query(sql, [userid, vitalid, systolic, diastolic, datetimecreated], function (err, result) {
 
             if (err) {
                 console.log(err);

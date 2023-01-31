@@ -268,6 +268,21 @@ app.post('/getVitalValue', printDebugInfo, function (req, res) {
     });
 });
 
+app.post('/getBloodPressureValue', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+
+    vital.getBloodPressureValue(userid, vitalid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
 // End point for add Vital Value
 app.post('/addVitalValue', printDebugInfo, function (req, res) {
 
@@ -336,6 +351,25 @@ app.post('/report', printDebugInfo, function (req, res) {
             res.status(201).send(output);
         } else {
             res.status(500);
+        }
+    });
+});
+
+// End point for add blood pressure Value
+app.post('/addBloodPressureValue', printDebugInfo, function (req, res) {
+
+    var userid = req.body.userid;
+    var vitalid = req.body.vitalid;
+    var systolic = req.body.systolic;
+    var diastolic = req.body.diastolic;
+    var datetimecreated = req.body.datetime;
+
+    vital.addBloodPressureValue(userid, vitalid, systolic, diastolic, datetimecreated, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
         }
     });
 });

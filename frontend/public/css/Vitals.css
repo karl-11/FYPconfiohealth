@@ -28,9 +28,8 @@ button>img {
     height: 80px;
 }
 
-label {
+label.form-check-label {
     width: 125px;
-    height: max-content;
     margin-top: 10px;
 }
 
@@ -41,8 +40,8 @@ label {
     z-index: 1021;
     top: 0;
     right: 0;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0, 0.9);
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.9);
     overflow-x: hidden;
     transition: 0.5s;
 }
