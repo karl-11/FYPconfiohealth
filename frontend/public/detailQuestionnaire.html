@@ -41,33 +41,38 @@
                 <button type="button" class="btn p-2 my-2 bg-cards rounded-circle shadow-bottom"><img
                         src="./images/backBtn.png" style="height: 35px; width: 35px;"></button>
 
-                <div class="card flex-column shadow-bottom bg-white border rounded-4 p-0 m-0 mb-2 me-1" wrap="false">
+                <div class="card flex-column shadow-bottom bg-white border rounded-4 p-0 m-0 mb-2 me-1">
                     <!-- qnrCarousel: questionnaire carousel -->
-                    <div id="qnrCarousel" wrap="false" class="carousel slide rounded-4 shadow" data-ride="carousel"
-                        data-interval="500" data-wrap="false" style="min-height: 300px;">
+                    <div id="qnrCarousel" class="carousel slide rounded-4 shadow" style="min-height: 300px;">
 
                         <!-- The slideshow/carousel -->
-                        <div class="carousel-inner" wrap="false">
+                        <div class="carousel-inner">
 
-                            <div id="questionContent" wrap="false">
+                            <div id="questionContent">
                             </div>
 
                         </div>
                         <!-- Left and right controls/icons -->
-                        <button id="previousBtn" class="carousel-control-prev" type="button"
-                            data-bs-target="#qnrCarousel" data-bs-slide="prev" onclick="myFunction()">
-                            <span class="carousel-control-prev-icon"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#qnrCarousel"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+
+                        <div id="previousBtn" class="previous visually-hidden">
+                            <button class="carousel-control-prev" type="button" data-bs-target="#qnrCarousel"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                        </div>
+
+                        <div id="nextBtn" class="next">
+                            <button class="carousel-control-next" type="button" data-bs-target="#qnrCarousel"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
                     </div>
                     <!-- end of carousel -->
                 </div>
-                <button id="submitScore" type="button" class="qnrSubmitBtn">Save & Exit</button>
+                <button id="submitScore" type="button" class="qnrSubmitBtn">Submit</button>
             </div>
         </main>
 
@@ -77,10 +82,6 @@
         <!--bootstrap bundle script-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="detailQuestionnaire.js"></script>
-
-        <script>
-
-        </script>
 
 
 </body>
