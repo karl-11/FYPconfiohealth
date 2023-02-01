@@ -20,6 +20,7 @@ var user = require('../model/user.js');
 var faq = require('../model/faqs.js');
 var vital = require('../model/vitals');
 var booking = require('../model/booking.js');
+var hp = require('../model/healthprofile.js');
 
 //-----------------------------------------
 // Middleware functions
@@ -367,6 +368,335 @@ app.post('/addBloodPressureValue', printDebugInfo, function (req, res) {
     vital.addBloodPressureValue(userid, vitalid, systolic, diastolic, datetimecreated, function (err, result) {
         if (!err) {
             res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+
+// end point for get all HealthProfile General 
+app.post('/HPGeneral', function (req, res) {
+
+    var userid = req.body.userid;
+
+    hp.getAllHPGeneral(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point for get all HealthProfile Medical 
+app.post('/HPMedical', function (req, res) {
+
+    var userid = req.body.userid;
+
+    hp.getAllHPMedical(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point for get all HealthProfile Medication 
+app.post('/HPMedication', function (req, res) {
+
+    var userid = req.body.userid;
+
+    hp.getAllHPMedication(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point for get all HealthProfile Surgical 
+app.post('/HPSurgical', function (req, res) {
+
+    var userid = req.body.userid;
+
+    hp.getAllHPSurgical(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point for get all HealthProfile Drug 
+app.post('/HPDrug', function (req, res) {
+
+    var userid = req.body.userid;
+
+    hp.getAllHPDrug(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point for get all HealthProfile Vaccination 
+app.post('/HPVaccination', function (req, res) {
+
+    var userid = req.body.userid;
+
+    hp.getAllHPVaccination(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//end point to insert new health profile general record
+app.post('/insertHPGeneral', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var userid = req.body.userid;
+    var gender = req.body.gender;
+    var date_of_birth = req.body.date_of_birth;
+    var blood_type = req.body.blood_type;
+    var weight = req.body.weight;
+    var height = req.body.height;
+
+    hp.insertHPGeneral(userid, gender, date_of_birth, blood_type, weight, height, function (err, result) {
+        if (!err) {
+            var output = {
+                "inserted id": result.insertId
+            };
+            res.status(201).send(output);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//end point to edit existing health profile general record
+app.post('/editHPGeneral', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var userid = req.body.userid;
+    var weight = req.body.weight;
+    var height = req.body.height;
+
+    hp.updateHPGeneral(weight, height, userid, function (err, result) {
+        if (!err) {
+            var output = {
+                "affectedRows": result.affectedRows,
+                "changedRows": result.changedRows
+            }
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//end point to insert new health profile medical record
+app.post('/insertHPMedical', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var userid = req.body.userid;
+    var text = req.body.text;
+
+    hp.insertHPMedical(userid, text, function (err, result) {
+        if (!err) {
+            var output = {
+                "inserted id": result.insertId
+            };
+            res.status(201).send(output);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/deleteHPMedical', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var id = req.body.id;
+
+    console.log(id)
+
+    hp.deleteHPMedical(id, function (err, result) {
+        if (!err) {
+            var output = {
+                "affected rows": result.affectedRows
+            };
+            res.status(200).send(output);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//end point to insert new health profile Medication record
+app.post('/insertHPMedication', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var userid = req.body.userid;
+    var text = req.body.text;
+
+    hp.insertHPMedication(userid, text, function (err, result) {
+        if (!err) {
+            var output = {
+                "inserted id": result.insertId
+            };
+            res.status(201).send(output);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/deleteHPMedication', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var id = req.body.id;
+
+    hp.deleteHPMedication(id, function (err, result) {
+        if (!err) {
+            var output = {
+                "affected rows": result.affectedRows
+            };
+            res.status(200).send(output);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//end point to insert new health profile Surgical record
+app.post('/insertHPSurgical', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var userid = req.body.userid;
+    var text = req.body.text;
+
+    hp.insertHPSurgical(userid, text, function (err, result) {
+        if (!err) {
+            var output = {
+                "inserted id": result.insertId
+            };
+            res.status(201).send(output);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/deleteHPSurgical', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var id = req.body.id;
+
+    hp.deleteHPSurgical(id, function (err, result) {
+        if (!err) {
+            var output = {
+                "affected rows": result.affectedRows
+            };
+            res.status(200).send(output);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//end point to insert new health profile Drug record
+app.post('/insertHPDrug', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var userid = req.body.userid;
+    var text = req.body.text;
+
+    hp.insertHPDrug(userid, text, function (err, result) {
+        if (!err) {
+            var output = {
+                "inserted id": result.insertId
+            };
+            res.status(201).send(output);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/deleteHPDrug', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var id = req.body.id;
+
+    hp.deleteHPDrug(id, function (err, result) {
+        if (!err) {
+            var output = {
+                "affected rows": result.affectedRows
+            };
+            res.status(200).send(output);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//end point to insert new health profile Vaccination record
+app.post('/insertHPVaccination', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var userid = req.body.userid;
+    var text = req.body.text;
+
+    hp.insertHPVaccination(userid, text, function (err, result) {
+        if (!err) {
+            var output = {
+                "inserted id": result.insertId
+            };
+            res.status(201).send(output);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/deleteHPVaccination', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var id = req.body.id;
+
+    hp.deleteHPVaccination(id, function (err, result) {
+        if (!err) {
+            var output = {
+                "affected rows": result.affectedRows
+            };
+            res.status(200).send(output);
         } else {
             res.status(500);
             console.log("error");
