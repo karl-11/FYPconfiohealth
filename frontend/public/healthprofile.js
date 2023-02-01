@@ -22,7 +22,7 @@ function getHPAllGeneral() {
 
             if (response.data[0] === undefined) {
 
-                console.log("data is empty")
+                // console.log("data is empty")
 
                 displayHPGeneralEmptyForm();
             }
@@ -42,7 +42,7 @@ function getHPAllGeneral() {
                         <p id="blood" class="mb-1">${data.blood_type}</p>
                         <p id="weight" class="mb-1">${data.weight}</p>
                         <p id="height" class="mb-1">${data.height}</p>
-                        <p id="bmi" class="mb-1">${BMI}</p>x
+                        <p id="bmi" class="mb-1">${BMI}</p>
                 `
 
                 document.getElementById("editHPGeneralFormPlaceholder").innerHTML = HPGeneralHTML
@@ -288,14 +288,14 @@ function displayTextField(passed_ID) {
     var formID = passed_ID + 'Form'
     var submitFunctionName = 'submit' + formID
 
-    console.log("submitFunctionName" + submitFunctionName)
+    // console.log("submitFunctionName" + submitFunctionName)
 
     var formHTML =
         `
     <form id="${formID}">
         <input id="textInput" type="text" required class="form-control-plaintext" placeholder="type here">
         <input type="hidden" id="formType" name="formType" value="${passed_ID}">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-success">Save</button>
         <input type="button" class="btn btn-danger" onClick="cancelBtn()" value="Cancel">
     </form>
     `
@@ -309,7 +309,7 @@ function displayTextField(passed_ID) {
 }
 
 function submitHPForm(event) {
-    alert("submitted!")
+    // alert("submitted!")
 
     event.preventDefault();
 
@@ -400,7 +400,7 @@ function displayHPGeneralEditForm() {
             <input id="textInputHeight" type="text" class="form-control-plaintext p-0 m-0 mb-1 " value="${height}">
             <p id="bmi" class="mb-1">${bmi}</p>
             <input type="hidden" id="formType" name="formType" value="">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-success">Save</button>
             <input type="button" class="btn btn-danger" onClick="HPGeneralcancelBtn()" value="Cancel">
         </form>
             `
@@ -427,12 +427,12 @@ function displayHPGeneralEmptyForm() {
             <label for="htmlF">F</label>
             <input id="textInputDob" type="date" class="p-0 m-0 mb-1">
             <input id="textInputAge" disabled type="text" class="form-control-plaintext p-0 m-0 mb-1" value="-">
-            <input id="textInputBlood" type="text" class="form-control-plaintext p-0 m-0 mb-1" value="Blood Type">
-            <input id="textInputWeight" type="text" class="form-control-plaintext p-0 m-0 mb-1 " value="Weight">
-            <input id="textInputHeight" type="text" class="form-control-plaintext p-0 m-0 mb-1 " value="Height">
+            <input id="textInputBlood" type="text" class="form-control-plaintext p-0 m-0 mb-1" value="enter blood type">
+            <input id="textInputWeight" type="text" class="form-control-plaintext p-0 m-0 mb-1 " value="enter weight">
+            <input id="textInputHeight" type="text" class="form-control-plaintext p-0 m-0 mb-1 " value="enter height">
             <input id="textInputBMI" type="text" disabled class="form-control-plaintext p-0 m-0 mb-1 " value="-">
 
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-success">Save</button>
             <input type="button" class="btn btn-danger" onClick="HPGeneralcancelBtn()" value="Cancel">
         </form>
             `
@@ -466,7 +466,6 @@ function submitHPGeneralEmptyForm(event) {
     var inputTextHeight = parseFloat(document.getElementById('textInputHeight').value).toFixed(2)
 
 
-
     // console.log("inputTextGender - " + inputTextGender)
     // console.log("inputTextDate - " + inputTextDate)
     // console.log("inputTextBlood - " + inputTextBlood)
@@ -496,7 +495,7 @@ function submitHPGeneralEmptyForm(event) {
             } else {
 
                 // passed all validation checks
-                alert("submitted!")
+                // alert("submitted!")
 
                 var reqBody = JSON.stringify({
                     userid: loggedInUserID,
@@ -544,7 +543,7 @@ function submitHPGeneralForm(event) {
         alert("please input valid values")
     }
     else {
-        alert("submitted!")
+        // alert("submitted!")
 
         var reqBody = JSON.stringify({
             userid: loggedInUserID,

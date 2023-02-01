@@ -162,7 +162,7 @@ var hpDB = {
         	(?, ?, ?, ?, ?, ?)
         `
 
-        conn.query(sql, [userid, gender, blood_type, date_of_birth, weight, height], function (err, result) {
+        conn.query(sql, [userid, gender, date_of_birth, blood_type, weight, height], function (err, result) {
 
             if (err) {
                 console.log(err);

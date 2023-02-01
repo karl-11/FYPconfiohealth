@@ -273,10 +273,11 @@ app.post('/insertHPGeneral', printDebugInfo, function (req, res) {
     var userid = req.body.userid;
     var gender = req.body.gender;
     var date_of_birth = req.body.date_of_birth;
+    var blood_type = req.body.blood_type;
     var weight = req.body.weight;
     var height = req.body.height;
 
-    hp.insertHPGeneral(userid, gender, date_of_birth, weight, height, function (err, result) {
+    hp.insertHPGeneral(userid, gender, date_of_birth, blood_type, weight, height, function (err, result) {
         if (!err) {
             var output = {
                 "inserted id": result.insertId
