@@ -177,7 +177,6 @@ app.get('/faqs', function (req, res) {
 });
 
 //endpoint for get all questionnaires (this returns for all users)
-//for testing purposes only
 app.get('/getAllQnr', function (req, res) {
 
     riskQuestionnaire.getAllQuestionnaires(function (err, result) {
@@ -190,10 +189,10 @@ app.get('/getAllQnr', function (req, res) {
     });
 });
 
-//endpoint to get by specific user
-app.post('/getQnByUser', function (req, res) {
+//endpoint to get user scores by specific user
+app.post('/getQnrUserScoreByUser', function (req, res) {
     var user_id = req.body.user_id;
-    riskQuestionnaire.getQuestionnairesByUserID(user_id, function (err, result) {
+    riskQuestionnaire.getQuestionnaireUserScoreByUserID(user_id, function (err, result) {
         if (!err) {
             res.status(200).send(result);
         } else {
@@ -202,6 +201,7 @@ app.post('/getQnByUser', function (req, res) {
         }
     });
 });
+
 
 //endpoint to get all questions from a specific questionnaire
 //for testing only

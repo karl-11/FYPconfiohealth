@@ -22,62 +22,33 @@ $(document).ready(function () {
                 var activeStatusClass = "carousel-item"
             }
             $('#questionContent').append(`
-            <div class="${activeStatusClass}">
-            <div class="d-flex flex-nowrap my-5">
-                <div class="col-md-2">
-                </div>
-                <div class="col-md-8 mx-5 py-5 pe-5 align-self-center">
-                    <!-- question number -->
-                    <div id="questionNumbers">
-                        <h5 id="currentQnNumber" class="m-3 position-absolute top-0 end-0"><strong>${currentQn}/${questionCount}</strong></h5>
-                    </div>
-                    <!-- question -->
-                    <h4 class="m-0 pb-3"><strong>${content}</strong></h4>
-                        <!-- 1-10 ranking buttons -->
-                        <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group mr-2" role="group" aria-label="First group">
-                        <div id="${buttonID}">
+                        <div class="${activeStatusClass}">
+                            <div class="d-flex flex-nowrap my-5">
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-8 mx-5 py-5 pe-5 align-self-center">
+                                    <!-- question number -->
+                                    <div id="questionNumbers">
+                                        <h5 id="totalCount" class="m-3 position-absolute top-0" style="right: 18px;">
+                                            <strong>${i + 1}</strong></h5>
+                                        <h5 id="currentQnNumber" class="m-3 position-absolute top-0 end-0">
+                                            <strong>/${questionCount}</strong></h5>
+                                    </div>
+                                    <!-- question -->
+                                    <h4 class="m-0 pb-3"><strong>${content}</strong></h4>
+                                    <!-- 1-10 ranking buttons -->
+                                    <div class="btn-toolbar mb-3" role="toolbar"
+                                        aria-label="Toolbar with button groups">
+                                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                                            <div id="${buttonID}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        </div>
-                        </div>
-                </div>
-            </div>
-            </div>
             `)
         }
-
-        //function to remove left arrow if on first qn, remove right arrow if on last qn
-        $('#nextBtn').click(function () {
-
-            for (i = 0; i < questionCount; i++) {
-                var currentQnCheck = i + 1;
-                console.log("currentqn is: " + currentQnCheck);
-                //this if checks if its the first qn
-                if (currentQnCheck == 1) {
-                    $('.previous').addClass('visually-hidden');
-                }
-                //this checks if its the last qn
-                else if (currentQnCheck == questionCount) {
-                    $('.next').addClass('visually-hidden');
-                } else if (currentQnCheck != 1) {
-                    $('.previous').removeClass('visually-hidden');
-
-                }
-            }
-        });
-        $('#previousBtn').click(function () {
-            // CHECK FOR FIRST QN, FIRST VAR CHECKS WHATS THE CURRENT QN NUMBER, SECOND VAR IS 1/(NUM OF QUESTIONS)
-            // var currentQnCheck = document.getElementById("currentQnNumber").innerText;
-            // console.log("currentqn is: " + currentQnCheck);
-            // var firstQnCheck = "1/" + questionCount;
-            // console.log("qnCount is: " + firstQnCheck);
-
-            // if (currentQnCheck == firstQnCheck) {
-            //     $('.previous').addClass(' visually-hidden');
-            // } else {
-            //     document.getElementById("previousBtn").className = "previous";
-            // }
-        });
         for (i = 0; i < response.data.length; i++) {
             const { id, content, max_score } = response.data[i]
             var buttonID = "button" + i;
@@ -97,11 +68,29 @@ $(document).ready(function () {
                 });
             });
         }
+        var count = 1
+        $('#nextBtn').click(function () {
+            // Function to increment count
+            document.getElementById('nextBtn').classList.add('visually-hidden')
+            count++;
+            console.log(count)
 
+        })
+        $('.btn').click(function () {
+            // Function to increment count
+            console.log(count)
+            if (count < questionCount) {
+                document.getElementById('nextBtn').classList.remove('visually-hidden')
+            }
+            if (count == questionCount) {
+                document.getElementById('nextBtn').classList.add('visually-hidden')
+            }
+        })
     })
         .catch((error) => {
             console.log(error);
         });
+
     $('#submitScore').click(function () {
         const id = localStorage.getItem('SelectedQnr')
         if (totalScore.length == 0) {

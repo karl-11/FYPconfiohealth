@@ -19,11 +19,10 @@ var jwtconfig = require('../config/jwtconfig.js')
 // taking from the questionnaire results table 
 //-----------------------------------------
 var questionnairesDB = {
-    //for testing purposes
     getAllQuestionnaires: function (callback) {
         var conn = db;
 
-        var sql = `SELECT * FROM questionnaireResults;`;
+        var sql = `SELECT * FROM questionnaire`;
 
         conn.query(sql, function (err, result) {
             if (err) {
@@ -35,9 +34,13 @@ var questionnairesDB = {
         });
     },
 
-    getQuestionnairesByUserID: function (user_id, callback) {
+    getQuestionnaireUserScoreByUserID: function (user_id, callback) {
         var conn = db;
-        var sql = `SELECT id, name, user_score, max_score, date_Taken, image_url FROM questionnaireResults WHERE user_id=?;`;
+        var sql = `SELECT q.id, q.name, q.max_score, q.image_url , qr.questionnaireID, qr.user_score, qr.date_Taken, qr.user_id
+        FROM questionnaire q
+        INNER JOIN questionnaireResults qr
+        ON q.id = qr.questionnaireID
+        WHERE qr.user_id = ?;`;
         conn.query(sql, [user_id], function (err, result) {
             if (err) {
                 console.log(err);
