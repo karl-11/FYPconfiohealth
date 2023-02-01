@@ -16,23 +16,38 @@ function getHPAllGeneral() {
     axios.post(`${baseUrl}/HPGeneral`, reqBodyUserID, axiosConfig)
         .then((response) => {
 
-            var HPGeneralHTML = ""
+            // console.log("reponse - " + response);
+            // console.log("reponse.data - " + response.data);
+            // console.log("reponse.data[0] - " + response.data[0])
 
-            var data = response.data[0];
+            if (response.data[0] === undefined) {
 
-            var BMI = parseFloat((data.weight / ((data.height / 100) * (data.height / 100)))).toFixed(2)
-            var HPGeneralHTML =
+                console.log("data is empty")
+
+                displayHPGeneralEmptyForm();
+            }
+            else {
+
+                var HPGeneralHTML = ""
+
+                var data = response.data[0];
+
+                var BMI = parseFloat((data.weight / ((data.height / 100) * (data.height / 100)))).toFixed(2)
+                var HPGeneralHTML =
+                    `
+                        <p id="fullName" class="mb-1">${data.full_name}</p>
+                        <p id="gender" class="mb-1">${data.gender}</p>
+                        <p id="dob" class="mb-1">${data.dob}</p>
+                        <p id="age" class="mb-1">${data.age}</p>
+                        <p id="blood" class="mb-1">${data.blood_type}</p>
+                        <p id="weight" class="mb-1">${data.weight}</p>
+                        <p id="height" class="mb-1">${data.height}</p>
+                        <p id="bmi" class="mb-1">${BMI}</p>x
                 `
-                <p id="fullName" class="mb-1">${data.full_name}</p>
-                <p id="gender" class="mb-1">${data.gender}</p>
-                <p id="age" class="mb-1">${data.age}</p>
-                <p id="weight" class="mb-1">${data.weight}</p>
-                <p id="height" class="mb-1">${data.height}</p>
-                <p id="bmi" class="mb-1">${BMI}</p>
-            `
 
-            document.getElementById("HPGeneralInfo").innerHTML = HPGeneralHTML
+                document.getElementById("editHPGeneralFormPlaceholder").innerHTML = HPGeneralHTML
 
+            }
         })
         .catch((error) => {
             console.log(error);
@@ -267,6 +282,32 @@ function deleteHPVaccination(clicked_id) {
         });
 }
 
+function displayTextField(passed_ID) {
+
+    var placeholderId = passed_ID + 'Placeholder'
+    var formID = passed_ID + 'Form'
+    var submitFunctionName = 'submit' + formID
+
+    console.log("submitFunctionName" + submitFunctionName)
+
+    var formHTML =
+        `
+    <form id="${formID}">
+        <input id="textInput" type="text" required class="form-control-plaintext" placeholder="type here">
+        <input type="hidden" id="formType" name="formType" value="${passed_ID}">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <input type="button" class="btn btn-danger" onClick="cancelBtn()" value="Cancel">
+    </form>
+    `
+
+    //replace the button with the form 
+    document.getElementById(placeholderId).innerHTML = formHTML;
+
+    //add event listener to the form we added just now
+    const form = document.getElementById(formID);
+    form.addEventListener('submit', submitHPForm);
+}
+
 function submitHPForm(event) {
     alert("submitted!")
 
@@ -296,32 +337,6 @@ function submitHPForm(event) {
         .catch((error) => {
             console.log(error);
         });
-}
-
-function displayTextField(passed_ID) {
-
-    var placeholderId = passed_ID + 'Placeholder'
-    var formID = passed_ID + 'Form'
-    var submitFunctionName = 'submit' + formID
-
-    console.log("submitFunctionName" + submitFunctionName)
-
-    var formHTML =
-        `
-    <form id="${formID}">
-        <input id="textInput" type="text" required class="form-control-plaintext" placeholder="type here">
-        <input type="hidden" id="formType" name="formType" value="${passed_ID}">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <input type="button" class="btn btn-danger" onClick="cancelBtn()" value="Cancel">
-    </form>
-    `
-
-    //replace the button with the form 
-    document.getElementById(placeholderId).innerHTML = formHTML;
-
-    //add event listener to the form we added just now
-    const form = document.getElementById(formID);
-    form.addEventListener('submit', submitHPForm);
 }
 
 function reloadfunctionName(type) {
@@ -359,6 +374,214 @@ function cancelBtn() {
     `
 
     document.getElementById(placeholderId).innerHTML = btnHTML;
+
+}
+
+function displayHPGeneralEditForm() {
+
+    var fullname = document.getElementById("fullName").innerText;
+    var gender = document.getElementById("gender").innerText;
+    var dob = document.getElementById("dob").innerText;
+    var blood = document.getElementById("blood").innerText;
+    var age = document.getElementById("age").innerText;
+    var weight = document.getElementById("weight").innerText;
+    var height = document.getElementById("height").innerText;
+    var bmi = document.getElementById("bmi").innerText;
+
+    var HPGeneralHTML =
+        `
+        <form id="editHPGeneralForm" class="col p-0 pe-5 m-0">
+            <p id="fullName" class="mb-1">${fullname}</p>
+            <p id="gender" class="mb-1">${gender}</p>
+            <p id="dob" class="mb-1">${dob}</p>
+            <p id="age" class="mb-1">${age}</p>
+            <p id="blood" class="mb-1">${blood}</p>
+            <input id="textInputWeight" type="text" class="form-control-plaintext p-0 m-0 mb-1 " value="${weight}">
+            <input id="textInputHeight" type="text" class="form-control-plaintext p-0 m-0 mb-1 " value="${height}">
+            <p id="bmi" class="mb-1">${bmi}</p>
+            <input type="hidden" id="formType" name="formType" value="">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <input type="button" class="btn btn-danger" onClick="HPGeneralcancelBtn()" value="Cancel">
+        </form>
+            `
+
+    document.getElementById("editHPGeneralFormPlaceholder").innerHTML = HPGeneralHTML;
+
+    const HPGeneralform = document.getElementById("editHPGeneralForm");
+    HPGeneralform.addEventListener('submit', submitHPGeneralForm);
+
+    document.getElementById("HPGeneralEditBtn").innerHTML = "";
+    document.getElementById("HPGeneralEditBtn").classList.remove("pt-4");
+
+}
+
+function displayHPGeneralEmptyForm() {
+
+    var HPGeneralHTML =
+        `
+        <form id="editHPGeneralEmptyForm" class="col p-0 pe-5 m-0">
+            <input id="textInputName" disabled type="text" class="form-control-plaintext p-0 m-0" value="-">
+            <input id="Male" name="textInputGender" type="radio" class=" p-0 m-0" value="M">
+            <label for="textInputGenderM">M</label>
+            <input id="Female" name="textInputGender" type="radio" class=" p-0 m-0" value="F">
+            <label for="htmlF">F</label>
+            <input id="textInputDob" type="date" class="p-0 m-0 mb-1">
+            <input id="textInputAge" disabled type="text" class="form-control-plaintext p-0 m-0 mb-1" value="-">
+            <input id="textInputBlood" type="text" class="form-control-plaintext p-0 m-0 mb-1" value="Blood Type">
+            <input id="textInputWeight" type="text" class="form-control-plaintext p-0 m-0 mb-1 " value="Weight">
+            <input id="textInputHeight" type="text" class="form-control-plaintext p-0 m-0 mb-1 " value="Height">
+            <input id="textInputBMI" type="text" disabled class="form-control-plaintext p-0 m-0 mb-1 " value="-">
+
+            <button type="submit" class="btn btn-primary">Save</button>
+            <input type="button" class="btn btn-danger" onClick="HPGeneralcancelBtn()" value="Cancel">
+        </form>
+            `
+
+    document.getElementById("editHPGeneralFormPlaceholder").innerHTML = HPGeneralHTML;
+
+    const HPGeneralform = document.getElementById("editHPGeneralEmptyForm");
+    HPGeneralform.addEventListener('submit', submitHPGeneralEmptyForm);
+
+    document.getElementById("HPGeneralEditBtn").innerHTML = "";
+    document.getElementById("HPGeneralEditBtn").classList.remove("pt-4");
+
+}
+
+function submitHPGeneralEmptyForm(event) {
+
+    event.preventDefault();
+
+    //extract the input data text
+
+    var ele = document.getElementsByName('textInputGender');
+
+    for (i = 0; i < ele.length; i++) {
+        if (ele[i].checked)
+            var inputTextGender = ele[i].value;
+    }
+
+    var inputTextDate = document.getElementById('textInputDob').value
+    var inputTextBlood = document.getElementById('textInputBlood').value
+    var inputTextWeight = parseFloat(document.getElementById('textInputWeight').value).toFixed(2)
+    var inputTextHeight = parseFloat(document.getElementById('textInputHeight').value).toFixed(2)
+
+
+
+    // console.log("inputTextGender - " + inputTextGender)
+    // console.log("inputTextDate - " + inputTextDate)
+    // console.log("inputTextBlood - " + inputTextBlood)
+    // console.log("inputTextWeight - " + inputTextWeight)
+    // console.log("inputTextHeight - " + inputTextHeight)
+
+
+    // validate input 
+
+    if (inputTextGender === undefined) {
+
+        // check gender input
+        alert("invalid input - Gender - please choose a gender")
+
+    } else {
+        if (inputTextBlood.length > 3) {
+
+            // check blood type input
+            alert("invalid input - Blood Type - please ensure you type 3 letters or less")
+
+        } else {
+
+            if (inputTextWeight == "" || inputTextWeight == null || inputTextWeight.length < 1 || inputTextHeight == "" || inputTextHeight == null || inputTextHeight.length < 1) {
+
+                alert("invalid input - Blood Type - please input valid values")
+
+            } else {
+
+                // passed all validation checks
+                alert("submitted!")
+
+                var reqBody = JSON.stringify({
+                    userid: loggedInUserID,
+                    gender: inputTextGender,
+                    date_of_birth: inputTextDate,
+                    blood_type: inputTextBlood,
+                    weight: inputTextWeight,
+                    height: inputTextHeight
+                });
+
+                axios.post(`${baseUrl}/insertHPGeneral`, reqBody, axiosConfig)
+                    .then((response) => {
+                        // console.log(response)
+                        alert("saved!")
+
+                        //reload the specific part of the page
+                        getHPAllGeneral();
+
+                        HPGeneralcancelBtn()
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        }
+    }
+}
+
+function submitHPGeneralForm(event) {
+
+    event.preventDefault();
+
+    //extract the input data text
+    var inputTextWeight = parseFloat(document.getElementById('textInputWeight').value).toFixed(2)
+    var inputTextHeight = parseFloat(document.getElementById('textInputHeight').value).toFixed(2)
+
+    // console.log("inputTextWeight - " + document.getElementById('textInputWeight').value)
+    // console.log("inputTextWeight - " + document.getElementById('textInputHeight').value)
+
+    // console.log("inputTextWeight rounded - " + inputTextWeight)
+    // console.log("inputTextWeight rounded - " + inputTextHeight)
+
+
+    if (inputTextWeight == "" || inputTextWeight == null || inputTextWeight.length < 1 || inputTextHeight == "" || inputTextHeight == null || inputTextHeight.length < 1) {
+        alert("please input valid values")
+    }
+    else {
+        alert("submitted!")
+
+        var reqBody = JSON.stringify({
+            userid: loggedInUserID,
+            weight: inputTextWeight,
+            height: inputTextHeight
+        });
+
+        axios.post(`${baseUrl}/editHPGeneral`, reqBody, axiosConfig)
+            .then((response) => {
+                // console.log(response)
+                alert("saved!")
+
+                //reload the specific part of the page
+                getHPAllGeneral();
+
+                HPGeneralcancelBtn()
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+}
+
+function HPGeneralcancelBtn() {
+
+    console.log("clicked cancel")
+
+    getHPAllGeneral();
+
+    var HPGeneralBtnHTML =
+        `
+        <button class="btnClearStyle editHPGeneralPosition"
+            onclick="displayHPGeneralEditForm()"><em>click here to edit...</em></button>
+    `
+
+    document.getElementById("HPGeneralEditBtn").innerHTML = HPGeneralBtnHTML;
+    document.getElementById("HPGeneralEditBtn").classList.add("pt-4");
 
 }
 

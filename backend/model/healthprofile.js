@@ -20,7 +20,7 @@ var hpDB = {
 
         var sql = ` SELECT 
                         HP_General.*, users.full_name, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(),HP_General.DATE_OF_BIRTH)), '%Y') 
-                        + 0 AS age
+                        + 0 AS age, DATE_FORMAT(HP_General.DATE_OF_BIRTH, '%d %b %Y') AS dob
                     FROM 
                         HP_General 
                     INNER JOIN
@@ -152,17 +152,17 @@ var hpDB = {
         });
     },
 
-    insertHPGeneral: function (userid, gender, date_of_birth, weight, height, callback) {
+    insertHPGeneral: function (userid, gender, date_of_birth, blood_type, weight, height, callback) {
         var conn = db;
 
         var sql = `
         INSERT INTO HP_General 
-        	(userid, gender, date_of_birth, weight, height)
+        	(userid, gender, date_of_birth, blood_type, weight, height)
         VALUES
-        	(?, ?, ?, ?, ?)
+        	(?, ?, ?, ?, ?, ?)
         `
 
-        conn.query(sql, [userid, gender, date_of_birth, weight, height], function (err, result) {
+        conn.query(sql, [userid, gender, blood_type, date_of_birth, weight, height], function (err, result) {
 
             if (err) {
                 console.log(err);

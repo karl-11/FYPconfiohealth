@@ -290,7 +290,7 @@ app.post('/insertHPGeneral', printDebugInfo, function (req, res) {
 });
 
 //end point to edit existing health profile general record
-app.put('/editHPGeneral', printDebugInfo, function (req, res) {
+app.post('/editHPGeneral', printDebugInfo, function (req, res) {
 
     //extract data from request body
     var userid = req.body.userid;

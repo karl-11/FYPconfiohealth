@@ -42,33 +42,43 @@
         <!-- START of First row of content -->
         <div class="d-flex w-100">
 
-            <div id="general-info" class="col shadow-bottom bg-cards border rounded-4 p-3 m-3 mh-100">
-                <h5 class="font-cardheader text-center">General Information</h5>
-
-                <div class="w-100 text-center p-3">
-                    <img id="profilepic" src="./images/healthProfile.png" alt="Avatar Logo" class="profilepic">
-                </div>
+            <div id="general-info" class="col shadow-bottom bg-cards border rounded-4 p-3 m-3 mh-100 positionRelative">
+                <h5 class="font-cardheader text-center p-3">General Information</h5>
 
                 <div class="row">
                     <div class="col p-0 ps-5 m-0">
-                        <p class="mb-1 font-bold">Full Name</p>
-                        <p class="mb-1 font-bold">Gender</p>
-                        <p class="mb-1 font-bold">Age</p>
-                        <p class="mb-1 font-bold">Weight (kg)</p>
-                        <p class="mb-1 font-bold">Height (cm)</p>
-                        <p class="mb-1 font-bold">BMI</p>
+                        <p class="mb-1 font-bold ">Full Name</p>
+                        <p class="mb-1 font-bold ">Gender</p>
+                        <p class="mb-1 font-bold ">Date of Birth</p>
+                        <p class="mb-1 font-bold ">Age</p>
+                        <p class="mb-1 font-bold ">Blood Type</p>
+                        <p class="mb-1 font-bold ">Weight (kg)</p>
+                        <p class="mb-1 font-bold ">Height (cm)</p>
+                        <p class="mb-1 font-bold ">BMI</p>
 
                     </div>
                     <div id="HPGeneralInfo" class="col p-0 pe-5 m-0">
 
-                        <!-- added axios code for general health profile -->
+                        <div id="editHPGeneralFormPlaceholder">
+
+                            <!-- added axios code for general health profile -->
+                        </div>
 
                     </div>
 
                 </div>
+
+                <div id="HPGeneralEditBtn" class="text-center row pt-4">
+                    <button class="btnClearStyle editHPGeneralPosition" onclick="displayHPGeneralEditForm()"><em>click
+                            here to edit...</em></button>
+
+                </div>
+
+
+
             </div>
             <div class="col shadow-bottom bg-beige border rounded-4 p-3 m-3">
-                <h5 class="font-cardheader text-center">Medical History</h5>
+                <h5 class="font-cardheader text-center p-3">Medical History</h5>
 
                 <!-- <button class="mx-1 border rounded-3" id= "editBtn" onclick="editMedicalHistory">Edit</button> -->
 
@@ -95,7 +105,7 @@
         <div class="d-flex w-100">
 
             <div id="medication-history" class="col shadow-bottom bg-beige border rounded-4 p-3 m-3">
-                <h5 class="font-cardheader text-center">Medication History</h5>
+                <h5 class="font-cardheader text-center p-3">Medication History</h5>
 
                 <ol id="HPMedicationContent" class="p-0 ps-5 pe-3 m-0 pt-1">
 
@@ -112,7 +122,7 @@
 
             </div>
             <div id="surgical-history" class="col shadow-bottom bg-cards border rounded-4 p-3 m-3">
-                <h5 class="font-cardheader text-center">Surgical History</h5>
+                <h5 class="font-cardheader text-center p-3">Surgical History</h5>
 
                 <ol id="HPSurgicalContent" class="p-0 ps-5 pe-3 m-0 pt-1">
 
@@ -136,7 +146,7 @@
         <div class="d-flex w-100">
 
             <div id="drug-allergies" class="col shadow-bottom bg-cards border rounded-4 p-3 m-3">
-                <h5 class="font-cardheader text-center">Drug Alleries</h5>
+                <h5 class="font-cardheader text-center p-3">Drug Alleries</h5>
 
                 <ol id="HPDrugContent" class="p-0 ps-5 pe-3 m-0 pt-1">
 
@@ -153,7 +163,7 @@
 
             </div>
             <div id="vaccination-history" class="col shadow-bottom bg-beige border rounded-4 p-3 m-3">
-                <h5 class="font-cardheader text-center">Vaccination History</h5>
+                <h5 class="font-cardheader text-center p-3">Vaccination History</h5>
 
                 <ol id="HPVaccinationContent" class="p-0 ps-5 pe-3 m-0 pt-1">
 
