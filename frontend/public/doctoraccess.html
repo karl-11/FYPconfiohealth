@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="./css/Custom.css">
+
+    <link href="./css/Custom.css">
+
+
+    <!--Font import-->
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+
+    <!--JQuery-->
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!--Include Header & Footer-->
+    <script>
+        $(function () {
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+
+            //document.getElementById("UserProfile").innterHTML = "abc"
+
+        });
+
+
+    </script>
+</head>
+
+<body class="font-montserrat body">
+
+
+    <section class="w-75 min-vh-100 mx-auto pb-170px">
+        <!--Header section-->
+        <span id="header"></span>
+        <div class=" text-center">
+            <h4 class="ps-4 pt-3 text-center">
+                Doctor Access
+            </h4>
+        </div>
+
+        <div id="selecteddoctor">
+
+            <div id="selected" class="row" onchange="displayRadioValue()">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="doctoraccessradio" id="1" value="test">
+                    <label class="form-check-label card shadow-bottom bg-cards border-0 p-2 mb-2 text-center" for="1">
+                        <!-- <img src="images/chat.png" class="align-self-center" alt=""> -->
+                        <p class="p-0 m-0" style="white-space: normal;">
+                            test
+                        </p>
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="doctoraccessradio" id="2" value="test">
+                    <label class="form-check-label card shadow-bottom bg-cards border-0 p-2 mb-2 text-center" for="2">
+                        <!-- <img src="images/chat.png" class="align-self-center" alt=""> -->
+                        <p class="p-0 m-0" style="white-space: normal;">
+                            test
+                        </p>
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="doctoraccessradio" id="3" value="test">
+                    <label class="form-check-label card shadow-bottom bg-cards border-0 p-2 mb-2 text-center" for="3">
+                        <!-- <img src="images/chat.png" class="align-self-center" alt=""> -->
+                        <p class="p-0 m-0" style="white-space: normal;">
+                            test
+                        </p>
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="doctoraccessradio" id="4" value="test">
+                    <label class="form-check-label card shadow-bottom bg-cards border-0 p-2 mb-2 text-center" for="4">
+                        <!-- <img src="images/chat.png" class="align-self-center" alt=""> -->
+                        <p class="p-0 m-0" style="white-space: normal;">
+                            test
+                        </p>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row justify-content-between">
+            <h4 class="ps-3 pt-3">
+                Doctor List
+            </h4>
+            <div class="m-3 form-group col-2">
+                <input type="text" class="form-control bg-beige" id="search" placeholder="search" name="search">
+            </div>
+        </div>
+
+        <div id="doctorlist">
+            <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
+                <a href="" class="text-decoration-none text-black">
+                    goh jia hua
+                </a>
+            </p>
+            <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
+                <a href="" class="text-decoration-none text-black">
+                    goh jia hua
+                </a>
+            </p>
+            <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
+                <a href="" class="text-decoration-none text-black">
+                    goh jia hua
+                </a>
+            </p>
+            <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
+                <a href="" class="text-decoration-none text-black">
+                    goh jia hua
+                </a>
+            </p>
+            <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
+                <a href="" class="text-decoration-none text-black">
+                    goh jia hua
+                </a>
+            </p>
+        </div>
+
+    </section>
+
+
+
+    <!--Footer section-->
+    <span id="footer"></span>
+
+
+    <!--bootstrap bundle script-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get vitals from table and put into html
+        const baseUrl = "http://localhost:3000";
+
+        var doctoraccessradio = document.getElementsByName("doctoraccessradio");
+
+        //remove radio button
+        for (let i = 0; i < doctoraccessradio.length; i++) {
+            doctoraccessradio[i].style.display = "none";
+        }
+
+        function displayRadioValue() {
+            console.log(doctoraccessradio)
+            for (i = 0; i < doctoraccessradio.length; i++) {
+                if (doctoraccessradio[i].checked) {
+                    console.log("id: " + doctoraccessradio[i].id);
+                }
+            }
+        };
+
+    </script>
+</body>
+
+</html>

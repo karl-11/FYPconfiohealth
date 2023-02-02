@@ -251,8 +251,6 @@ function off() {
     document.getElementById("overlaycontent").style.width = "0%";
 };
 
-
-
 function loadchart() {
     for (i = 0; i < vitalsradio.length; i++) {
         if (vitalsradio[i].checked) {
