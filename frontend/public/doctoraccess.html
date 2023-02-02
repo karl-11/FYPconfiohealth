@@ -185,15 +185,7 @@
                     console.log(error);
                 });
         }
-        // function SelectedPatient() {
-        //     axios.post(`${baseUrl}/getSelectedPatient`, requestBody)
-        //         .then((response) => {
-        //             console.log(response.data);
-        //         })
-        //         .catch((error) => {
-        //             console.log(error);
-        //         });
-        // }
+
         function deleteselecteddoctor() {
             axios.post(`${baseUrl}/deleteSelectedDoctor`, requestBody)
                 .then((response) => {
