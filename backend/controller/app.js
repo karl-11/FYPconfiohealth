@@ -21,6 +21,7 @@ var faq = require('../model/faqs.js');
 var vital = require('../model/vitals');
 var booking = require('../model/booking.js');
 var hp = require('../model/healthprofile.js');
+var access = require('../model/access.js');
 
 //-----------------------------------------
 // Middleware functions
@@ -323,7 +324,7 @@ app.post('/booking', printDebugInfo, function (req, res) {
 });
 
 // end point for get user booking 
-app.post('/viewbooking',printDebugInfo, function (req, res) {
+app.post('/viewbooking', printDebugInfo, function (req, res) {
     //extract data from request body
     var userid = req.body.userid;
     booking.viewbooking(userid, function (err, result) {
@@ -704,5 +705,81 @@ app.post('/deleteHPVaccination', printDebugInfo, function (req, res) {
     });
 });
 
+app.post('/getAllSelectedDoctor', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var patientid = req.body.patientid;
+
+    access.getAllSelectedDoctor(patientid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/getNotSelectedDoctor', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var patientid = req.body.patientid;
+
+    access.getNotSelectedDoctor(patientid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/getSelectedPatient', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var doctorid = req.body.doctorid;
+
+    access.getSelectedPatient(doctorid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/deleteSelectedDoctor', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var patientid = req.body.patientid;
+    var doctorid = req.body.doctorid;
+
+    access.deleteSelectedDoctor(patientid, doctorid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/addSelectedDoctor', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var patientid = req.body.patientid;
+    var doctorid = req.body.doctorid;
+
+    access.addSelectedDoctor(patientid, doctorid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
 
 module.exports = app;

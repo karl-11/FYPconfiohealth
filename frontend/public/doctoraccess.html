@@ -43,89 +43,28 @@
     <section class="w-75 min-vh-100 mx-auto pb-170px">
         <!--Header section-->
         <span id="header"></span>
-        <div class=" text-center">
-            <h4 class="ps-4 pt-3 text-center">
+        <div class="text-center">
+            <h4 class="ps-4 pt-3">
                 Doctor Access
             </h4>
         </div>
 
-        <div id="selecteddoctor">
+        <div id="selecteddoctor" onchange="displayRadioValue(),deleteselecteddoctor()">
 
-            <div id="selected" class="row" onchange="displayRadioValue()">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="doctoraccessradio" id="1" value="test">
-                    <label class="form-check-label card shadow-bottom bg-cards border-0 p-2 mb-2 text-center" for="1">
-                        <!-- <img src="images/chat.png" class="align-self-center" alt=""> -->
-                        <p class="p-0 m-0" style="white-space: normal;">
-                            test
-                        </p>
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="doctoraccessradio" id="2" value="test">
-                    <label class="form-check-label card shadow-bottom bg-cards border-0 p-2 mb-2 text-center" for="2">
-                        <!-- <img src="images/chat.png" class="align-self-center" alt=""> -->
-                        <p class="p-0 m-0" style="white-space: normal;">
-                            test
-                        </p>
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="doctoraccessradio" id="3" value="test">
-                    <label class="form-check-label card shadow-bottom bg-cards border-0 p-2 mb-2 text-center" for="3">
-                        <!-- <img src="images/chat.png" class="align-self-center" alt=""> -->
-                        <p class="p-0 m-0" style="white-space: normal;">
-                            test
-                        </p>
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="doctoraccessradio" id="4" value="test">
-                    <label class="form-check-label card shadow-bottom bg-cards border-0 p-2 mb-2 text-center" for="4">
-                        <!-- <img src="images/chat.png" class="align-self-center" alt=""> -->
-                        <p class="p-0 m-0" style="white-space: normal;">
-                            test
-                        </p>
-                    </label>
-                </div>
-            </div>
         </div>
 
-        <div class="d-flex flex-row justify-content-between">
+
+        <div class="text-center">
             <h4 class="ps-3 pt-3">
                 Doctor List
             </h4>
-            <div class="m-3 form-group col-2">
+            <!-- <div class="m-3 form-group col-2">
                 <input type="text" class="form-control bg-beige" id="search" placeholder="search" name="search">
-            </div>
+            </div> -->
         </div>
 
-        <div id="doctorlist">
-            <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
-                <a href="" class="text-decoration-none text-black">
-                    goh jia hua
-                </a>
-            </p>
-            <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
-                <a href="" class="text-decoration-none text-black">
-                    goh jia hua
-                </a>
-            </p>
-            <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
-                <a href="" class="text-decoration-none text-black">
-                    goh jia hua
-                </a>
-            </p>
-            <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
-                <a href="" class="text-decoration-none text-black">
-                    goh jia hua
-                </a>
-            </p>
-            <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
-                <a href="" class="text-decoration-none text-black">
-                    goh jia hua
-                </a>
-            </p>
+        <div id="notselecteddoctor" onchange="displayRadioValue(),addselecteddoctor()">
+
         </div>
 
     </section>
@@ -143,20 +82,141 @@
         const baseUrl = "http://localhost:3000";
 
         var doctoraccessradio = document.getElementsByName("doctoraccessradio");
+        const loggedinid = localStorage.getItem('loggedInUserID');
+        var doctorid;
+        var requestBody = {
+            patientid: loggedinid,
+            doctorid: doctorid
+        };
+
+        window.addEventListener('DOMContentLoaded', notSelectedDoctor());
+        window.addEventListener('DOMContentLoaded', selectedDoctor());
+
 
         //remove radio button
-        for (let i = 0; i < doctoraccessradio.length; i++) {
-            doctoraccessradio[i].style.display = "none";
-        }
+        // for (let i = 0; i < doctoraccessradio.length; i++) {
+        //     doctoraccessradio[i].style.display = "none";
+        // }
 
         function displayRadioValue() {
-            console.log(doctoraccessradio)
+            //console.log(doctoraccessradio)
             for (i = 0; i < doctoraccessradio.length; i++) {
                 if (doctoraccessradio[i].checked) {
-                    console.log("id: " + doctoraccessradio[i].id);
+                    // console.log("id: " + doctoraccessradio[i].id);
+                    doctorid = doctoraccessradio[i].id;
+                    requestBody = {
+                        patientid: loggedinid,
+                        doctorid: doctorid
+                    };
+                    // console.log(requestBody);
                 }
             }
         };
+
+        function selectedDoctor() {
+            axios.post(`${baseUrl}/getAllSelectedDoctor`, requestBody)
+                .then((response) => {
+                    //console.log(response.data);
+
+                    var doctorStringSelected = "";
+
+                    for (i = 0; i < response.data.length; i++) {
+
+                        //console.log("Not selected vitals");
+                        var data = response.data[i];
+                        //console.log(data);
+
+                        var doctorStringSelected = doctorStringSelected +
+                            `
+                            <div class="form-check  ">
+                                <input class="form-check-input" type="radio" name="doctoraccessradio" id="${data.id}" value="${data.id}">
+                                <label class="form-check-label card shadow-bottom bg-cards border-0 p-2 mb-2 text-center" for="${data.id}">
+                                    <!-- <img src="images/chat.png" class="align-self-center" alt=""> -->
+                                    <p class="p-0 m-0" style="white-space: normal;">
+                                        ${"Dr " + data.full_name}
+                                    </p>
+                                </label>
+                            </div>
+                            `
+                    }
+                    document.getElementById("selecteddoctor").innerHTML = doctorStringSelected;
+
+                    for (let i = 0; i < doctoraccessradio.length; i++) {
+                        doctoraccessradio[i].style.display = "none";
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        function notSelectedDoctor() {
+            axios.post(`${baseUrl}/getNotSelectedDoctor`, requestBody)
+                .then((response) => {
+                    //console.log(response.data);
+
+                    var doctorStringNotSelected = "";
+
+                    for (i = 0; i < response.data.length; i++) {
+
+                        //console.log("Not selected vitals");
+                        var data = response.data[i];
+                        //console.log(data);
+
+                        var doctorStringNotSelected = doctorStringNotSelected +
+                            `
+                            <div class="form-check  ">
+                                <input class="form-check-input" type="radio" name="doctoraccessradio" id="${data.id}" value="${data.id}">
+                                <label class="form-check-label card shadow-bottom bg-cards border-0 p-2 mb-2 text-center" for="${data.id}">
+                                    <!-- <img src="images/chat.png" class="align-self-center" alt=""> -->
+                                    <p class="p-0 m-0" style="white-space: normal;">
+                                        ${"Dr " + data.full_name}
+                                    </p>
+                                </label>
+                            </div>
+                            `
+                    }
+                    document.getElementById("notselecteddoctor").innerHTML = doctorStringNotSelected;
+
+                    for (let i = 0; i < doctoraccessradio.length; i++) {
+                        doctoraccessradio[i].style.display = "none";
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        // function SelectedPatient() {
+        //     axios.post(`${baseUrl}/getSelectedPatient`, requestBody)
+        //         .then((response) => {
+        //             console.log(response.data);
+        //         })
+        //         .catch((error) => {
+        //             console.log(error);
+        //         });
+        // }
+        function deleteselecteddoctor() {
+            axios.post(`${baseUrl}/deleteSelectedDoctor`, requestBody)
+                .then((response) => {
+                    //console.log(response);
+                    selectedDoctor()
+                    notSelectedDoctor()
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        function addselecteddoctor() {
+            axios.post(`${baseUrl}/addSelectedDoctor`, requestBody)
+                .then((response) => {
+                   // console.log(response);
+                    selectedDoctor()
+                    notSelectedDoctor()
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+
 
     </script>
 </body>
