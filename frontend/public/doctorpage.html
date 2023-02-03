@@ -45,8 +45,7 @@
 
         <!-- card button links -->
         <div class="row justify-content-between my-5 mx-1">
-            <a href="patientlist.html" id="healthProfileButton"
-                class=" text-decoration-none col-3 p-0 m-0">
+            <a href="patientlist.html" id="healthProfileButton" class=" text-decoration-none col-3 p-0 m-0">
                 <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                     <img src="./images/healthProfile.png" alt="Avatar Logo" class="card-img-top align-self-center p-2">
                     <div class="card-body p-0 m-0 mb-2">
@@ -54,7 +53,7 @@
                     </div>
                 </div>
             </a>
-            <a href="patientlist.html" id="vitalSignsButton" class=" text-decoration-none col-3 p-0 m-0 btn btn-link">
+            <a href="vitals.html" id="vitalSignsButton" class=" text-decoration-none col-3 p-0 m-0 btn btn-link">
                 <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                     <img src="./images/Data extraction-cuate 1.png" alt="Avatar Logo"
                         class="card-img-top align-self-center p-2">
@@ -116,8 +115,9 @@
     <script>
         const myUrl = new URL(window.location.toLocaleString()).searchParams;
         var patientid = myUrl.get("patientid");
+        document.getElementById('vitalSignsButton').href = "vitals.html?patientid=" + patientid;
         console.log(patientid);
-
+        console.log(document.getElementById('vitalSignsButton').getAttribute("href"));
         if (patientid == null || patientid == "") {
             var btn = document.getElementsByClassName("btn")
             for (var i = 0; i < btn.length; i++) {

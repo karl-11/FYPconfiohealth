@@ -3,13 +3,22 @@ const baseUrl = "http://localhost:3000";
 
 // Data extraction from localstorage
 const loggedinid = localStorage.getItem('loggedInUserID');
-
-// data compilation
-var requestBody = {
-    userid: loggedinid
-};
+// for doctor extracting patient id from url
+const myUrl = new URL(window.location.toLocaleString()).searchParams;
+var patientid = myUrl.get("patientid");
+console.log(patientid);
+if (patientid != null) {
+    var requestBody = {
+        userid: patientid
+    };
+} else {
+    // data compilation
+    var requestBody = {
+        userid: loggedinid
+    };
+}
 // console.log("---------------- compiled data -----------");
-// console.log(requestBody);
+console.log(requestBody);
 
 window.addEventListener('DOMContentLoaded', selectedvitals());
 window.addEventListener('DOMContentLoaded', notSelectedVitals());
@@ -254,11 +263,20 @@ function off() {
 function loadchart() {
     for (i = 0; i < vitalsradio.length; i++) {
         if (vitalsradio[i].checked) {
-            var requestBody = {
-                userid: loggedinid,
-                vitalid: vitalsradio[i].value
-            };
-            console.log(requestBody);
+            if (patientid != null) {
+                var requestBody = {
+                    userid: patientid,
+                    vitalid: vitalsradio[i].value
+                };
+                console.log(requestBody);
+            } else {
+                var requestBody = {
+                    userid: loggedinid,
+                    vitalid: vitalsradio[i].value
+                };
+                console.log(requestBody);
+            }
+
         }
     }
     if (requestBody.vitalid != 3) {
@@ -432,7 +450,7 @@ function loadchart() {
                             // Apply each element to the Date function
                             var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
                             number = res[0].vital_value;
-                            test.push([d, res[i].diastolic,res[i].systolic]);
+                            test.push([d, res[i].diastolic, res[i].systolic]);
                             console.log(t);
                             console.log(d);
                             console.log(res[i]);
