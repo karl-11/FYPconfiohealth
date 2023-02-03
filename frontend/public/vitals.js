@@ -6,7 +6,7 @@ const loggedinid = localStorage.getItem('loggedInUserID');
 // for doctor extracting patient id from url
 const myUrl = new URL(window.location.toLocaleString()).searchParams;
 var patientid = myUrl.get("patientid");
-console.log(patientid);
+//console.log(patientid);
 if (patientid != null) {
     var requestBody = {
         userid: patientid
@@ -18,7 +18,7 @@ if (patientid != null) {
     };
 }
 // console.log("---------------- compiled data -----------");
-console.log(requestBody);
+//console.log(requestBody);
 
 window.addEventListener('DOMContentLoaded', selectedvitals());
 window.addEventListener('DOMContentLoaded', notSelectedVitals());
@@ -45,7 +45,7 @@ function selectedvitals() {
 
                 //console.log("select vitals");
                 var data = response.data[i];
-                console.log(data);
+                //console.log(data);
 
                 var vitalsStringSelected = vitalsStringSelected +
                     `
@@ -140,8 +140,8 @@ function notSelectedVitals() {
 var vitalsradio = document.getElementsByName("vitalsradio");
 var vitalscheck = document.getElementsByName("vitalscheck");
 
-console.log(vitalsradio);
-console.log(vitalscheck);
+//console.log(vitalsradio);
+//console.log(vitalscheck);
 var radioid;
 
 // too see the value of selected radio
@@ -169,10 +169,18 @@ function displayCheckValue() {
 function addSelectedVital() {
     for (i = 0; i < vitalscheck.length; i++) {
         if (vitalscheck[i].checked) {
-            var requestBody = {
-                userid: loggedinid,
-                vitalid: vitalscheck[i].value
-            };
+            if (patientid != null) {
+                var requestBody = {
+                    userid: patientid,
+                    vitalid: vitalscheck[i].value
+                };
+            } else {
+                // data compilation
+                var requestBody = {
+                    userid: loggedinid,
+                    vitalid: vitalscheck[i].value
+                };
+            }
         }
     }
     //console.log(requestBody);
@@ -198,10 +206,18 @@ function removeSelectedVital() {
 
     for (i = 0; i < vitalscheck.length; i++) {
         if (vitalscheck[i].checked) {
-            var requestBody = {
-                userid: loggedinid,
-                vitalid: vitalscheck[i].value
-            };
+            if (patientid != null) {
+                var requestBody = {
+                    userid: patientid,
+                    vitalid: vitalscheck[i].value
+                };
+            } else {
+                // data compilation
+                var requestBody = {
+                    userid: loggedinid,
+                    vitalid: vitalscheck[i].value
+                };
+            }
         }
     }
     //console.log(requestBody);

@@ -57,6 +57,76 @@ var bookingDB = {
         });
     },
 
+    viewallbooking: function ( callback) {
+        var conn = db;
+
+        var sql = `                         
+        SELECT 
+            u.id, u.full_name, u.type, b.date, b.time, b.location, b.acceptance, b.bookingid, b.acceptance
+        FROM
+            booking b, users u 
+        WHERE 
+            b.userid = u.id AND b.date > now()
+        ORDER BY
+            b.date, b.time
+        ASC;
+                `;
+
+        conn.query(sql, function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    acceptBooking: function (bookingid, callback) {
+        var conn = db;
+
+        var sql = ` 
+        update
+            booking
+        set 
+            acceptance = "accepted"
+        Where 
+            bookingid = ?;
+                    `;
+
+        conn.query(sql, [bookingid], function (err, result) {
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    declineBooking: function (bookingid, callback) {
+        var conn = db;
+
+        var sql = ` 
+        update
+            booking
+        set 
+            acceptance = "declined"
+        Where 
+            bookingid = ?;
+                    `;
+
+        conn.query(sql, [bookingid], function (err, result) {
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
 }  
 //-----------------------------------------
 // exports
