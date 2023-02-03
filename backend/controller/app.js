@@ -5,6 +5,8 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const fs = require('fs');
 
 // -------------------------------------------------------
 // INIT EXPRESS SERVER
@@ -21,6 +23,7 @@ var faq = require('../model/faqs.js');
 var vital = require('../model/vitals');
 var booking = require('../model/booking.js');
 var hp = require('../model/healthprofile.js');
+var uploadDB = require('../model/upload.js')
 
 //-----------------------------------------
 // Middleware functions
@@ -55,6 +58,7 @@ var printDebugInfo = function (req, res, next) {
 
 var urlEncodedParser = bodyParser.urlencoded({ extended: false });
 var jsonParser = bodyParser.json();
+var uploadFiles = require("../middleware/uploadFiles.js");
 
 //-----------------------------------------
 // MF Configurations
@@ -323,7 +327,7 @@ app.post('/booking', printDebugInfo, function (req, res) {
 });
 
 // end point for get user booking 
-app.post('/viewbooking',printDebugInfo, function (req, res) {
+app.post('/viewbooking', printDebugInfo, function (req, res) {
     //extract data from request body
     var userid = req.body.userid;
     booking.viewbooking(userid, function (err, result) {
@@ -703,6 +707,94 @@ app.post('/deleteHPVaccination', printDebugInfo, function (req, res) {
         }
     });
 });
+
+// end point to upload image
+app.post('/uploadImage', printDebugInfo, function (req, res, next) {
+
+    var upload = multer({
+        storage: uploadFiles.image.storage(),
+        fileFilter: function (req, file, callback) {
+            var ext = file.originalname.split(".")[1];
+
+            if (ext !== 'png' && ext !== 'jpg' && ext !== 'gif' && ext !== 'jpeg' && ext !== 'pdf') {
+
+                var msg = 'Error - Only images and pdf(s) are allowed'
+                var output = {
+                    msg: msg
+                }
+                res.status(406).send(output);
+
+                return next();
+            }
+
+            callback(null, true)
+        },
+        limits: {
+            fileSize: 1024 * 1024 //1 mb
+        }
+    }).single('upload-file');
+
+    upload(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+
+            // if multer error
+            res.status(500).send(err);
+
+        } else if (err) {
+
+            // if general error
+            res.status(500).send(err);
+
+        } else {
+
+            // hardcoded for dev purposes
+            var folder_id = 1
+            var userid = 9
+
+            // var folder_id = req.body.folder_id
+            // var userid = req.body.user_id
+
+            var file_name = req.file.filename
+            var display_name = req.body.fileName
+            var file_type = req.file.mimetype
+            var file_size = req.file.size
+            var upload_path = req.file.path
+
+            // call model
+            uploadDB.uploadImage(folder_id, file_name, file_type, userid, display_name, file_size, function (err, data) {
+                // res.render('upload-form', { alertMsg: data })
+
+                if (err) {
+
+                    console.log(err)
+                    res.status(500).send(err);
+
+                }
+                // if file name already exists
+                else if (data.success == 'no') {
+
+                    // delete the physical folder we uploaded just now
+                    fs.unlinkSync(upload_path);
+
+                    // send response and alert user that it failed
+                    res.status(406).send(data);
+
+                }
+                // everything ok, image stored and uploaded into database
+                else {
+
+                    res.status(200).send(data);
+
+                }
+
+            })
+        }
+    })
+})
+
+app.get('/uploadImage', printDebugInfo, function (req, res, next) {
+    res.render('upload-form');
+})
 
 
 module.exports = app;
