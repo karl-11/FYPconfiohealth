@@ -89,17 +89,21 @@
                         //console.log("Not selected vitals");
                         var data = response.data[i];
                         //console.log(data);
-
+                        var linkID = data.patientid + "_" + data.full_name;
                         var patientStringList = patientStringList +
                             `
                             <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
-                                <a href="./doctorpage.html?patientid=${data.patientid}" class="text-decoration-none text-black">
+                                <a href="./doctorpage.html?patientid=${data.patientid}" class="text-decoration-none text-black stretched-link" id="${data.full_name}">
                                     ${data.full_name}
                                 </a>
                             </p>
                             `
                     }
-                    document.getElementById("patientlist").innerHTML = patientStringList;
+                    document.getElementById("patientlist").innerHTML = patientStringList
+                    const button = document.getElementById(`${data.full_name}`);
+                    button.onclick = function click() {
+                        localStorage.setItem('patientName', data.full_name);
+                    };
                 })
                 .catch((error) => {
                     console.log(error);
