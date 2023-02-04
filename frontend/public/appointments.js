@@ -88,7 +88,38 @@ function viewbooking() {
 
             }
             $(document).ready(function () {
-                $('.btn').click(function () {
+                $('.bg-danger').click(function () {
+                    var pending = $(this).attr("id").includes("accept");
+                    //console.log(pending);
+                    var bookingid = $(this).attr("id").replace(/decline|accept/gi, "");
+                    console.log(bookingid);
+                    var requestBody = {
+                        userid: userid,
+                        bookingid: bookingid
+                    };
+                    if (pending == true) {
+                        console.log(pending);
+                        axios.post(`${baseUrl}/acceptBooking`, requestBody)
+                            .then((response) => {
+                                console.log("data")
+                                console.log(response.data)
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                    } else {
+                        console.log(pending);
+                        axios.post(`${baseUrl}/declineBooking`, requestBody)
+                            .then((response) => {
+                                console.log("data")
+                                console.log(response.data)
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                    }
+                });
+                $('.bg-success').click(function () {
                     var pending = $(this).attr("id").includes("accept");
                     //console.log(pending);
                     var bookingid = $(this).attr("id").replace(/decline|accept/gi, "");
@@ -120,6 +151,7 @@ function viewbooking() {
                     }
 
                 });
+
 
             });
 

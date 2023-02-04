@@ -146,12 +146,12 @@ var radioid;
 
 // too see the value of selected radio
 function displayRadioValue() {
-    console.log(vitalsradio)
+    //console.log(vitalsradio)
     for (i = 0; i < vitalsradio.length; i++) {
         if (vitalsradio[i].checked) {
             radioid = vitalsradio[i].value;
-            console.log("id: " + vitalsradio[i].value);
-            console.log("Vital: " + vitalsradio[i].id.replace("selected", ""));
+            //console.log("id: " + vitalsradio[i].value);
+            //console.log("Vital: " + vitalsradio[i].id.replace("selected", ""));
         }
     }
 };
@@ -284,13 +284,13 @@ function loadchart() {
                     userid: patientid,
                     vitalid: vitalsradio[i].value
                 };
-                console.log(requestBody);
+                //console.log(requestBody);
             } else {
                 var requestBody = {
                     userid: loggedinid,
                     vitalid: vitalsradio[i].value
                 };
-                console.log(requestBody);
+                //console.log(requestBody);
             }
 
         }
@@ -298,11 +298,11 @@ function loadchart() {
     if (requestBody.vitalid != 3) {
         axios.post(`${baseUrl}/getVitalValue`, requestBody)
             .then((response) => {
-                console.log("get vitals value");
+                //console.log("get vitals value");
                 var res = response.data;
-                console.log(res);
+                //console.log(res);
                 var number;
-                console.log("load chart");
+                //console.log("load chart");
 
                 //Google Chart
                 google.charts.load('current', { packages: ['corechart', 'line'] });
@@ -326,11 +326,11 @@ function loadchart() {
                             var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
                             number = res[0].vital_value;
                             test.push([d, res[i].vitalvalue]);
-                            console.log(t);
-                            console.log(d);
-                            console.log(res[i]);
+                            //console.log(t);
+                            //console.log(d);
+                            //console.log(res[i]);
                         }
-                        console.log(test);
+                        //console.log(test);
 
                         data.addRows(
                             test
@@ -373,13 +373,13 @@ function loadchart() {
                                     //console.log(response.data[i]);
                                     if (radioid == response.data[i].id) {
                                         number = response.data[i].vital_value;
-                                        console.log("-----------number-----------");
-                                        console.log(number);
+                                        //console.log("-----------number-----------");
+                                        //console.log(number);
                                     }
                                 }
                                 var d = new Date
                                 test.push([d, null])
-                                console.log(test);
+                                //console.log(test);
 
                                 data.addRows(
                                     test
@@ -415,14 +415,27 @@ function loadchart() {
 
                     }
 
-                    var valuebtn =
+                    if (patientid != null) {
+                        var valuebtn =
+                            `
+                        <div class="text-center">
+                            <button type="button" class="btn bg-beige ">
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
+                            </button>
+                        </div>
                         `
-                 <div class="text-center">
-                     <button type="button" class="btn bg-beige ">
-                         <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
-                     </button>
-                 </div>
-                 `
+                    } else {
+                        var valuebtn =
+                            `
+                        <div class="text-center">
+                            <button type="button" class="btn bg-beige ">
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
+                            </button>
+                        </div>
+                        `
+                    }
+
+
                     document.getElementById("valuebtn").innerHTML = valuebtn;
 
                     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -437,13 +450,13 @@ function loadchart() {
     else {
         axios.post(`${baseUrl}/getBloodPressureValue`, requestBody)
             .then((response) => {
-                console.log("get vitals value");
+                //console.log("get vitals value");
                 var res = response.data;
-                console.log(res);
+                //console.log(res);
                 var number;
                 var systolic;
                 var diastolic;
-                console.log("load chart");
+                //console.log("load chart");
 
                 //Google Chart
                 google.charts.load('current', { packages: ['corechart', 'line'] });
@@ -467,11 +480,11 @@ function loadchart() {
                             var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
                             number = res[0].vital_value;
                             test.push([d, res[i].diastolic, res[i].systolic]);
-                            console.log(t);
-                            console.log(d);
-                            console.log(res[i]);
+                            //console.log(t);
+                            //console.log(d);
+                            //console.log(res[i]);
                         }
-                        console.log(test);
+                        // console.log(test);
 
                         data.addRows(
                             test
@@ -514,13 +527,13 @@ function loadchart() {
                                     //console.log(response.data[i]);
                                     if (radioid == response.data[i].id) {
                                         number = response.data[i].vital_value;
-                                        console.log("-----------number-----------");
-                                        console.log(number);
+                                        //console.log("-----------number-----------");
+                                        //console.log(number);
                                     }
                                 }
                                 var d = new Date
                                 test.push([d, null])
-                                console.log(test);
+                                //console.log(test);
 
                                 data.addRows(
                                     test
@@ -554,15 +567,25 @@ function loadchart() {
                                 console.log(error);
                             });
                     }
-
-                    var valuebtn =
+                    if (patientid != null) {
+                        var valuebtn =
                         `
-             <div class="text-center">
-                 <button type="button" class="btn bg-beige ">
-                     <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
-                 </button>
-             </div>
-             `
+                        <div class="text-center">
+                            <button type="button" class="btn bg-beige ">
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
+                            </button>
+                        </div>
+                        `
+                    } else {
+                        var valuebtn =
+                        `
+                        <div class="text-center">
+                            <button type="button" class="btn bg-beige ">
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
+                            </button>
+                        </div>
+                        `
+                    }
                     document.getElementById("valuebtn").innerHTML = valuebtn;
 
                     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));

@@ -66,7 +66,7 @@ var bookingDB = {
         FROM
             booking b, users u 
         WHERE 
-            b.userid = u.id AND b.date > now()
+            b.userid = u.id AND b.date >= curdate()
         ORDER BY
             b.date, b.time
         ASC;

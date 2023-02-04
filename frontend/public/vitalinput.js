@@ -3,11 +3,22 @@ const baseUrl = "http://localhost:3000";
 
 // Data extraction from localstorage
 const loggedinid = localStorage.getItem('loggedInUserID');
+// for doctor extracting patient id from url
+const myUrl = new URL(window.location.toLocaleString()).searchParams;
+var patientid = myUrl.get("patientid");
+//console.log(patientid);
+if (patientid != null) {
+    var requestBody = {
+        userid: patientid
+    };
+} else {
+    // data compilation
+    var requestBody = {
+        userid: loggedinid
+    };
+}
 
-// data compilation
-var requestBody = {
-    userid: loggedinid
-};
+var vitalhtml;
 // console.log("---------------- compiled data -----------");
 // console.log(requestBody);
 
@@ -161,10 +172,18 @@ function displayCheckValue() {
 function addSelectedVital() {
     for (i = 0; i < vitalscheck.length; i++) {
         if (vitalscheck[i].checked) {
-            var requestBody = {
-                userid: loggedinid,
-                vitalid: vitalscheck[i].value
-            };
+            if (patientid != null) {
+                var requestBody = {
+                    userid: patientid,
+                    vitalid: vitalscheck[i].value
+                };
+            } else {
+                // data compilation
+                var requestBody = {
+                    userid: loggedinid,
+                    vitalid: vitalscheck[i].value
+                };
+            }
         }
     }
     //console.log(requestBody);
@@ -190,10 +209,18 @@ function removeSelectedVital() {
 
     for (i = 0; i < vitalscheck.length; i++) {
         if (vitalscheck[i].checked) {
-            var requestBody = {
-                userid: loggedinid,
-                vitalid: vitalscheck[i].value
-            };
+            if (patientid != null) {
+                var requestBody = {
+                    userid: patientid,
+                    vitalid: vitalscheck[i].value
+                };
+            } else {
+                // data compilation
+                var requestBody = {
+                    userid: loggedinid,
+                    vitalid: vitalscheck[i].value
+                };
+            }
         }
     }
     //console.log(requestBody);
@@ -264,6 +291,12 @@ function getAllVitals() {
                         console.log(vitalvalue);
                     }
                 }
+                if (patientid != null) {
+                    vitalhtml = `/vitals.html?patientid=${patientid}`;
+                } else {
+                    // data compilation
+                    vitalhtml = "/vitals.html";
+                }
                 var valuestring =
                     `
                 <div class="m-3 form-group">
@@ -280,7 +313,7 @@ function getAllVitals() {
                 </div>
                 <div class="text-center">
                     <button type="button" class="btn bg-beige rounded-3 px-5">
-                        <a class="text-decoration-none text-dark" href="vitals.html">
+                        <a class="text-decoration-none text-dark" href="${vitalhtml}">
                             Back
                         </a>
                     </button>
@@ -334,6 +367,12 @@ function getAllVitals() {
                         console.log(vitalvalue);
                     }
                 }
+                if (patientid != null) {
+                    vitalhtml = `/vitals.html?patientid=${patientid}`;
+                } else {
+                    // data compilation
+                    vitalhtml = "/vitals.html";
+                }
                 var valuestring =
                     `
                 <div class="m-3 form-group">
@@ -354,7 +393,7 @@ function getAllVitals() {
                 </div>
                 <div class="text-center">
                     <button type="button" class="btn bg-beige rounded-3 px-5">
-                        <a class="text-decoration-none text-dark" href="vitals.html">
+                        <a class="text-decoration-none text-dark" href="${vitalhtml}">
                             Back
                         </a>
                     </button>
@@ -421,12 +460,36 @@ form.addEventListener('submit', (event) => {
             vital_value: vital_value,
             datetime: datetime
         };
+        if (patientid != null) {
+            var requestBody = {
+                userid: patientid,
+                vitalid: vitalid,
+                vital_value: vital_value,
+                datetime: datetime
+            };
+        } else {
+            // data compilation
+            var requestBody = {
+                userid: userid,
+                vitalid: vitalid,
+                vital_value: vital_value,
+                datetime: datetime
+            };
+        }
+
         axios.post(`${baseUrl}/addVitalValue`, requestBody)
             .then((response) => {
                 console.log("========= Add Vital Value response ==========")
                 console.log(response.data)
 
-                window.location.href = "/vitals.html";
+                if (patientid != null) {
+                    window.location.href = `/vitals.html?patientid=${patientid}`;
+                } else {
+                    // data compilation
+                    window.location.href = "/vitals.html";
+                }
+
+
             })
             .catch((error) => {
                 console.log(error);
@@ -434,20 +497,37 @@ form.addEventListener('submit', (event) => {
     } else {
         var systolic = document.getElementById(`${vitalvalue + "1"}`).value;
         var diastolic = document.getElementById(`${vitalvalue + "2"}`).value;
-        // data compilation
-        var requestBody = {
-            userid: userid,
-            vitalid: vitalid,
-            systolic: systolic,
-            diastolic: diastolic,
-            datetime: datetime
-        };
+        if (patientid != null) {
+            var requestBody = {
+                userid: patientid,
+                vitalid: vitalid,
+                systolic: systolic,
+                diastolic: diastolic,
+                datetime: datetime
+            };
+        } else {
+            // data compilation
+            var requestBody = {
+                userid: userid,
+                vitalid: vitalid,
+                systolic: systolic,
+                diastolic: diastolic,
+                datetime: datetime
+            };
+        }
+
+
         axios.post(`${baseUrl}/addBloodPressureValue`, requestBody)
             .then((response) => {
                 console.log("========= Add Vital Value response ==========")
                 console.log(response.data)
 
-                window.location.href = "/vitals.html";
+                if (patientid != null) {
+                    window.location.href = `/vitals.html?patientid=${patientid}`;
+                } else {
+                    // data compilation
+                    window.location.href = "/vitals.html";
+                }
             })
             .catch((error) => {
                 console.log(error);
