@@ -111,6 +111,9 @@ app.post("/login", (req, res) => {
 
         if (result === null) {
             res.status(401).send();
+
+            console.log("wrong password or invalid login ")
+            
             return;
         }
 

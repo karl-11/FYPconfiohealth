@@ -453,20 +453,9 @@ form.addEventListener('submit', (event) => {
     console.log(radioid);
     if (radioid != 3) {
         var vital_value = document.getElementById(`${vitalvalue}`).value;
-        // data compilation
-        var requestBody = {
-            userid: userid,
-            vitalid: vitalid,
-            vital_value: vital_value,
-            datetime: datetime
-        };
-        if (patientid != null) {
-            var requestBody = {
-                userid: patientid,
-                vitalid: vitalid,
-                vital_value: vital_value,
-                datetime: datetime
-            };
+
+        if (isNaN(vital_value) == true || vital_value == "") {
+            alert("insert proper value")
         } else {
             // data compilation
             var requestBody = {
@@ -475,69 +464,90 @@ form.addEventListener('submit', (event) => {
                 vital_value: vital_value,
                 datetime: datetime
             };
+            if (patientid != null) {
+                var requestBody = {
+                    userid: patientid,
+                    vitalid: vitalid,
+                    vital_value: vital_value,
+                    datetime: datetime
+                };
+            } else {
+                // data compilation
+                var requestBody = {
+                    userid: userid,
+                    vitalid: vitalid,
+                    vital_value: vital_value,
+                    datetime: datetime
+                };
+            }
+
+            axios.post(`${baseUrl}/addVitalValue`, requestBody)
+                .then((response) => {
+                    console.log("========= Add Vital Value response ==========")
+                    console.log(response.data)
+
+                    if (patientid != null) {
+                        window.location.href = `/vitals.html?patientid=${patientid}`;
+                    } else {
+                        // data compilation
+                        window.location.href = "/vitals.html";
+                    }
+
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
 
-        axios.post(`${baseUrl}/addVitalValue`, requestBody)
-            .then((response) => {
-                console.log("========= Add Vital Value response ==========")
-                console.log(response.data)
-
-                if (patientid != null) {
-                    window.location.href = `/vitals.html?patientid=${patientid}`;
-                } else {
-                    // data compilation
-                    window.location.href = "/vitals.html";
-                }
-
-
-            })
-            .catch((error) => {
-                console.log(error);
-            });
     } else {
+
         var systolic = document.getElementById(`${vitalvalue + "1"}`).value;
         var diastolic = document.getElementById(`${vitalvalue + "2"}`).value;
-        if (patientid != null) {
-            var requestBody = {
-                userid: patientid,
-                vitalid: vitalid,
-                systolic: systolic,
-                diastolic: diastolic,
-                datetime: datetime
-            };
+        if (isNaN(systolic) == true || systolic == "" || isNaN(diastolic) || diastolic == "") {
+            alert("insert proper value")
         } else {
-            // data compilation
-            var requestBody = {
-                userid: userid,
-                vitalid: vitalid,
-                systolic: systolic,
-                diastolic: diastolic,
-                datetime: datetime
-            };
+            if (patientid != null) {
+                var requestBody = {
+                    userid: patientid,
+                    vitalid: vitalid,
+                    systolic: systolic,
+                    diastolic: diastolic,
+                    datetime: datetime
+                };
+            } else {
+                // data compilation
+                var requestBody = {
+                    userid: userid,
+                    vitalid: vitalid,
+                    systolic: systolic,
+                    diastolic: diastolic,
+                    datetime: datetime
+                };
+            }
+
+
+            axios.post(`${baseUrl}/addBloodPressureValue`, requestBody)
+                .then((response) => {
+                    console.log("========= Add Vital Value response ==========")
+                    console.log(response.data)
+
+                    if (patientid != null) {
+                        window.location.href = `/vitals.html?patientid=${patientid}`;
+                    } else {
+                        // data compilation
+                        window.location.href = "/vitals.html";
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
 
 
-        axios.post(`${baseUrl}/addBloodPressureValue`, requestBody)
-            .then((response) => {
-                console.log("========= Add Vital Value response ==========")
-                console.log(response.data)
-
-                if (patientid != null) {
-                    window.location.href = `/vitals.html?patientid=${patientid}`;
-                } else {
-                    // data compilation
-                    window.location.href = "/vitals.html";
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        console.log("---------------- compiled data -----------");
+        console.log(requestBody);
     }
-
-
-    console.log("---------------- compiled data -----------");
-    console.log(requestBody);
-
 
 });
 
