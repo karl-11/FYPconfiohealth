@@ -20,11 +20,13 @@ var bookingDB = {
 
         var sql = `                         
         SELECT 
-        date, time, location
-      FROM 
-          booking
-      WHERE
-          userid = ? ;
+            date, time, location, acceptance
+        FROM 
+            booking
+        WHERE
+            userid = ? AND date >= curdate()
+		ORDER BY 
+            date, time;
                 `;
 
         conn.query(sql,[userid], function (err, result) {

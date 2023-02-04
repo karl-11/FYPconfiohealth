@@ -16,17 +16,20 @@ function AddBooking() {
   };
 
   console.log(requestBody);
-
-  axios.post(`${baseUrl}/booking`, requestBody)
-    .then((response) => {
-      console.log("booking response")
-      console.log(response.data)
-      alert('Booking Successful!');
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
+  if (requestBody.date == "" || requestBody.time == "") {
+    alert("KEY IN DATE AND TIME");
+  } else {
+    axios.post(`${baseUrl}/booking`, requestBody)
+      .then((response) => {
+        console.log("booking response")
+        console.log(response.data)
+        alert('Booking Successful!');
+        window.location.href = "/appview.html";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -62,14 +65,16 @@ function viewbooking() {
         var year = d.getFullYear();
         var month = (d.getMonth() + 1);
         var day = d.getDate();
-        var hour = d.getHours();
-        var minute = d.getMinutes();
         if (month < 10) {
-            month = '0' + month
+          month = '0' + month
         };
         if (day < 10) {
-            day = '0' + day
+          day = '0' + day
         };
+
+        var hms = data.time.split(':');
+        console.log(hms)
+        var time = hms[0] + ":" + hms[1]
 
         // console.log(year);
         // console.log(month);
@@ -78,16 +83,58 @@ function viewbooking() {
         var date = year + '-' + month + '-' + day;
         //console.log(date);
 
+        if (data.acceptance == "pending") {
 
-
-        datetimestring = datetimestring +
-          `
-    <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-10">
-    ${"Date: " + date} <br>
-    ${"Time: " + response.data[i].time} <br>
-    ${"Location: " + response.data[0].location}
-    </p>
+          datetimestring = datetimestring +
+            `
+          <div class="row justify-content-between my-5 mx-1 align-items-center">
+          <div class="text-decoration-none col-7 p-0 m-0 text-center">
+              <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+                  ${"Date: " + date + " | Time: " + time} <br>
+                  ${"Location: " + data.location}
+              </p>
+          </div>
+          <div class="text-decoration-none col-4 p-0 m-0 text-center">
+              <p class="card flex-column shadow-bottom bg-warning border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
+          </div>
+      </div>
     `
+        }
+        else if (data.acceptance == "accepted") {
+
+          datetimestring = datetimestring +
+            `
+          <div class="row justify-content-between my-5 mx-1 align-items-center">
+          <div class="text-decoration-none col-7 p-0 m-0 text-center">
+              <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+                  ${"Date: " + date + " | Time: " + time} <br>
+                  ${"Location: " + data.location}
+              </p>
+          </div>
+          <div class="text-decoration-none col-4 p-0 m-0 text-center">
+              <p class="card flex-column shadow-bottom bg-success border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
+          </div>
+      </div>
+    `
+        }
+        else{
+          datetimestring = datetimestring +
+          `
+        <div class="row justify-content-between my-5 mx-1 align-items-center">
+        <div class="text-decoration-none col-7 p-0 m-0 text-center">
+            <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+                ${"Date: " + date + " | Time: " + time} <br>
+                ${"Location: " + data.location}
+            </p>
+        </div>
+        <div class="text-decoration-none col-4 p-0 m-0 text-center">
+            <p class="card flex-column shadow-bottom bg-danger border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
+        </div>
+    </div>
+  `
+        }
+
+
 
         document.getElementById("arrPrint").innerHTML = datetimestring;
 

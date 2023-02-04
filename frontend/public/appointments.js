@@ -51,7 +51,7 @@ function viewbooking() {
                 if (data.acceptance == "pending") {
                     datetimestring = datetimestring +
                         `
-                    <div class="row justify-content-between my-5 mx-1">
+                    <div class="row justify-content-between my-5 mx-1 align-items-center">
                         <div class="text-decoration-none col-7 p-0 m-0 text-center">
                             <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                 ${"Name: " + data.full_name} <br>
@@ -59,12 +59,15 @@ function viewbooking() {
                                 ${"Location: " + data.location}
                             </p>
                         </div>
-                        <div class="text-decoration-none col-2 p-0 m-0 text-center">
-                            <p id="${"accept" + data.bookingid}" class="btn bg-success card flex-column shadow-bottom border rounded-4 p-0 m-0">Accept</p>
+                        <div class = "col-4">
+                            <div class="text-decoration-none col p-0 m-0 pb-2 text-center">
+                                <p id="${"accept" + data.bookingid}" class="btn bg-success card flex-column shadow-bottom border rounded-4 p-0 m-0"><strong>Accept</strong></p>
+                            </div>
+                            <div class="text-decoration-none col p-0 m-0 text-center">
+                                <p id="${"decline" + data.bookingid}" class="btn bg-danger card flex-column shadow-bottom border rounded-4 p-0 m-0"><strong>Decline</strong></p>
+                            </div>
                         </div>
-                        <div class="text-decoration-none col-2 p-0 m-0 text-center">
-                        <p id="${"decline" + data.bookingid}" class="btn bg-danger card flex-column shadow-bottom border rounded-4 p-0 m-0">Decline</p>
-                    </div>
+
                     </div>
                     `
                 } else {
@@ -78,8 +81,8 @@ function viewbooking() {
                             ${"Location: " + data.location}
                         </p>
                     </div>
-                    <div class="text-decoration-none col-2 p-0 m-0 text-center">
-                        <p class="card flex-column shadow-bottom bg-cards border btn rounded-4 p-0 m-0">${data.acceptance}</p>
+                    <div class="text-decoration-none col-4 p-0 m-0 text-center">
+                        <p class="card flex-column shadow-bottom bg-cards border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
                     </div>
                 </div>
                 `
