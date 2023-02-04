@@ -210,3 +210,13 @@
 }
 
 /* end of qnr button styles */
+
+/* back button styles */
+.backBtn {
+    border: 2px solid #FFF8F2;
+}
+
+.backBtn:hover {
+    border: 2px solid #f1f1f1;
+}
+/* end of back button styles */

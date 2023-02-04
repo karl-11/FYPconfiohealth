@@ -36,7 +36,8 @@ var questionnairesDB = {
 
     getQuestionnaireUserScoreByUserID: function (user_id, callback) {
         var conn = db;
-        var sql = `SELECT q.id, q.name, q.max_score, q.image_url , qr.questionnaireID, qr.user_score, qr.date_Taken, qr.user_id
+        //q.id = qr.id
+        var sql = `SELECT q.id, q.name, q.max_score, q.image_url , qr.resultsID, qr.questionnaireID, qr.user_score, qr.date_Taken, qr.user_id
         FROM questionnaire q
         INNER JOIN questionnaireResults qr
         ON q.id = qr.questionnaireID
@@ -50,7 +51,6 @@ var questionnairesDB = {
             }
         });
     },
-
 
     //-----------------------------------------
     // questions table
@@ -87,12 +87,38 @@ var questionnairesDB = {
         });
     },
 
-    submitScore: function (user_score, id, callback) {
+    submitScore: function (user_score, resultsID, callback) {
         var conn = db;
 
-        var sql = `UPDATE questionnaireResults SET user_score =? WHERE id=?`;
+        var sql = `
+        UPDATE questionnaireResults
+        SET user_score = ?, date_Taken = now()
+        WHERE resultsID = ?;
+        `;
 
-        conn.query(sql, [user_score, id], function (err, result) {
+        conn.query(sql, [user_score, resultsID], function (err, result) {
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+    // 2 axios, if results id is null run a pure insert sql , else run the regular code
+
+    insertNewScore: function (user_score, user_id, questionnaireID, callback) {
+        var conn = db;
+        //needs to be fixed: future karl, insert the other columns data too
+        var sql = `
+        INSERT INTO questionnaireResults
+            (user_score, date_Taken, user_id, questionnaireID)
+        VALUES
+            (?, now(), ?, ?);
+        `;
+
+        conn.query(sql, [user_score, user_id, questionnaireID], function (err, result) {
             if (err) {
                 console.log(err);
                 return callback(err, null);
@@ -103,6 +129,7 @@ var questionnairesDB = {
     },
 
 }
+
 
 //-----------------------------------------
 // exports

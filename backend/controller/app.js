@@ -230,9 +230,23 @@ app.post('/getQnsByQnr', function (req, res) {
 });
 
 app.post('/updateScore', function (req, res) {
-    var id = req.body.id;
     var user_score = req.body.user_score;
-    riskQuestionnaire.submitScore(user_score, id, function (err, result) {
+    var resultsID = req.body.resultsID;
+    riskQuestionnaire.submitScore(user_score, resultsID, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/insertScore', function (req, res) {
+    var user_score = req.body.user_score;
+    var user_id = req.body.user_id;
+    var questionnaireID = req.body.questionnaireID;
+    riskQuestionnaire.insertNewScore(user_score, user_id, questionnaireID, function (err, result) {
         if (!err) {
             res.status(200).send(result);
         } else {

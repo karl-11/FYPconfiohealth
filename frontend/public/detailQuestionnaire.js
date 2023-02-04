@@ -73,8 +73,7 @@ $(document).ready(function () {
             // Function to increment count
             document.getElementById('nextBtn').classList.add('visually-hidden')
             count++;
-            console.log(count)
-
+            console.log(count);
         })
         $('.btn').click(function () {
             // Function to increment count
@@ -92,7 +91,11 @@ $(document).ready(function () {
         });
 
     $('#submitScore').click(function () {
-        const id = localStorage.getItem('SelectedQnr')
+        let resultsID = parseInt(localStorage.getItem('resultsID'));
+
+        let questionnaireID = localStorage.getItem('SelectedQnr');
+        let user_id = localStorage.getItem('loggedInUserID');
+        console.log(resultsID);
         if (totalScore.length == 0) {
             user_score = 0
         } else {
@@ -101,14 +104,33 @@ $(document).ready(function () {
             });
         }
         console.log(user_score);
+        //insert
+        var InsertRequestBody = {
+            user_score: user_score,
+            user_id: user_id,
+            questionnaireID: questionnaireID
+        };
+        //update
         var requestBody = {
-            id: id,
+            resultsID: resultsID,
             user_score: user_score
         };
-        axios.post(`${baseUrl}/updateScore`, requestBody).then(function (response) {
+        // 2 axios, if results id is null run a pure insert sql , else run the regular code
+        if (resultsID == null || isNaN(resultsID)) {
+            //pure insert
+            axios.post(`${baseUrl}/insertScore`, InsertRequestBody).then(function (response) {
 
-        })
-        //So it will not crash if the user did not answer any questions, automatically sets the user_score to 0 
+            })
+            console.log("null and inserted");
+        } else {
+            //update
+            axios.post(`${baseUrl}/updateScore`, requestBody).then(function (response) {
+
+            })
+            console.log("not null and updated");
+
+        }
+        // So it will not crash if the user did not answer any questions, automatically sets the user_score to 0 
         if (totalScore.length == 0) {
             window.location.replace(`${windowUrl}/risk_identification.html`);
         } else {
