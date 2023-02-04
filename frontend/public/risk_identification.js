@@ -6,11 +6,9 @@ $(document).ready(function () {
     if (loggedInUserType == "patient") {
         console.log("patient user")
         loadAllData();
-
     } else if (loggedInUserType == "doctor") {
         console.log("doctor user")
         loadPatientDataForDoctor();
-
     } else {
         console.log("Invalid User!!!")
 
