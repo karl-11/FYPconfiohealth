@@ -337,6 +337,47 @@ app.post('/viewbooking', printDebugInfo, function (req, res) {
     });
 });
 
+// end point for get All user booking 
+app.get('/viewallbooking', printDebugInfo, function (req, res) {
+    booking.viewallbooking(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point for get All user booking 
+app.post('/acceptBooking', printDebugInfo, function (req, res) {
+    //extract data from request body
+    var bookingid = req.body.bookingid;
+    booking.acceptBooking(bookingid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point for get All user booking 
+app.post('/declineBooking', printDebugInfo, function (req, res) {
+    //extract data from request body
+    var bookingid = req.body.bookingid;
+
+    booking.declineBooking(bookingid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
 //  end point to insert new report 
 app.post('/report', printDebugInfo, function (req, res) {
 

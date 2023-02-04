@@ -3,8 +3,14 @@ const baseUrl = "http://localhost:3000";
 
 const loggedInUserID = localStorage.getItem("loggedInUserID")
 // console.log("printing loggedInUserID" + loggedInUserID)
-
-const reqBodyUserID = JSON.stringify({ userid: loggedInUserID });
+const myUrl = new URL(window.location.toLocaleString()).searchParams;
+var patientid = myUrl.get("patientid");
+if (patientid != null) {
+    var reqBodyUserID = JSON.stringify({ userid: patientid });
+} else {
+    // data compilation
+    var reqBodyUserID = JSON.stringify({ userid: loggedInUserID });
+}
 
 axiosConfig = {
     headers: {
@@ -12,6 +18,13 @@ axiosConfig = {
     }
 };
 
+var docacc = document.getElementById("doctoraccess")
+if (patientid != null) {
+    console.log(docacc);
+    docacc.innerHTML= ""
+}
+console.log(docacc)
+console.log(reqBodyUserID);
 function getHPAllGeneral() {
     axios.post(`${baseUrl}/HPGeneral`, reqBodyUserID, axiosConfig)
         .then((response) => {

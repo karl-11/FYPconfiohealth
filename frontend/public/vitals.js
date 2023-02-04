@@ -3,13 +3,22 @@ const baseUrl = "http://localhost:3000";
 
 // Data extraction from localstorage
 const loggedinid = localStorage.getItem('loggedInUserID');
-
-// data compilation
-var requestBody = {
-    userid: loggedinid
-};
+// for doctor extracting patient id from url
+const myUrl = new URL(window.location.toLocaleString()).searchParams;
+var patientid = myUrl.get("patientid");
+//console.log(patientid);
+if (patientid != null) {
+    var requestBody = {
+        userid: patientid
+    };
+} else {
+    // data compilation
+    var requestBody = {
+        userid: loggedinid
+    };
+}
 // console.log("---------------- compiled data -----------");
-// console.log(requestBody);
+//console.log(requestBody);
 
 window.addEventListener('DOMContentLoaded', selectedvitals());
 window.addEventListener('DOMContentLoaded', notSelectedVitals());
@@ -36,7 +45,7 @@ function selectedvitals() {
 
                 //console.log("select vitals");
                 var data = response.data[i];
-                console.log(data);
+                //console.log(data);
 
                 var vitalsStringSelected = vitalsStringSelected +
                     `
@@ -131,18 +140,18 @@ function notSelectedVitals() {
 var vitalsradio = document.getElementsByName("vitalsradio");
 var vitalscheck = document.getElementsByName("vitalscheck");
 
-console.log(vitalsradio);
-console.log(vitalscheck);
+//console.log(vitalsradio);
+//console.log(vitalscheck);
 var radioid;
 
 // too see the value of selected radio
 function displayRadioValue() {
-    console.log(vitalsradio)
+    //console.log(vitalsradio)
     for (i = 0; i < vitalsradio.length; i++) {
         if (vitalsradio[i].checked) {
             radioid = vitalsradio[i].value;
-            console.log("id: " + vitalsradio[i].value);
-            console.log("Vital: " + vitalsradio[i].id.replace("selected", ""));
+            //console.log("id: " + vitalsradio[i].value);
+            //console.log("Vital: " + vitalsradio[i].id.replace("selected", ""));
         }
     }
 };
@@ -160,10 +169,18 @@ function displayCheckValue() {
 function addSelectedVital() {
     for (i = 0; i < vitalscheck.length; i++) {
         if (vitalscheck[i].checked) {
-            var requestBody = {
-                userid: loggedinid,
-                vitalid: vitalscheck[i].value
-            };
+            if (patientid != null) {
+                var requestBody = {
+                    userid: patientid,
+                    vitalid: vitalscheck[i].value
+                };
+            } else {
+                // data compilation
+                var requestBody = {
+                    userid: loggedinid,
+                    vitalid: vitalscheck[i].value
+                };
+            }
         }
     }
     //console.log(requestBody);
@@ -189,10 +206,18 @@ function removeSelectedVital() {
 
     for (i = 0; i < vitalscheck.length; i++) {
         if (vitalscheck[i].checked) {
-            var requestBody = {
-                userid: loggedinid,
-                vitalid: vitalscheck[i].value
-            };
+            if (patientid != null) {
+                var requestBody = {
+                    userid: patientid,
+                    vitalid: vitalscheck[i].value
+                };
+            } else {
+                // data compilation
+                var requestBody = {
+                    userid: loggedinid,
+                    vitalid: vitalscheck[i].value
+                };
+            }
         }
     }
     //console.log(requestBody);
@@ -254,21 +279,30 @@ function off() {
 function loadchart() {
     for (i = 0; i < vitalsradio.length; i++) {
         if (vitalsradio[i].checked) {
-            var requestBody = {
-                userid: loggedinid,
-                vitalid: vitalsradio[i].value
-            };
-            console.log(requestBody);
+            if (patientid != null) {
+                var requestBody = {
+                    userid: patientid,
+                    vitalid: vitalsradio[i].value
+                };
+                //console.log(requestBody);
+            } else {
+                var requestBody = {
+                    userid: loggedinid,
+                    vitalid: vitalsradio[i].value
+                };
+                //console.log(requestBody);
+            }
+
         }
     }
     if (requestBody.vitalid != 3) {
         axios.post(`${baseUrl}/getVitalValue`, requestBody)
             .then((response) => {
-                console.log("get vitals value");
+                //console.log("get vitals value");
                 var res = response.data;
-                console.log(res);
+                //console.log(res);
                 var number;
-                console.log("load chart");
+                //console.log("load chart");
 
                 //Google Chart
                 google.charts.load('current', { packages: ['corechart', 'line'] });
@@ -292,11 +326,11 @@ function loadchart() {
                             var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
                             number = res[0].vital_value;
                             test.push([d, res[i].vitalvalue]);
-                            console.log(t);
-                            console.log(d);
-                            console.log(res[i]);
+                            //console.log(t);
+                            //console.log(d);
+                            //console.log(res[i]);
                         }
-                        console.log(test);
+                        //console.log(test);
 
                         data.addRows(
                             test
@@ -339,13 +373,13 @@ function loadchart() {
                                     //console.log(response.data[i]);
                                     if (radioid == response.data[i].id) {
                                         number = response.data[i].vital_value;
-                                        console.log("-----------number-----------");
-                                        console.log(number);
+                                        //console.log("-----------number-----------");
+                                        //console.log(number);
                                     }
                                 }
                                 var d = new Date
                                 test.push([d, null])
-                                console.log(test);
+                                //console.log(test);
 
                                 data.addRows(
                                     test
@@ -381,14 +415,27 @@ function loadchart() {
 
                     }
 
-                    var valuebtn =
+                    if (patientid != null) {
+                        var valuebtn =
+                            `
+                        <div class="text-center">
+                            <button type="button" class="btn bg-beige ">
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
+                            </button>
+                        </div>
                         `
-                 <div class="text-center">
-                     <button type="button" class="btn bg-beige ">
-                         <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
-                     </button>
-                 </div>
-                 `
+                    } else {
+                        var valuebtn =
+                            `
+                        <div class="text-center">
+                            <button type="button" class="btn bg-beige ">
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
+                            </button>
+                        </div>
+                        `
+                    }
+
+
                     document.getElementById("valuebtn").innerHTML = valuebtn;
 
                     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -403,13 +450,13 @@ function loadchart() {
     else {
         axios.post(`${baseUrl}/getBloodPressureValue`, requestBody)
             .then((response) => {
-                console.log("get vitals value");
+                //console.log("get vitals value");
                 var res = response.data;
-                console.log(res);
+                //console.log(res);
                 var number;
                 var systolic;
                 var diastolic;
-                console.log("load chart");
+                //console.log("load chart");
 
                 //Google Chart
                 google.charts.load('current', { packages: ['corechart', 'line'] });
@@ -432,12 +479,12 @@ function loadchart() {
                             // Apply each element to the Date function
                             var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
                             number = res[0].vital_value;
-                            test.push([d, res[i].diastolic,res[i].systolic]);
-                            console.log(t);
-                            console.log(d);
-                            console.log(res[i]);
+                            test.push([d, res[i].diastolic, res[i].systolic]);
+                            //console.log(t);
+                            //console.log(d);
+                            //console.log(res[i]);
                         }
-                        console.log(test);
+                        // console.log(test);
 
                         data.addRows(
                             test
@@ -480,13 +527,13 @@ function loadchart() {
                                     //console.log(response.data[i]);
                                     if (radioid == response.data[i].id) {
                                         number = response.data[i].vital_value;
-                                        console.log("-----------number-----------");
-                                        console.log(number);
+                                        //console.log("-----------number-----------");
+                                        //console.log(number);
                                     }
                                 }
                                 var d = new Date
                                 test.push([d, null])
-                                console.log(test);
+                                //console.log(test);
 
                                 data.addRows(
                                     test
@@ -520,15 +567,25 @@ function loadchart() {
                                 console.log(error);
                             });
                     }
-
-                    var valuebtn =
+                    if (patientid != null) {
+                        var valuebtn =
                         `
-             <div class="text-center">
-                 <button type="button" class="btn bg-beige ">
-                     <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
-                 </button>
-             </div>
-             `
+                        <div class="text-center">
+                            <button type="button" class="btn bg-beige ">
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
+                            </button>
+                        </div>
+                        `
+                    } else {
+                        var valuebtn =
+                        `
+                        <div class="text-center">
+                            <button type="button" class="btn bg-beige ">
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
+                            </button>
+                        </div>
+                        `
+                    }
                     document.getElementById("valuebtn").innerHTML = valuebtn;
 
                     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
