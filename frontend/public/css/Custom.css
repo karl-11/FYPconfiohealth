@@ -138,6 +138,7 @@
     transition: none !important;
 }
 
+/* The popup chat - hidden by default */
 .chatPopup {
     display: none;
     position: fixed;
@@ -145,62 +146,13 @@
     right: 15px;
     border: 3px solid #f1f1f1;
     z-index: 9;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-/* Button used to open the chat form - fixed at the bottom of the page */
-.open-button {
-    background-color: #555;
-    color: white;
-    padding: 16px 20px;
-    border: none;
-    cursor: pointer;
-    opacity: 0.8;
-    position: fixed;
-    bottom: 23px;
-    right: 28px;
-    width: 280px;
-}
-
-/* The popup chat - hidden by default */
-.chat-popup {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    right: 15px;
-    border: 3px solid #f1f1f1;
-    z-index: 9;
+    width: 1200px;
 }
 
 /* Add styles to the form container */
 .form-container {
-    max-width: 300px;
     padding: 10px;
-    background-color: white;
-}
-
-/* Full-width textarea */
-.form-container textarea {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    border: none;
-    background: #f1f1f1;
-    resize: none;
-    min-height: 200px;
-}
-
-/* When the textarea gets focus, do something */
-.form-container textarea:focus {
-    background-color: #ddd;
-    outline: none;
+    background-color: whitesmoke;
 }
 
 /* Set a style for the submit/send button */
@@ -251,3 +203,76 @@ body {
 }
 
 /* END of chat styles */
+.container-test {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.darker {
+    border-color: #ccc;
+    background-color: #ddd;
+}
+
+.container-test::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.container-test img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.container-test img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right: 0;
+}
+
+.time-right {
+    float: right;
+    color: #aaa;
+}
+
+.time-left {
+    float: left;
+    color: #999;
+}
+
+/* END of chat styles */
+
+/* questionnaire button styles */
+
+.qnrSubmitBtn {
+    transition-duration: 0.4s;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    color: black;
+    border: 2px solid #04AA6D;
+    float: right;
+    border-radius: 5px;
+}
+
+.qnrSubmitBtn:hover {
+    background-color: #04AA6D;
+    color: white;
+}
+
+/* end of qnr button styles */
+
+/* back button styles */
+.backBtn {
+    border: 2px solid #FFF8F2;
+}
+
+.backBtn:hover {
+    border: 2px solid #f1f1f1;
+}
+/* end of back button styles */

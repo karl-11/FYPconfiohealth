@@ -782,4 +782,84 @@ app.post('/addSelectedDoctor', printDebugInfo, function (req, res) {
     });
 });
 
+//endpoint for get all questionnaires (this returns for all users)
+app.get('/getAllQnr', function (req, res) {
+
+    riskQuestionnaire.getAllQuestionnaires(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//endpoint to get user scores by specific user
+app.post('/getQnrUserScoreByUser', function (req, res) {
+    var user_id = req.body.user_id;
+    riskQuestionnaire.getQuestionnaireUserScoreByUserID(user_id, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+
+//endpoint to get all questions from a specific questionnaire
+//for testing only
+app.get('/getAllQnsByQnr', function (req, res) {
+
+    riskQuestionnaire.getAllQuestions(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/getQnsByQnr', function (req, res) {
+    var questionnaireID = req.body.questionnaireID;
+    riskQuestionnaire.getQuestionsByQnrID(questionnaireID, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/updateScore', function (req, res) {
+    var user_score = req.body.user_score;
+    var resultsID = req.body.resultsID;
+    riskQuestionnaire.submitScore(user_score, resultsID, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+app.post('/insertScore', function (req, res) {
+    var user_score = req.body.user_score;
+    var user_id = req.body.user_id;
+    var questionnaireID = req.body.questionnaireID;
+    riskQuestionnaire.insertNewScore(user_score, user_id, questionnaireID, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
 module.exports = app;
