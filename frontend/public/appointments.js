@@ -1,5 +1,11 @@
 const baseUrl = "http://localhost:3000";
 
+var patientid;
+
+// for doctor extracting patient id from url
+const myUrl = new URL(window.location.toLocaleString()).searchParams;
+var patientid = myUrl.get("patientid");
+
 function viewbooking() {
 
     const userid = localStorage.getItem('loggedInUserID');
@@ -51,15 +57,15 @@ function viewbooking() {
                 if (data.acceptance == "pending") {
                     datetimestring = datetimestring +
                         `
-                    <div class="row justify-content-between my-5 mx-1 align-items-center">
-                        <div class="text-decoration-none col-7 p-0 m-0 text-center">
+                    <div class="row justify-content-evenly my-5 mx-1 align-items-center">
+                        <div class="text-decoration-none col-5 p-0 m-0 text-center">
                             <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                 ${"Name: " + data.full_name} <br>
                                 ${"Date: " + date + " | Time: " + time} <br>
                                 ${"Location: " + data.location}
                             </p>
                         </div>
-                        <div class = "col-4">
+                        <div class = "col-2">
                             <div class="text-decoration-none col p-0 m-0 pb-2 text-center">
                                 <p id="${"accept" + data.bookingid}" class="btn bg-success card flex-column shadow-bottom border rounded-4 p-0 m-0"><strong>Accept</strong></p>
                             </div>
@@ -73,15 +79,15 @@ function viewbooking() {
                 } else {
                     datetimestring = datetimestring +
                         `
-                <div class="row justify-content-between my-5 mx-1 align-items-center">
-                    <div class="text-decoration-none col-7 p-0 m-0 text-center">
+                <div class="row justify-content-evenly my-5 mx-1 align-items-center">
+                    <div class="text-decoration-none col-5 p-0 m-0 text-center">
                         <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                             ${"Name: " + data.full_name} <br>
                             ${"Date: " + date + " | Time: " + time} <br>
                             ${"Location: " + data.location}
                         </p>
                     </div>
-                    <div class="text-decoration-none col-4 p-0 m-0 text-center">
+                    <div class="text-decoration-none col-2 p-0 m-0 text-center">
                         <p class="card flex-column shadow-bottom bg-cards border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
                     </div>
                 </div>
@@ -106,6 +112,7 @@ function viewbooking() {
                             .then((response) => {
                                 console.log("data")
                                 console.log(response.data)
+                                viewbooking()
                             })
                             .catch((error) => {
                                 console.log(error);
@@ -116,6 +123,7 @@ function viewbooking() {
                             .then((response) => {
                                 console.log("data")
                                 console.log(response.data)
+                                viewbooking()
                             })
                             .catch((error) => {
                                 console.log(error);
@@ -137,6 +145,7 @@ function viewbooking() {
                             .then((response) => {
                                 console.log("data")
                                 console.log(response.data)
+                                viewbooking()
                             })
                             .catch((error) => {
                                 console.log(error);
@@ -147,6 +156,7 @@ function viewbooking() {
                             .then((response) => {
                                 console.log("data")
                                 console.log(response.data)
+                                viewbooking()
                             })
                             .catch((error) => {
                                 console.log(error);
@@ -162,7 +172,15 @@ function viewbooking() {
         .catch((error) => {
             console.log(error);
         });
+
+
 }
 
+
+function back() {
+    var backbtn = document.getElementById("backbtn");
+    console.log(backbtn);
+    window.location.href = "doctorpage.html?patientid=" + patientid
+}
 
 

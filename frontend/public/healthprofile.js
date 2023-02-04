@@ -7,11 +7,9 @@ const myUrl = new URL(window.location.toLocaleString()).searchParams;
 var patientid = myUrl.get("patientid");
 if (patientid != null) {
     var reqBodyUserID = JSON.stringify({ userid: patientid });
-
 } else {
     // data compilation
     var reqBodyUserID = JSON.stringify({ userid: loggedInUserID });
-
 }
 
 axiosConfig = {
@@ -20,6 +18,12 @@ axiosConfig = {
     }
 };
 
+var docacc = document.getElementById("doctoraccess")
+if (patientid != null) {
+    console.log(docacc);
+    docacc.innerHTML= ""
+}
+console.log(docacc)
 console.log(reqBodyUserID);
 function getHPAllGeneral() {
     axios.post(`${baseUrl}/HPGeneral`, reqBodyUserID, axiosConfig)
