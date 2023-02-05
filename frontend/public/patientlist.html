@@ -88,28 +88,25 @@
                         //console.log("Not selected vitals");
                         var data = response.data[i];
                         //console.log(data);
-                        var linkID = data.patientid + "_" + data.full_name;
                         var patientStringList = patientStringList +
                             `
                             <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
-                                <a href="" class="text-decoration-none text-black stretched-link" id="${linkID}">${data.full_name}</a>
+                                <a href="./doctorpage.html?patientid=${data.patientid}" id="${data.full_name}" class="text-decoration-none text-black" onclick = "sendName(this.id)">
+                                    ${data.full_name}
+                                </a>
                             </p>
                             `
-                        document.getElementById("patientlist").innerHTML = patientStringList
-
-                        var button = document.getElementById(`${linkID}`);
-                        let text = document.getElementById(`${linkID}`).textContent;
-                        button.onclick = function click() {
-                            localStorage.setItem('patientName', text);
-                        };
-                        console.log("patient name: " + text);
-                        
                     }
+                    document.getElementById("patientlist").innerHTML = patientStringList;
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
+        function sendName(clickedName) {
+            localStorage.setItem('patientName', clickedName);
+        }
+
 
     </script>
 </body>

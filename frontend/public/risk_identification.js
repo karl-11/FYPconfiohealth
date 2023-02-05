@@ -94,10 +94,12 @@ function loadPatientDataForDoctor() {
         console.log("first")
         qnrCount = response.data.length;
         console.log("number of qnrs: " + qnrCount);
-        const patientName = localStorage.getItem('patientName')
+
+        var patientName = localStorage.getItem('patientName');
         $('#patientName').append(`
         <h2>Viewing results of: ${patientName}</h2>
         `)
+
         for (i = 0; i < response.data.length; i++) {
             const { id, name, max_score, image_url } = response.data[i]
             var resultDataID = "result" + id;
