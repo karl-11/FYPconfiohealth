@@ -22,6 +22,7 @@ var vital = require('../model/vitals');
 var booking = require('../model/booking.js');
 var hp = require('../model/healthprofile.js');
 var access = require('../model/access.js');
+var riskQuestionnaire = require('../model/riskQuestionnaireModel.js')
 
 //-----------------------------------------
 // Middleware functions

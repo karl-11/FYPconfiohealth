@@ -24,9 +24,9 @@ $(document).ready(function () {
             $('#questionContent').append(`
                         <div class="${activeStatusClass}">
                             <div class="d-flex flex-nowrap my-5">
-                                <div class="col-md-2">
+                                <div class="col-md-1">
                                 </div>
-                                <div class="col-md-8 mx-5 py-5 pe-5 align-self-center">
+                                <div class="col-md-10 mx-5 py-5 pe-5 align-self-center">
                                     <!-- question number -->
                                     <div id="questionNumbers">
                                         <h5 id="totalCount" class="m-3 position-absolute top-0" style="right: 18px;">
