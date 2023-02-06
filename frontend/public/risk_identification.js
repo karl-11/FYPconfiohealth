@@ -32,7 +32,7 @@ function loadAllData() {
             $('#questionnaireContent').append(`
             <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0 mb-4"
                 style="width: 290px; height:310px;">
-                <a href="detailQuestionnaire.html" id=${qnrID} class="sendIDsData text-decoration-none stretched-link" onclick="sendID(this.id)">
+                <a href="detailQuestionnaire.html" id=${qnrID} class="text-decoration-none stretched-link" onclick="sendID(this.id)">
                 </a>
                 <p class="text-start text-black p-0 mx-3 mt-3 mb-0 fs-5">${name}</p>
                 <img src="${image_url}" alt="questionnaire image"
@@ -106,12 +106,15 @@ function loadPatientDataForDoctor() {
             var qnrID = id;
             console.log("the qnrID is: " + qnrID);
 
+
+            // line 22: <a href="detailQuestionnaire.html" id=${qnrID} class="text-decoration-none stretched-link" onclick="sendID(this.id)">
+            // </a>
+
             //progress bar is loaded in as 0/max_score with no values, if there is content, .html() function will replace those values
             $('#questionnaireContent').append(`
             <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0 mb-4"
-                style="width: 290px; height:310px;">
-                <a href="detailQuestionnaire.html" id=${qnrID} class="sendIDsData text-decoration-none stretched-link" onclick="sendID(this.id)">
-                </a>
+                style="width: 270px; height:290px;">
+
                 <p class="text-start text-black p-0 mx-3 mt-3 mb-0 fs-5">${name}</p>
                 <img src="${image_url}" alt="questionnaire image"
                     class="img-fluid align-self-center p-3 mt-0" style="height:200px;">
