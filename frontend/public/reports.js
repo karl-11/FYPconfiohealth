@@ -29,7 +29,11 @@ function getAllFolders() {
 
                 console.log("data is empty")
 
-                // displayHPGeneralEmptyForm();
+                createThreeDefaultFolders();
+
+                //after looping thrice, refresh the page.
+                //getAllFolders();
+                //addNewFolderCard();
             }
             else {
 
@@ -145,6 +149,46 @@ function submitNewFolderForm(event) {
         .catch((error) => {
             console.log(error);
         });
+}
+
+function createThreeDefaultFolders() {
+
+    // loop thrice
+    for (i = 0; i < 3; i++) {
+
+        var defaultFolderName
+
+        switch (i) {
+            case 0:
+                defaultFolderName = "Medical Checkups"
+                break;
+            case 1:
+                defaultFolderName = "Blood Tests"
+                break;
+            case 2:
+                defaultFolderName = "X-Rays"
+        }
+
+        var reqBody = JSON.stringify({
+            userid: loggedInUserID,
+            folderName: defaultFolderName
+        });
+
+        axios.post(`${baseUrl}/insertFolder`, reqBody, axiosConfig)
+            .then((response) => {
+                // console.log(response)
+                // alert("saved!")
+
+                //reload the whole page
+                // getAllFolders();
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    location.reload();
 }
 
 function viewFolder() {
@@ -427,6 +471,11 @@ function submitNewFileForm(event) {
     var file = document.getElementById('input_file').files[0]
     var fileName = document.getElementById('fileName').value
 
+    if (file.size > (3 * 1024 * 1024)) {
+        alert("upload failed! - file size exceeds 3MB.")
+        return;
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     const folderid = urlParams.get('id');
 
@@ -443,7 +492,21 @@ function submitNewFileForm(event) {
             viewFolder2();
         })
         .catch((error) => {
-            console.log(error);
+
+            console.log(error)
+
+            if (error.response.data.errCode == "file already exists") {
+                alert("upload failed! - " + error.response.data.msg.split('error'))
+            }
+            else if (error.response.data.errCode == "file type not supported") {
+                alert("upload failed! - " + error.response.data.msg.split('error'))
+            }
+            else if (error.response.data.code == 'LIMIT_FILE_SIZE') {
+                alert("upload failed! - file size exceeds 3MB.")
+            }
+            else {
+                alert("upload failed! please check your input and try again")
+            }
         });
 }
 
@@ -472,10 +535,30 @@ function viewFile() {
 
                 var data = response.data[0];
 
-                var fileHTML =
-                    `
+                var fileType = data.file_type.split('/')[0]
+
+                console.log(data)
+                console.log(fileType)
+
+                var fileHTML = ""
+
+                if (fileType == 'image') {
+                    fileHTML =
+                        `
                                 <img style="max-width: 75%;" src="./uploads/${data.file_name}" alt="Avatar Logo">
                             `
+                }
+                else {
+                    fileHTML =
+                        `
+                            <iframe class="w-75 vh-100" src="./uploads/${data.file_name}">
+                        `
+                }
+
+                // var fileHTML =
+                //     `
+                //                 <img style="max-width: 75%;" src="./uploads/${data.file_name}" alt="Avatar Logo">
+                //             `
 
                 document.getElementById("fileplaceholder").innerHTML = fileHTML
 

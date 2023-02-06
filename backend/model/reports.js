@@ -40,6 +40,7 @@ var uploadDB = {
 
                 var output = {
                     success: 'no',
+                    errCode : "file already exists",
                     msg: msg
                 }
                 return callback(null, output);

@@ -987,6 +987,7 @@ app.post('/uploadFile', printDebugInfo, function (req, res, next) {
 
                 var msg = 'Error - Only images and pdf(s) are allowed'
                 var output = {
+                    errCode : "file type not supported",
                     msg: msg
                 }
                 res.status(406).send(output);
@@ -997,7 +998,7 @@ app.post('/uploadFile', printDebugInfo, function (req, res, next) {
             callback(null, true)
         },
         limits: {
-            fileSize: 1024 * 1024 //1 mb
+            fileSize: 3 * 1024 * 1024 //3 mb
         }
     }).single('input_file')
 
@@ -1016,7 +1017,7 @@ app.post('/uploadFile', printDebugInfo, function (req, res, next) {
 
             try {
 
-                console.log(req.body)
+                // console.log(req.body)
 
                 var file_name = req.file.filename
                 var folder_id = req.body.folder_id
