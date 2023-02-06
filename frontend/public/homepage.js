@@ -8,6 +8,10 @@ if (localStorage.getItem("loggedInUserType") === null) {
     document.getElementById("medicationOptimisationButton").href = "Login.html";
 }
 
+if (localStorage.getItem("loggedInUserType") === "doctor") {
+    document.location.href = "/doctorpage.html"
+}
+
 //paste this line whenever we need api or endpoints
 const baseUrl = "http://localhost:3000";
 
