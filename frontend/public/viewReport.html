@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="./css/reports.css">
     <link href="./css/Custom.css">
 
+
     <!--Font import-->
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 
@@ -31,7 +32,7 @@
     </script>
 </head>
 
-<body class="font-montserrat body" onload="getAllFolders()">
+<body class="font-montserrat body" onload="viewFile()">
 
     <!--Body section-->
     <section class="w-75 min-vh-100 mx-auto pb-170px">
@@ -39,28 +40,38 @@
         <!--Header section-->
         <span id="header"></span>
 
-        <!-- Page Header Title-->
-        <h3 class="text-center font-pageheader p-2 pb-0"><strong>Investigation Reports</strong></h3>
+        <!-- Page Header Section to put the back button and page header in the same row -->
+        <div class="container-fluid">
+            <div class="row just-content-evenly my-2">
+
+                <button class="col-2 button rounded-3 p-2 m-0" type="button" >
+                    <img style="max-width: 10%;" class="" src="./images/icons8-back-30.png" alt="">
+                    <a class="text-decoration-none text-black" href="Javascript:history.go ( -1)"><Strong>Back</Strong></a></button>
+
+                <!-- Page Header Title-->
+                <h3 id="fileName" class="col-8 text-center font-pageheader p-2 pb-0 ">
+                    <strong>Report 123</strong>
+                </h3>
+
+
+                <button id="deleteReportBtn" class="col-2 button rounded-3 p-2 m-0" type="button" onclick="deleteReport()"><img class=""
+                        style="max-width: 10%;" src="./images/icons8-minus-30.png" alt="">
+                    <Strong>Delete report</Strong></button>
+
+            </div>
+        </div>
 
         <!--Main section-->
-        <div id="reports-main-section" class="row justify-content-start ms-2">
-
+        <div id="main-section" class="text-center" onclick="viewFile()">
+            <div id="fileplaceholder" class="mx-5 p-3">
+                <!-- <img style="max-width: 75%;" src="./images/47lfuu03aak31-userid9-1675481450101-632196698.jpg" alt="Avatar Logo"> -->
+            </div>
         </div>
 
         <!--Footer section-->
         <span id="footer"></span>
 
     </section>
-
-
-    <!-- <form action="/uploadImage" method="POST" enctype="multipart/form-data">
-        <label>Store Image</label><br><br>
-        <p>
-            alert message
-        </p>
-        <input type="file" name="image" multiple>
-        <button type="submit">Upload</button>
-    </form> -->
 
     <script src="./reports.js"></script>
 

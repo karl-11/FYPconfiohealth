@@ -5,6 +5,8 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const fs = require('fs');
 
 // -------------------------------------------------------
 // INIT EXPRESS SERVER
@@ -23,6 +25,7 @@ var booking = require('../model/booking.js');
 var hp = require('../model/healthprofile.js');
 var access = require('../model/access.js');
 var riskQuestionnaire = require('../model/riskQuestionnaireModel.js')
+var reportsDB = require('../model/reports.js')
 
 //-----------------------------------------
 // Middleware functions
@@ -57,6 +60,7 @@ var printDebugInfo = function (req, res, next) {
 
 var urlEncodedParser = bodyParser.urlencoded({ extended: false });
 var jsonParser = bodyParser.json();
+var uploadFiles = require("../middleware/uploadFiles.js");
 
 //-----------------------------------------
 // MF Configurations
@@ -114,7 +118,7 @@ app.post("/login", (req, res) => {
             res.status(401).send();
 
             console.log("wrong password or invalid login ")
-            
+
             return;
         }
 
@@ -578,6 +582,7 @@ app.post('/insertHPMedical', printDebugInfo, function (req, res) {
     });
 });
 
+//end point to delete Medical record
 app.post('/deleteHPMedical', printDebugInfo, function (req, res) {
 
     //extract data from request body
@@ -618,6 +623,7 @@ app.post('/insertHPMedication', printDebugInfo, function (req, res) {
     });
 });
 
+//end point to delete Medication record
 app.post('/deleteHPMedication', printDebugInfo, function (req, res) {
 
     //extract data from request body
@@ -656,6 +662,7 @@ app.post('/insertHPSurgical', printDebugInfo, function (req, res) {
     });
 });
 
+//end point to delete Surgical record
 app.post('/deleteHPSurgical', printDebugInfo, function (req, res) {
 
     //extract data from request body
@@ -694,6 +701,7 @@ app.post('/insertHPDrug', printDebugInfo, function (req, res) {
     });
 });
 
+// end point to delete a health profile drug allergy record
 app.post('/deleteHPDrug', printDebugInfo, function (req, res) {
 
     //extract data from request body
@@ -732,6 +740,7 @@ app.post('/insertHPVaccination', printDebugInfo, function (req, res) {
     });
 });
 
+// end point to delete a health profile vaccination record
 app.post('/deleteHPVaccination', printDebugInfo, function (req, res) {
 
     //extract data from request body
@@ -906,5 +915,236 @@ app.post('/insertScore', function (req, res) {
         }
     });
 });
+
+
+// end point to add a new folder
+app.post('/insertFolder', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var userid = req.body.userid;
+    var folderName = req.body.folderName;
+
+    reportsDB.insertFolder(folderName, userid, function (err, result) {
+        if (!err) {
+            var output = {
+                "inserted id": result.insertId
+            };
+            res.status(201).send(output);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point to get all folders for a user
+app.post('/getAllFoldersForUser', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var userid = req.body.userid;
+
+    reportsDB.getFoldersForUser(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point to delete a folder
+app.post('/deleteFolder', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var id = req.body.id;
+
+    reportsDB.deleteFolder(id, function (err, result) {
+        if (!err) {
+            var output = {
+                "affected rows": result.affectedRows
+            };
+            res.status(200).send(output);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point to upload image
+app.post('/uploadFile', printDebugInfo, function (req, res, next) {
+
+    console.log("here")
+    console.log(req.body.input_file)
+
+    var upload = multer({
+        storage: uploadFiles.image.storage(),
+        fileFilter: function (req, file, callback) {
+            var ext = file.originalname.split(".")[1];
+
+            if (ext !== 'png' && ext !== 'jpg' && ext !== 'gif' && ext !== 'jpeg' && ext !== 'pdf') {
+
+                var msg = 'Error - Only images and pdf(s) are allowed'
+                var output = {
+                    msg: msg
+                }
+                res.status(406).send(output);
+
+                return next();
+            }
+
+            callback(null, true)
+        },
+        limits: {
+            fileSize: 1024 * 1024 //1 mb
+        }
+    }).single('input_file')
+
+    upload(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+
+            // if multer error
+            res.status(500).send(err);
+
+        } else if (err) {
+
+            // if general error
+            res.status(500).send(err);
+
+        } else {
+
+            try {
+
+                console.log(req.body)
+
+                var file_name = req.file.filename
+                var folder_id = req.body.folder_id
+                var userid = req.body.user_id
+                var display_name = req.body.fileName
+                var file_type = req.file.mimetype
+                var file_size = req.file.size
+                var upload_path = req.file.path
+
+                // call model
+                reportsDB.uploadFile(folder_id, file_name, file_type, userid, display_name, file_size, function (err, data) {
+
+                    if (err) {
+
+                        console.log(err)
+                        res.status(500).send(err);
+
+                    }
+                    // if file name already exists
+                    else if (data.success == 'no') {
+
+                        // delete the physical folder we uploaded just now
+                        fs.unlinkSync(upload_path);
+
+                        // send response and alert user that it failed
+                        res.status(406).send(data);
+
+                    }
+                    // everything ok, image stored and uploaded into database
+                    else {
+
+                        res.status(200).send(data);
+
+                    }
+
+                })
+
+            } catch (error) {
+
+                res.status(500).send(error.message);
+            }
+
+        }
+    })
+})
+
+// end point to get all files in a folder
+app.post('/getFilesInsideFolder', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var folder_id = req.body.folder_id;
+
+    reportsDB.getFilesInsideFolder(folder_id, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point to get one file to view in detail
+app.post('/getFile', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var file_id = req.body.file_id;
+
+    reportsDB.getFile(file_id, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point to delete a file 
+app.post('/deleteFile', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var file_id = req.body.id;
+
+    reportsDB.getFile(file_id, function (err, result) {
+
+        // if file is found, proceed with delete
+        if (!err) {
+
+            // console.log("result -" + result)
+
+            // delete the physical file from the storage folder
+            var data = result[0];
+
+            // get the file path and file name to delete
+            var file_name = data.file_name;
+            var basepath = '../frontend/public/uploads/'
+            var filepath = basepath + file_name
+
+            // console.log("filepath " + filepath); 
+            fs.unlinkSync(filepath);
+
+            // delete the file record from the database
+            reportsDB.deleteFile(file_id, function (err, result) {
+                if (!err) {
+
+                    var output = {
+                        "affected rows": result.affectedRows
+                    };
+
+                    console.log(result);
+                    res.status(200).send(output);
+                } else {
+                    res.status(500);
+                    console.log("error");
+                }
+            });
+
+        }
+        // file not found
+        else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+
+
+});
+
 
 module.exports = app;
