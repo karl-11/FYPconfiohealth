@@ -216,77 +216,75 @@
         <!-- End of FAQ -->
     </section>
 
+    <!-- Modal for header + footer -->
+    <div class="modal fade" id="clinicModal" tabindex="-1" aria-labelledby="clinicModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Our Clinic Address</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Located in: Depot Heights Shopping Centre <br>
+                    Address: 108 Depot Rd, #01-10, Singapore 100108
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="contactUsModal" tabindex="-1" aria-labelledby="contactUsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Contact Us</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Phone:
+                    <a href="tel:6278 0088">6278 0088</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="aboutUsModal" tabindex="-1" aria-labelledby="aboutUsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">About Us</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Started by doctors who witness their patient daily struggles, the Confio team aims to empower
+                        patients to live better through personalisation around their lives.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--Footer section-->
     <span id="footer"></span>
 
     <!-- Chat button -->
-    <button type="button" class="btn p-0 m-0 chatbutton bg-beige rounded-circle shadow-bottom"><img
-            src="./images/chat.png" alt="chat icon" onclick="openChat(), loadMessages()"></button>
-
-    <!-- Chat section -->
-    <div class="chatPopup" id="chatPage">
-        <div class="overflow-auto" style="max-height: 500px;">
-            <form action="/chat.js" class="form-container">
-                <form class="form-container">
-                    <div>
-                        <label for="msg"><b>Message</b></label>
-                    </div>
-                    <div class="container">
-                        <img src="/w3images/bandmember.jpg" alt="Avatar">
-                        <p>Hello. How are you today?</p>
-                        <span class="time-right">11:00</span>
-                    </div>
-
-                    <div class="container darker">
-                        <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
-                        <p>Hey! I'm fine. Thanks for asking!</p>
-                        <span class="time-left">11:01</span>
-                    </div>
-
-                    <div class="container">
-                        <img src="/w3images/bandmember.jpg" alt="Avatar">
-                        <p>Sweet! So, what do you wanna do today?</p>
-                        <span class="time-right">11:02</span>
-                    </div>
-
-                    <div class="container darker">
-                        <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
-                        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
-                        <span class="time-left">11:05</span>
-                    </div>
-                    <div class="container">
-                        <img src="/w3images/bandmember.jpg" alt="Avatar">
-                        <p>Hello. How are you today?</p>
-                        <span class="time-right">11:00</span>
-                      </div>
-                      
-                      <div class="container darker">
-                        <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
-                        <p>Hey! I'm fine. Thanks for asking!</p>
-                        <span class="time-left">11:01</span>
-                      </div>
-                      
-                      <div class="container">
-                        <img src="/w3images/bandmember.jpg" alt="Avatar">
-                        <p>Sweet! So, what do you wanna do today?</p>
-                        <span class="time-right">11:02</span>
-                      </div>
-                      
-                      <div class="container darker">
-                        <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
-                        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
-                        <span class="time-left">11:05</span>
-                      </div>
-                    <textarea placeholder="Type message.." name="msg" required></textarea>
-                    <button type="submit" class="btn">Send</button>
-                    <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
-                </form>
-        </div>
-    </div>
+    <!-- <button type="button" class="btn p-0 m-0 chatbutton bg-beige rounded-circle shadow-bottom"><img 
+             src="./images/chat.png" alt="chat icon" onclick="openChat()"></button> -->
 
     <!--bootstrap bundle script-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./homepage.js"></script>
+    <!-- <script src="./chat.js"></script> -->
+
 </body>
 
 </html>

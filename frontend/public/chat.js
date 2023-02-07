@@ -1,3 +1,34 @@
+const chatList = document.querySelector('#chat-list');
+const messageInput = document.querySelector('#message-input');
+const sendButton = document.querySelector('#send-button');
 
-msg = document.getElementsByName(msg);
-console.log("message is" + msg);
+//paste this line whenever we need api or endpoints
+const baseUrl = "http://localhost:3000";
+const windowUrl = "http://localhost:3001";
+
+sendButton.addEventListener('click', (event) => {
+    // event.preventDefault();
+    // const message = messageInput.value;
+    // if (!message) return;
+
+    // const li = document.createElement('li');
+    // li.classList.add('list-group-item');
+    // li.textContent = message;
+    // chatList.appendChild(li);
+    // messageInput.value = '';
+
+    var id = localStorage.getItem('loggedInUserID')
+    var receiverID = 1;
+    var content = messageInput.value;
+    var requestBody = {
+        senderID: id,
+        receiverID: receiverID,
+        content: content,
+    };
+
+    axios.post(`${baseUrl}/sendMessages`, requestBody).then(function (response) {
+
+    })
+});
+
+

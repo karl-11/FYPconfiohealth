@@ -26,6 +26,7 @@ var hp = require('../model/healthprofile.js');
 var access = require('../model/access.js');
 var riskQuestionnaire = require('../model/riskQuestionnaireModel.js')
 var reportsDB = require('../model/reports.js')
+var chatDB = require('../model/chatModel.js')
 
 //-----------------------------------------
 // Middleware functions
@@ -1892,7 +1893,7 @@ app.post('/getFilesInsideFolder', printDebugInfo, isLoggedInMiddleware, function
         return;
     }
 
-    
+
     if (!req.body.patientid) {
 
         //default code here
@@ -2004,8 +2005,6 @@ app.post('/deleteFile', printDebugInfo, isLoggedInMiddleware, function (req, res
             console.log("error");
         }
     });
-
-
 });
 
 // end point for getting patient name for doctor vitals 
@@ -2033,5 +2032,48 @@ app.get('/getDoctorName', function (req, res) {
     });
 });
 
+//-----------------------------------------
+// Chat endpoints
+//-----------------------------------------
+app.get('/chat', printDebugInfo, function (req, res) {
+    chatDB.getAllContacts(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
 
+
+app.post('/chatContacts', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    const id = req.body.id;
+
+    chatDB.getAllMessages(id, function (err, result) {
+    });
+});
+
+
+app.post('/sendMessages', printDebugInfo, function (req, res) {
+
+    const id = req.body.id;
+    const receiverID = req.body.receiverID;
+    const content = req.body.content;
+
+    chatDB.sendMessage(id, receiverID, content, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//-----------------------------------------
+// End of chat endpoints
+//-----------------------------------------
 module.exports = app;

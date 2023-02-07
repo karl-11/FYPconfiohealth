@@ -11,7 +11,6 @@ $(document).ready(function () {
         loadPatientDataForDoctor();
     } else {
         console.log("Invalid User!!!")
-
     }
 
 })
