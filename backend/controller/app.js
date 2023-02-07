@@ -1481,10 +1481,18 @@ app.post('/deleteHPVaccination', printDebugInfo, isLoggedInMiddleware, function 
 // DOCTOR ACCESS
 //-----------------------------------------
 
-app.post('/getAllSelectedDoctor', printDebugInfo, function (req, res) {
+app.post('/getAllSelectedDoctor', printDebugInfo, isLoggedInMiddleware,function (req, res) {
 
     //extract data from request body
     var patientid = req.body.patientid;
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     access.getAllSelectedDoctor(patientid, function (err, result) {
         if (!err) {
@@ -1496,10 +1504,19 @@ app.post('/getAllSelectedDoctor', printDebugInfo, function (req, res) {
     });
 });
 
-app.post('/getNotSelectedDoctor', printDebugInfo, function (req, res) {
+app.post('/getNotSelectedDoctor', printDebugInfo, isLoggedInMiddleware,function (req, res) {
 
     //extract data from request body
     var patientid = req.body.patientid;
+
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     access.getNotSelectedDoctor(patientid, function (err, result) {
         if (!err) {
@@ -1511,10 +1528,19 @@ app.post('/getNotSelectedDoctor', printDebugInfo, function (req, res) {
     });
 });
 
-app.post('/getSelectedPatient', printDebugInfo, function (req, res) {
+app.post('/getSelectedPatient', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var doctorid = req.body.doctorid;
+
+    var patientid = req.body.patientid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != patientid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     access.getSelectedPatient(doctorid, function (err, result) {
         if (!err) {
@@ -1526,11 +1552,19 @@ app.post('/getSelectedPatient', printDebugInfo, function (req, res) {
     });
 });
 
-app.post('/deleteSelectedDoctor', printDebugInfo, function (req, res) {
+app.post('/deleteSelectedDoctor', printDebugInfo, isLoggedInMiddleware,function (req, res) {
 
     //extract data from request body
-    var patientid = req.body.patientid;
     var doctorid = req.body.doctorid;
+
+    var patientid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != patientid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     access.deleteSelectedDoctor(patientid, doctorid, function (err, result) {
         if (!err) {
@@ -1542,11 +1576,20 @@ app.post('/deleteSelectedDoctor', printDebugInfo, function (req, res) {
     });
 });
 
-app.post('/addSelectedDoctor', printDebugInfo, function (req, res) {
+app.post('/addSelectedDoctor', printDebugInfo, isLoggedInMiddleware,function (req, res) {
 
     //extract data from request body
     var patientid = req.body.patientid;
     var doctorid = req.body.doctorid;
+
+    // var patientid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != patientid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     access.addSelectedDoctor(patientid, doctorid, function (err, result) {
         if (!err) {
