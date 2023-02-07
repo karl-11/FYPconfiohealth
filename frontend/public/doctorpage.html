@@ -139,6 +139,8 @@
         document.getElementById('vitalSignsButton').href = "vitals.html?patientid=" + patientid;
         document.getElementById('healthProfileButton').href = "profile.html?patientid=" + patientid;
         document.getElementById('appointmentButton').href = "appointments.html?patientid=" + patientid;
+        document.getElementById('riskIdentificationBtn').href = "risk_identification.html?patientid=" + patientid;
+        document.getElementById('healthReportsButton').href = "reports.html?patientid=" + patientid;
         console.log(patientid);
         console.log(document.getElementById('vitalSignsButton').getAttribute("href"));
         if (isNaN(patientid) == true || patientid == "" || patientid == null) {
@@ -147,7 +149,6 @@
                 btn[i].classList.add("disabled")
             }
         }
-        document.getElementById('riskIdentificationBtn').href = "risk_identification.html?patientid=" + patientid;
 
 
 

@@ -1802,7 +1802,7 @@ app.post('/deleteFolder', printDebugInfo, isLoggedInMiddleware, function (req, r
     //extract data from request body
     var id = req.body.id;
 
-    // var userid = req.body.userid;
+     var userid = req.body.userid;
     var user_role = req.body.user_role
 
     //check if user trying to post is actual logged in user
