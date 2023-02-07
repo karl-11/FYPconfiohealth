@@ -17,11 +17,14 @@ function AddBooking() {
 
   console.log(requestBody);
 
+  //sends data to backend
   axios.post(`${baseUrl}/booking`, requestBody)
     .then((response) => {
       console.log("booking response")
       console.log(response.data)
       alert('Booking Successful!');
+      window.location.href = "/optimisation.html";
+
     })
     .catch((error) => {
       console.log(error);
@@ -62,8 +65,6 @@ function viewbooking() {
         var year = d.getFullYear();
         var month = (d.getMonth() + 1);
         var day = d.getDate();
-        var hour = d.getHours();
-        var minute = d.getMinutes();
         if (month < 10) {
             month = '0' + month
         };
