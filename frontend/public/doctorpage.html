@@ -78,7 +78,8 @@
                     <img src="./images/Wallet-bro (1) 1.png" alt="Avatar Logo"
                         class="card-img-top align-self-center p-2">
                     <div class="card-body p-0 m-0 mb-2">
-                        <p class="text-center text-black p-0 m-0"><strong>Appointments</strong></p>
+                        <p class="text-center text-black p-0 m-0"><strong>Appointments</strong> <span
+                                class="badge bg-danger rounded-5" id="notibadge"></span></p>
                     </div>
                 </div>
             </a>
@@ -122,6 +123,8 @@
     <!--bootstrap bundle script-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        const baseUrl = "http://localhost:3000";
+        const userid = localStorage.getItem('loggedInUserID');
         const myUrl = new URL(window.location.toLocaleString()).searchParams;
         var patientid = myUrl.get("patientid");
         document.getElementById('vitalSignsButton').href = "vitals.html?patientid=" + patientid;
@@ -136,6 +139,38 @@
             }
         }
         document.getElementById('riskIdentificationBtn').href = "risk_identification.html?patientid=" + patientid;
+
+
+        function notification() {
+            var requestBody = {
+                doctorid: userid
+            };
+            console.log(requestBody)
+            axios.post(`${baseUrl}/viewmybooking`, requestBody)
+                .then((response) => {
+                    console.log("view booking ")
+                    console.log(response.data)
+                    let datetimestring = "";
+                    var count = 0;
+                    for (i = 0; i < response.data.length; i++) {
+                        var data = response.data[i];
+                        if (data.acceptance == "pending") {
+                            count++
+                            console.log(count);
+                        }
+
+                    }
+                    if (count > 0) {
+                        document.getElementById('notibadge').innerHTML = count
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        document.addEventListener("DOMContentLoaded", notification())
+
+        setInterval(notification, 60000);
 
     </script>
 </body>
