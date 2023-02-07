@@ -33,9 +33,15 @@ form.addEventListener('submit', (event) => {
             localStorage.setItem("loggedInUserID", loggedInUserID);
             localStorage.setItem("loggedInUserType", loggedInUserType);
 
-            window.location.href = "/";
+            if (loggedInUserType == "doctor") {
+                window.location.href = "/doctorpage.html";
+            } else {
+                window.location.href = "/";
+            }
+
         })
         .catch((error) => {
+            alert("invalid login")
             console.log(error);
         });
 });

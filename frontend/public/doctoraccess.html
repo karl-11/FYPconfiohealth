@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="./css/Custom.css">
+
+    <link href="./css/Custom.css">
+
+
+    <!--Font import-->
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+
+    <!--JQuery-->
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!--Include Header & Footer-->
+    <script>
+        $(function () {
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+
+            //document.getElementById("UserProfile").innterHTML = "abc"
+
+        });
+
+
+    </script>
+</head>
+
+<body class="font-montserrat body">
+
+
+    <section class="w-75 min-vh-100 mx-auto pb-170px">
+        <!--Header section-->
+        <span id="header"></span>
+        <div class="text-center">
+            <h4 class="ps-4 pt-3">
+                Doctor Access
+            </h4>
+        </div>
+
+        <div id="selecteddoctor" onchange="displayRadioValue(),deleteselecteddoctor()">
+
+        </div>
+
+
+        <div class="text-center">
+            <h4 class="ps-3 pt-3">
+                Doctor List
+            </h4>
+            <!-- <div class="m-3 form-group col-2">
+                <input type="text" class="form-control bg-beige" id="search" placeholder="search" name="search">
+            </div> -->
+        </div>
+
+        <div id="notselecteddoctor" onchange="displayRadioValue(),addselecteddoctor()">
+
+        </div>
+
+    </section>
+
+
+
+    <!--Footer section-->
+    <span id="footer"></span>
+
+
+    <!--bootstrap bundle script-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get vitals from table and put into html
+        const baseUrl = "http://localhost:3000";
+
+        var doctoraccessradio = document.getElementsByName("doctoraccessradio");
+        const loggedinid = localStorage.getItem('loggedInUserID');
+        var doctorid;
+        var requestBody = {
+            patientid: loggedinid,
+            doctorid: doctorid
+        };
+
+        window.addEventListener('DOMContentLoaded', notSelectedDoctor());
+        window.addEventListener('DOMContentLoaded', selectedDoctor());
+
+
+        //remove radio button
+        // for (let i = 0; i < doctoraccessradio.length; i++) {
+        //     doctoraccessradio[i].style.display = "none";
+        // }
+
+        function displayRadioValue() {
+            //console.log(doctoraccessradio)
+            for (i = 0; i < doctoraccessradio.length; i++) {
+                if (doctoraccessradio[i].checked) {
+                    // console.log("id: " + doctoraccessradio[i].id);
+                    doctorid = doctoraccessradio[i].id;
+                    requestBody = {
+                        patientid: loggedinid,
+                        doctorid: doctorid
+                    };
+                    // console.log(requestBody);
+                }
+            }
+        };
+
+        function selectedDoctor() {
+            axios.post(`${baseUrl}/getAllSelectedDoctor`, requestBody)
+                .then((response) => {
+                    //console.log(response.data);
+
+                    var doctorStringSelected = "";
+
+                    for (i = 0; i < response.data.length; i++) {
+
+                        //console.log("Not selected vitals");
+                        var data = response.data[i];
+                        //console.log(data);
+
+                        var doctorStringSelected = doctorStringSelected +
+                            `
+                            <div class="form-check  ">
+                                <input class="form-check-input" type="radio" name="doctoraccessradio" id="${data.id}" value="${data.id}">
+                                <label class="form-check-label card shadow-bottom bg-cards border-0 p-2 mb-2 text-center" for="${data.id}">
+                                    <!-- <img src="images/chat.png" class="align-self-center" alt=""> -->
+                                    <p class="p-0 m-0" style="white-space: normal;">
+                                        ${"Dr " + data.full_name}
+                                    </p>
+                                </label>
+                            </div>
+                            `
+                    }
+                    document.getElementById("selecteddoctor").innerHTML = doctorStringSelected;
+
+                    for (let i = 0; i < doctoraccessradio.length; i++) {
+                        doctoraccessradio[i].style.display = "none";
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        function notSelectedDoctor() {
+            axios.post(`${baseUrl}/getNotSelectedDoctor`, requestBody)
+                .then((response) => {
+                    //console.log(response.data);
+
+                    var doctorStringNotSelected = "";
+
+                    for (i = 0; i < response.data.length; i++) {
+
+                        //console.log("Not selected vitals");
+                        var data = response.data[i];
+                        //console.log(data);
+
+                        var doctorStringNotSelected = doctorStringNotSelected +
+                            `
+                            <div class="form-check  ">
+                                <input class="form-check-input" type="radio" name="doctoraccessradio" id="${data.id}" value="${data.id}">
+                                <label class="form-check-label card shadow-bottom bg-cards border-0 p-2 mb-2 text-center" for="${data.id}">
+                                    <!-- <img src="images/chat.png" class="align-self-center" alt=""> -->
+                                    <p class="p-0 m-0" style="white-space: normal;">
+                                        ${"Dr " + data.full_name}
+                                    </p>
+                                </label>
+                            </div>
+                            `
+                    }
+                    document.getElementById("notselecteddoctor").innerHTML = doctorStringNotSelected;
+
+                    for (let i = 0; i < doctoraccessradio.length; i++) {
+                        doctoraccessradio[i].style.display = "none";
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+
+        function deleteselecteddoctor() {
+            axios.post(`${baseUrl}/deleteSelectedDoctor`, requestBody)
+                .then((response) => {
+                    //console.log(response);
+                    selectedDoctor()
+                    notSelectedDoctor()
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        function addselecteddoctor() {
+            axios.post(`${baseUrl}/addSelectedDoctor`, requestBody)
+                .then((response) => {
+                   // console.log(response);
+                    selectedDoctor()
+                    notSelectedDoctor()
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+
+
+    </script>
+</body>
+
+</html>

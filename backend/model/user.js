@@ -76,7 +76,7 @@ var userDB = {
                     return callback(null, user);
                 } else {
                     // return res.status(500).json({ message: 'Login has failed.' });
-                    return res.status(500).json({ message: error });
+                    return callback(error, null);
                 }
 
 

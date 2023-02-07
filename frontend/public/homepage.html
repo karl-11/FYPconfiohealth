@@ -32,9 +32,11 @@
             //document.getElementById("UserProfile").innterHTML = "abc"
 
         });
-
-
     </script>
+
+    <!-- chat stuff -->
+    <script src="/socket.io/socket.io.js"></script>
+
 </head>
 
 <body class="font-montserrat body">
@@ -42,7 +44,6 @@
 
     <section class="w-75 min-vh-100 mx-auto pb-170px">
         <span id="header"></span>
-
 
         <!-- card button links -->
         <div class="row justify-content-between my-5 mx-1">
@@ -72,7 +73,8 @@
                     </div>
                 </div>
             </a>
-            <a href="risks.html" id="healthRisksButton" class="feature text-decoration-none col-2 p-0 m-0">
+            <a href="risk_identification.html" id="healthRisksButton"
+                class="feature text-decoration-none col-2 p-0 m-0">
                 <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                     <img src="./images/Wallet-bro (1) 2 (1).png" alt="Avatar Logo"
                         class="card-img-top align-self-center p-2">
@@ -196,57 +198,94 @@
             </button>
 
         </div>
-
         <!-- End of carousel -->
 
         <!-- Start of FAQ -->
-
         <div>
             <h3 class="pt-5 pb-3"><strong>Frequently Asked Questions</strong></h3>
             <div class="row p-0 m-0">
-
                 <div class="col-md-4 mh-100 px-0">
                     <img src="./images/Medical prescription-bro 1.png" class="w-100" alt="">
                 </div>
-
-
                 <div class="col-md-8 ps-5 p-0">
-
                     <div class="d-flex flex-column flex-nowrap" style="min-height: 100%;" id="accordion">
-
-
                     </div>
                 </div>
             </div>
         </div>
-
         <!-- End of FAQ -->
-
     </section>
-
-
 
     <!--Footer section-->
     <span id="footer"></span>
 
     <!-- Chat button -->
     <button type="button" class="btn p-0 m-0 chatbutton bg-beige rounded-circle shadow-bottom"><img
-            src="./images/chat.png" alt="chat icon" onclick="openChat()"></button>
+            src="./images/chat.png" alt="chat icon" onclick="openChat(), loadMessages()"></button>
 
+    <!-- Chat section -->
     <div class="chatPopup" id="chatPage">
-        <!-- <form action="/chat.js" class="form-container"> -->
-        <form class="form-container">
-            <label for="msg"><b>Message</b></label>
-            <textarea placeholder="Type message.." name="msg" required></textarea>
+        <div class="overflow-auto" style="max-height: 500px;">
+            <form action="/chat.js" class="form-container">
+                <form class="form-container">
+                    <div>
+                        <label for="msg"><b>Message</b></label>
+                    </div>
+                    <div class="container">
+                        <img src="/w3images/bandmember.jpg" alt="Avatar">
+                        <p>Hello. How are you today?</p>
+                        <span class="time-right">11:00</span>
+                    </div>
 
-            <button type="submit" class="btn">Send</button>
-            <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
-        </form>
+                    <div class="container darker">
+                        <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
+                        <p>Hey! I'm fine. Thanks for asking!</p>
+                        <span class="time-left">11:01</span>
+                    </div>
+
+                    <div class="container">
+                        <img src="/w3images/bandmember.jpg" alt="Avatar">
+                        <p>Sweet! So, what do you wanna do today?</p>
+                        <span class="time-right">11:02</span>
+                    </div>
+
+                    <div class="container darker">
+                        <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
+                        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+                        <span class="time-left">11:05</span>
+                    </div>
+                    <div class="container">
+                        <img src="/w3images/bandmember.jpg" alt="Avatar">
+                        <p>Hello. How are you today?</p>
+                        <span class="time-right">11:00</span>
+                      </div>
+                      
+                      <div class="container darker">
+                        <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
+                        <p>Hey! I'm fine. Thanks for asking!</p>
+                        <span class="time-left">11:01</span>
+                      </div>
+                      
+                      <div class="container">
+                        <img src="/w3images/bandmember.jpg" alt="Avatar">
+                        <p>Sweet! So, what do you wanna do today?</p>
+                        <span class="time-right">11:02</span>
+                      </div>
+                      
+                      <div class="container darker">
+                        <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
+                        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+                        <span class="time-left">11:05</span>
+                      </div>
+                    <textarea placeholder="Type message.." name="msg" required></textarea>
+                    <button type="submit" class="btn">Send</button>
+                    <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
+                </form>
+        </div>
     </div>
 
     <!--bootstrap bundle script-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
     <script src="./homepage.js"></script>
 </body>
 

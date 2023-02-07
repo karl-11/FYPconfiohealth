@@ -18,6 +18,7 @@
     <!--JQuery-->
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!--Include Header & Footer-->
     <script>
         $(function () {
@@ -29,15 +30,38 @@
 
 <body class="font-montserrat body">
     <!--Header section-->
-
     <section class="w-75 min-vh-100 mx-auto pb-170px">
         <span id="header"></span>
-    <!--Footer section-->
-    <span id="footer"></span>
+
+        <main>
+
+            <div class="justify-content-between my-3 mx-1 ">
+                <div class="row justify-content-center">
+                    <div class="col-8 text-center mb-2">
+                        <h2>Health Risk Identification</h2>
+                        <h2 id="patientName"></h2>
+                    </div>
+                </div>
+
+                <!-- content from the database goes in here (based off each user) -->
+                <div class="container row justify-content-between my-3 mx-1 col-12" id="questionnaireContent">
+
+                </div>
+
+            </div>
+
+            <!-- test -->
+            <!-- end test -->
+        </main>
+
+        <!--Footer section-->
+        <span id="footer"></span>
 
 
-    <!--bootstrap bundle script-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!--bootstrap bundle script-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="risk_identification.js"></script>
+
 </body>
 
 
