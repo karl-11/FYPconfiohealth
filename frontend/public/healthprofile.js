@@ -9,7 +9,7 @@ const token = localStorage.getItem("token")
 const myUrl = new URL(window.location.toLocaleString()).searchParams;
 var patientid = myUrl.get("patientid");
 if (patientid != null && loggedInUserType != "patient") {
-    var reqBodyUserID = JSON.stringify({ userid: patientid, user_role: loggedInUserType });
+    var reqBodyUserID = JSON.stringify({ userid: loggedInUserID, patientid: patientid, user_role: loggedInUserType });
 } else {
     // data compilation
     var reqBodyUserID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType });
@@ -214,7 +214,7 @@ function getAllHPVaccination() {
 
 function deleteHPMedical(clicked_id) {
 
-    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType, id: clicked_id });
+    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, patientid: patientid, user_role: loggedInUserType, id: clicked_id });
 
     // console.log(reqBodyClickedID);
 
@@ -232,7 +232,7 @@ function deleteHPMedical(clicked_id) {
 
 function deleteHPMedication(clicked_id) {
 
-    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType, id: clicked_id });
+    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, patientid: patientid, user_role: loggedInUserType, id: clicked_id });
 
     // console.log(reqBodyClickedID);
 
@@ -251,7 +251,7 @@ function deleteHPMedication(clicked_id) {
 
 function deleteHPSurgical(clicked_id) {
 
-    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType, id: clicked_id });
+    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, patientid: patientid, user_role: loggedInUserType, id: clicked_id });
 
     // console.log(reqBodyClickedID);
 
@@ -270,7 +270,7 @@ function deleteHPSurgical(clicked_id) {
 
 function deleteHPDrug(clicked_id) {
 
-    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType, id: clicked_id });
+    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, patientid: patientid, user_role: loggedInUserType, id: clicked_id });
 
     // console.log(reqBodyClickedID);
 
@@ -289,7 +289,7 @@ function deleteHPDrug(clicked_id) {
 
 function deleteHPVaccination(clicked_id) {
 
-    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType, id: clicked_id });
+    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, patientid: patientid, user_role: loggedInUserType, id: clicked_id });
 
     // console.log(reqBodyClickedID);
 
@@ -343,6 +343,7 @@ function submitHPForm(event) {
 
     var reqBody = JSON.stringify({
         userid: loggedInUserID,
+        patientid: patientid,
         user_role: loggedInUserType,
         text: inputText
     });
@@ -523,7 +524,7 @@ function submitHPGeneralEmptyForm(event) {
                 // alert("submitted!")
 
                 var reqBody = JSON.stringify({
-                    userid: loggedInUserID, user_role: loggedInUserType,
+                    userid: loggedInUserID, user_role: loggedInUserType, patientid: patientid,
                     gender: inputTextGender,
                     date_of_birth: inputTextDate,
                     blood_type: inputTextBlood,
@@ -571,7 +572,7 @@ function submitHPGeneralForm(event) {
         // alert("submitted!")
 
         var reqBody = JSON.stringify({
-            userid: loggedInUserID, user_role: loggedInUserType,
+            userid: loggedInUserID, user_role: loggedInUserType, patientid: patientid,
             weight: inputTextWeight,
             height: inputTextHeight
         });

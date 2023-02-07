@@ -13,7 +13,8 @@ var patientid = myUrl.get("patientid");
 //console.log(patientid);
 if (patientid != null) {
     var requestBody = {
-        userid: patientid,
+        userid: loggedinid,
+        patientid: patientid,
         user_role: loggedInUserType
     };
 } else {
@@ -190,7 +191,8 @@ function addSelectedVital() {
         if (vitalscheck[i].checked) {
             if (patientid != null) {
                 var requestBody = {
-                    userid: patientid,
+                    userid: loggedinid,
+                    patientid: patientid,
                     user_role: loggedInUserType,
                     vitalid: vitalscheck[i].value
                 };
@@ -227,7 +229,8 @@ function removeSelectedVital() {
         if (vitalscheck[i].checked) {
             if (patientid != null) {
                 var requestBody = {
-                    userid: patientid,
+                    userid: loggedinid,
+                    patientid: patientid,
                     user_role: loggedInUserType,
                     vitalid: vitalscheck[i].value
                 };
@@ -262,7 +265,8 @@ function removeSelectedVital() {
 function getPatientName() {
     if (patientid != null) {
         var requestBody = {
-            userid: patientid,
+            userid: loggedinid,
+            patientid: patientid,
         };
     } else {
         // data compilation
@@ -339,7 +343,8 @@ function loadchart() {
         if (vitalsradio[i].checked) {
             if (patientid != null) {
                 var requestBody = {
-                    userid: patientid,
+                    userid: loggedinid,
+                    patientid: patientid,
                     user_role: loggedInUserType,
                     vitalid: vitalsradio[i].value
                 };

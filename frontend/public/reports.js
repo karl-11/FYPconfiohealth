@@ -20,7 +20,7 @@ var axiosConfigAuth = {
 const myUrl = new URL(window.location.toLocaleString()).searchParams;
 var patientid = myUrl.get("patientid");
 if (patientid != null && loggedInUserType != "patient") {
-    var reqBodyUserID = JSON.stringify({ userid: patientid, user_role: loggedInUserType });
+    var reqBodyUserID = JSON.stringify({ userid: loggedInUserID, patientid: patientid, user_role: loggedInUserType });
 } else {
     // data compilation
     var reqBodyUserID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType });
@@ -214,6 +214,7 @@ function viewFolder() {
 
     var reqBody = JSON.stringify({
         userid: loggedInUserID,
+        patientid: patientid,
         user_role: loggedInUserType,
         folder_id: folder_id
     });
@@ -316,6 +317,7 @@ function viewFolder2() {
 
     var reqBody = JSON.stringify({
         userid: loggedInUserID,
+        patientid: patientid,
         user_role: loggedInUserType,
         folder_id: folder_id
     });
@@ -540,6 +542,7 @@ function viewFile() {
 
     var reqBody = JSON.stringify({
         userid: loggedInUserID,
+        patientid: patientid,
         user_role: loggedInUserType,
         file_id: file_id
     });
