@@ -604,6 +604,11 @@ app.post('/viewmybooking', printDebugInfo, isLoggedInMiddleware, function (req, 
     // var userid = req.body.userid;
     var user_role = req.body.user_role
 
+    console.log(doctorid)
+    console.log(user_role)
+    console.log(req.decodedToken.user_id)
+    console.log(req.decodedToken.user_role)
+
     //check if user trying to post is actual logged in user
     if (req.decodedToken.user_id != doctorid || req.decodedToken.user_role != user_role) {
         res.status(401).send("Unauthorised!")

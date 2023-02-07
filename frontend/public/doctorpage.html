@@ -134,6 +134,8 @@
     <script>
         const baseUrl = "http://localhost:3000";
         const userid = localStorage.getItem('loggedInUserID');
+        const usertype = localStorage.getItem('loggedInUserType');
+        const token = localStorage.getItem('token')
         const myUrl = new URL(window.location.toLocaleString()).searchParams;
         var patientid = myUrl.get("patientid");
         document.getElementById('vitalSignsButton').href = "vitals.html?patientid=" + patientid;
@@ -149,15 +151,22 @@
                 btn[i].classList.add("disabled")
             }
         }
-
+        // requestconfig if endpoint needs authorization
+        var axiosConfigAuth = {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + token
+            }
+        };
 
 
         function notification() {
             var requestBody = {
-                doctorid: userid
+                doctorid: userid,
+                user_role: usertype
             };
             console.log(requestBody)
-            axios.post(`${baseUrl}/viewmybooking`, requestBody)
+            axios.post(`${baseUrl}/viewmybooking`, requestBody, axiosConfigAuth)
                 .then((response) => {
                     console.log("view booking ")
                     console.log(response.data)
@@ -182,10 +191,11 @@
 
         function showtoast() {
             var requestBody = {
-                doctorid: userid
+                doctorid: userid,
+                user_role: usertype
             };
             console.log(requestBody)
-            axios.post(`${baseUrl}/viewmybooking`, requestBody)
+            axios.post(`${baseUrl}/viewmybooking`, requestBody, axiosConfigAuth)
                 .then((response) => {
                     console.log("view booking ")
                     console.log(response.data)
@@ -200,7 +210,7 @@
                     }
                     if (count > 0) {
 
-                        document.getElementById('toastbody').innerHTML=`<h3>You have ${count} pending bookings</h3>`
+                        document.getElementById('toastbody').innerHTML = `<h3>You have ${count} pending bookings</h3>`
                         $('#element').toast('show');
 
                     }
