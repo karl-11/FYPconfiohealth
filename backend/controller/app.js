@@ -180,6 +180,26 @@ app.post('/signup', printDebugInfo, function (req, res) {
     });
 });
 
+//  end point to insert new user record
+app.post('/doctorsignup', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var email = req.body.email;
+    var password = req.body.password;
+    var full_name = req.body.full_name;
+    var type = "doctor"
+
+    user.doctorsignUp(email, password, full_name,type, function (err, result) {
+        if (!err) {
+            var output = {
+                "inserted id": result.insertId
+            };
+            res.status(201).send(output);
+        } else {
+            res.status(500);
+        }
+    });
+});
 //-----------------------------------------
 // VITAL SIGNS
 //-----------------------------------------
