@@ -223,6 +223,28 @@ var vitalsDB = {
         });
     },
 
+    getPatientName: function (userid, callback) {
+        var conn = db;
+
+        var sql = ` 
+        SELECT 
+            full_name
+        FROM 
+            users  
+        WHERE ID = ?
+                `;
+
+        conn.query(sql, [userid], function (err, result) {
+
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
 }
 
 //-----------------------------------------

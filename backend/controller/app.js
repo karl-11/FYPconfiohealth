@@ -318,8 +318,9 @@ app.post('/booking', printDebugInfo, function (req, res) {
     var time = req.body.time;
     var location = req.body.location;
     var userid = req.body.userid;
+    var doctorid = req.body.doctorid;
 
-    booking.AddBooking(date, time, location, userid, function (err, result) {
+    booking.AddBooking(date, time, location, userid, doctorid, function (err, result) {
         if (!err) {
             var output = {
                 "inserted booking": result
@@ -346,8 +347,10 @@ app.post('/viewbooking', printDebugInfo, function (req, res) {
 });
 
 // end point for get All user booking 
-app.get('/viewallbooking', printDebugInfo, function (req, res) {
-    booking.viewallbooking(function (err, result) {
+app.post('/viewmybooking', printDebugInfo, function (req, res) {
+    var doctorid = req.body.doctorid;
+    console.log(doctorid);
+    booking.viewmybooking(doctorid, function (err, result) {
         if (!err) {
             res.status(200).send(result);
         } else {
@@ -1145,6 +1148,31 @@ app.post('/deleteFile', printDebugInfo, function (req, res) {
     });
 
 
+});
+
+// end point for getting patient name for doctor vitals 
+app.post('/getPatientName', function (req, res) {
+    userid = req.body.userid
+    vital.getPatientName(userid,function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+// end point for getting doctor name,id for doctor booking 
+app.get('/getDoctorName', function (req, res) {
+    booking.getdoctor(function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
 });
 
 

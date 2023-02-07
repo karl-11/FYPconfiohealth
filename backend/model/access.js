@@ -75,7 +75,7 @@ var accessDB = {
         FROM
             users u , patient_doctor_access pd
         WHERE
-            u.id = pd.patientid AND pd.doctorid = 40;
+            u.id = pd.patientid AND pd.doctorid = ?;
                 `;
 
         conn.query(sql,[doctorid], function (err, result) {

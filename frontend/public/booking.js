@@ -1,23 +1,27 @@
 const baseUrl = "http://localhost:3000";
 
+window.addEventListener('DOMContentLoaded', doctoroption());
+
+
 function AddBooking() {
   // data extraction
   const date = document.getElementById('bookdate').value;
   const time = document.getElementById('booktime').value;
   const location = document.getElementById('location').value;
   const userid = localStorage.getItem('loggedInUserID');
-
+  const doctorid = document.getElementById('doctor').value;
   // data compilation
   const requestBody = {
     date: date,
     time: time,
     location: location,
     userid: userid,
+    doctorid: doctorid,
   };
 
   console.log(requestBody);
   if (requestBody.date == "" || requestBody.time == "") {
-    alert("KEY IN DATE AND TIME");
+    alert("choose date and time");
   } else {
     axios.post(`${baseUrl}/booking`, requestBody)
       .then((response) => {
@@ -30,6 +34,32 @@ function AddBooking() {
         console.log(error);
       });
   }
+}
+
+function doctoroption() {
+  axios.get(`${baseUrl}/getDoctorName`)
+    .then((response) => {
+      console.log("booking response")
+      var doctoroptionstring;
+
+      var data = response.data
+      console.log(data)
+      for (var i = 0; i < data.length; i++) {
+        console.log(data[i]);
+
+        doctoroptionstring = doctoroptionstring +
+          `  
+        <option value="${data[i].id}">${"Dr " + data[i].full_name} </option>
+        `
+      }
+
+      document.getElementById("doctor").innerHTML = doctoroptionstring
+
+
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -91,7 +121,8 @@ function viewbooking() {
           <div class="text-decoration-none col-7 p-0 m-0 text-center">
               <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                   ${"Date: " + date + " | Time: " + time} <br>
-                  ${"Location: " + data.location}
+                  ${"Location: " + data.location} <br>
+                  ${"Doctor: Dr " + data.full_name}
               </p>
           </div>
           <div class="text-decoration-none col-4 p-0 m-0 text-center">
@@ -108,7 +139,8 @@ function viewbooking() {
           <div class="text-decoration-none col-7 p-0 m-0 text-center">
               <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                   ${"Date: " + date + " | Time: " + time} <br>
-                  ${"Location: " + data.location}
+                  ${"Location: " + data.location} <br>
+                  ${"Doctor: Dr " + data.full_name}
               </p>
           </div>
           <div class="text-decoration-none col-4 p-0 m-0 text-center">
@@ -117,14 +149,15 @@ function viewbooking() {
       </div>
     `
         }
-        else{
+        else {
           datetimestring = datetimestring +
-          `
+            `
         <div class="row justify-content-between my-5 mx-1 align-items-center">
         <div class="text-decoration-none col-7 p-0 m-0 text-center">
             <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                 ${"Date: " + date + " | Time: " + time} <br>
-                ${"Location: " + data.location}
+                ${"Location: " + data.location} <br>
+                ${"Doctor: Dr " + data.full_name}
             </p>
         </div>
         <div class="text-decoration-none col-4 p-0 m-0 text-center">
