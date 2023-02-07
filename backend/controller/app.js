@@ -139,7 +139,10 @@ app.post("/login", (req, res) => {
             //(2) Secret key
             JWT_SECRET,
             //(3) Signing Algorithm
-            { algorithm: "HS256" },
+            {
+                algorithm: "HS256",
+                expiresIn: '2h'
+            },
             //(4) Response handler (callback function)
             (error, token) => {
                 if (error) {
@@ -572,7 +575,7 @@ app.post('/booking', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 });
 
 // end point for get user booking 
-app.post('/viewbooking', printDebugInfo, isLoggedInMiddleware,function (req, res) {
+app.post('/viewbooking', printDebugInfo, isLoggedInMiddleware, function (req, res) {
     //extract data from request body
     var userid = req.body.userid;
 
@@ -619,7 +622,7 @@ app.post('/viewmybooking', printDebugInfo, isLoggedInMiddleware, function (req, 
 });
 
 // end point for get All user booking 
-app.post('/acceptBooking', printDebugInfo, isLoggedInMiddleware,function (req, res) {
+app.post('/acceptBooking', printDebugInfo, isLoggedInMiddleware, function (req, res) {
     //extract data from request body
     var bookingid = req.body.bookingid;
 
@@ -1501,7 +1504,7 @@ app.post('/deleteHPVaccination', printDebugInfo, isLoggedInMiddleware, function 
 // DOCTOR ACCESS
 //-----------------------------------------
 
-app.post('/getAllSelectedDoctor', printDebugInfo, isLoggedInMiddleware,function (req, res) {
+app.post('/getAllSelectedDoctor', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var patientid = req.body.patientid;
@@ -1524,7 +1527,7 @@ app.post('/getAllSelectedDoctor', printDebugInfo, isLoggedInMiddleware,function 
     });
 });
 
-app.post('/getNotSelectedDoctor', printDebugInfo, isLoggedInMiddleware,function (req, res) {
+app.post('/getNotSelectedDoctor', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var patientid = req.body.patientid;
@@ -1572,7 +1575,7 @@ app.post('/getSelectedPatient', printDebugInfo, isLoggedInMiddleware, function (
     });
 });
 
-app.post('/deleteSelectedDoctor', printDebugInfo, isLoggedInMiddleware,function (req, res) {
+app.post('/deleteSelectedDoctor', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var doctorid = req.body.doctorid;
@@ -1596,7 +1599,7 @@ app.post('/deleteSelectedDoctor', printDebugInfo, isLoggedInMiddleware,function 
     });
 });
 
-app.post('/addSelectedDoctor', printDebugInfo, isLoggedInMiddleware,function (req, res) {
+app.post('/addSelectedDoctor', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var patientid = req.body.patientid;
@@ -1865,7 +1868,7 @@ app.post('/deleteFolder', printDebugInfo, isLoggedInMiddleware, function (req, r
     //extract data from request body
     var id = req.body.id;
 
-     var userid = req.body.userid;
+    var userid = req.body.userid;
     var user_role = req.body.user_role
 
     //check if user trying to post is actual logged in user
