@@ -12,11 +12,11 @@ function viewbooking() {
     console.log(userid);
     // data compilation
     var requestBody = {
-        userid: userid
+        doctorid: userid
     };
+    console.log(requestBody)
 
-
-    axios.get(`${baseUrl}/viewallbooking`, requestBody)
+    axios.post(`${baseUrl}/viewmybooking`, requestBody)
         .then((response) => {
             console.log("view booking ")
             console.log(response.data)
@@ -73,7 +73,6 @@ function viewbooking() {
                                 <p id="${"decline" + data.bookingid}" class="btn bg-danger card flex-column shadow-bottom border rounded-4 p-0 m-0"><strong>Decline</strong></p>
                             </div>
                         </div>
-
                     </div>
                     `
                 } else {

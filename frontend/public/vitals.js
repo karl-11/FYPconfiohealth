@@ -3,6 +3,7 @@ const baseUrl = "http://localhost:3000";
 
 // Data extraction from localstorage
 const loggedinid = localStorage.getItem('loggedInUserID');
+const loggedintype = localStorage.getItem('loggedInUserType');
 // for doctor extracting patient id from url
 const myUrl = new URL(window.location.toLocaleString()).searchParams;
 var patientid = myUrl.get("patientid");
@@ -20,8 +21,13 @@ if (patientid != null) {
 // console.log("---------------- compiled data -----------");
 //console.log(requestBody);
 
+if (patientid != null) {
+    window.addEventListener('DOMContentLoaded', getPatientName());
+}
 window.addEventListener('DOMContentLoaded', selectedvitals());
 window.addEventListener('DOMContentLoaded', notSelectedVitals());
+
+
 
 function selectedvitals() {
     axios.post(`${baseUrl}/selectedvitals`, requestBody)
@@ -140,8 +146,8 @@ function notSelectedVitals() {
 var vitalsradio = document.getElementsByName("vitalsradio");
 var vitalscheck = document.getElementsByName("vitalscheck");
 
-//console.log(vitalsradio);
-//console.log(vitalscheck);
+console.log(vitalsradio);
+console.log(vitalscheck);
 var radioid;
 
 // too see the value of selected radio
@@ -150,8 +156,8 @@ function displayRadioValue() {
     for (i = 0; i < vitalsradio.length; i++) {
         if (vitalsradio[i].checked) {
             radioid = vitalsradio[i].value;
-            //console.log("id: " + vitalsradio[i].value);
-            //console.log("Vital: " + vitalsradio[i].id.replace("selected", ""));
+            console.log("id: " + vitalsradio[i].value);
+            console.log("Vital: " + vitalsradio[i].id.replace("selected", ""));
         }
     }
 };
@@ -198,8 +204,6 @@ function addSelectedVital() {
             console.log(error);
         });
 
-
-
 };
 
 function removeSelectedVital() {
@@ -235,6 +239,43 @@ function removeSelectedVital() {
         });
 
 
+
+};
+
+function getPatientName() {
+    if (patientid != null) {
+        var requestBody = {
+            userid: patientid,
+        };
+    } else {
+        // data compilation
+        var requestBody = {
+            userid: loggedinid,
+        };
+    }
+
+    //console.log(requestBody);
+
+    axios.post(`${baseUrl}/getPatientName`, requestBody)
+        .then((response) => {
+
+            //console.log("add selected vital");
+            var data = response.data[0];
+            console.log(data);
+
+            var fullnamestring = `            
+        <h2>
+            Viewing results of: ${data.full_name} 
+        </h2>`
+
+            document.getElementById("patientnameplaceholder").innerHTML = fullnamestring;
+
+
+
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 
 };
 
@@ -569,7 +610,7 @@ function loadchart() {
                     }
                     if (patientid != null) {
                         var valuebtn =
-                        `
+                            `
                         <div class="text-center">
                             <button type="button" class="btn bg-beige ">
                                 <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
@@ -578,7 +619,7 @@ function loadchart() {
                         `
                     } else {
                         var valuebtn =
-                        `
+                            `
                         <div class="text-center">
                             <button type="button" class="btn bg-beige ">
                                 <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
