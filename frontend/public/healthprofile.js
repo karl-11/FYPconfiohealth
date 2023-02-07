@@ -89,9 +89,11 @@ function getAllHPMedical() {
 
                 var data = response.data[i];
 
+                var text = escape(data.text);
+
                 var HPMedicalHTML = HPMedicalHTML +
                     `
-                    <li class="mb-1 positionRelative">${data.text} <button class="deleteBtnPosition btnClearStyle" id="${data.id}" onclick="deleteHPMedical(this.id)"><img class="w-75" src="./images/icons8-minus-30.png" alt="deleteBtn"/></button></li>
+                    <li class="mb-1 positionRelative">${text} <button class="deleteBtnPosition btnClearStyle" id="${data.id}" onclick="deleteHPMedical(this.id)"><img class="w-75" src="./images/icons8-minus-30.png" alt="deleteBtn"/></button></li>
                 `
 
             }
@@ -115,9 +117,11 @@ function getAllHPMedication() {
 
                 var data = response.data[i];
 
+                var text = escape(data.text);
+
                 var HPMedicationHTML = HPMedicationHTML +
                     `
-                    <li class="mb-1 positionRelative">${data.text} <button class="deleteBtnPosition btnClearStyle" id="${data.id}" onclick="deleteHPMedication(this.id)"><img class="w-75" src="./images/icons8-minus-30.png" alt="deleteBtn"/></button></li>
+                    <li class="mb-1 positionRelative">${text} <button class="deleteBtnPosition btnClearStyle" id="${data.id}" onclick="deleteHPMedication(this.id)"><img class="w-75" src="./images/icons8-minus-30.png" alt="deleteBtn"/></button></li>
                 `
 
             }
@@ -141,10 +145,11 @@ function getAllHPSurgical() {
             for (i = 0; i < response.data.length; i++) {
 
                 var data = response.data[i];
+                var text = escape(data.text);
 
                 var HPSurgicalHTML = HPSurgicalHTML +
                     `
-                    <li class="mb-1 positionRelative">${data.text} <button class="deleteBtnPosition btnClearStyle" id="${data.id}" onclick="deleteHPSurgical(this.id)"><img class="w-75" src="./images/icons8-minus-30.png" alt="deleteBtn"/></button></li>
+                    <li class="mb-1 positionRelative">${text} <button class="deleteBtnPosition btnClearStyle" id="${data.id}" onclick="deleteHPSurgical(this.id)"><img class="w-75" src="./images/icons8-minus-30.png" alt="deleteBtn"/></button></li>
                 `
 
             }
@@ -169,9 +174,11 @@ function getAllHPDrug() {
 
                 var data = response.data[i];
 
+                var text = escape(data.text);
+
                 var HPDrugHTML = HPDrugHTML +
                     `
-                    <li class="mb-1 positionRelative">${data.text} <button class="deleteBtnPosition btnClearStyle" id="${data.id}" onclick="deleteHPDrug(this.id)"><img class="w-75" src="./images/icons8-minus-30.png" alt="deleteBtn"/></button></li>
+                    <li class="mb-1 positionRelative">${text} <button class="deleteBtnPosition btnClearStyle" id="${data.id}" onclick="deleteHPDrug(this.id)"><img class="w-75" src="./images/icons8-minus-30.png" alt="deleteBtn"/></button></li>
                 `
 
             }
@@ -196,9 +203,11 @@ function getAllHPVaccination() {
 
                 var data = response.data[i];
 
+                var text = escape(data.text);
+
                 var HPVaccinationHTML = HPVaccinationHTML +
                     `
-                    <li class="mb-1 positionRelative">${data.text} <button class="deleteBtnPosition btnClearStyle" id="${data.id}" onclick="deleteHPVaccination(this.id)"><img class="w-75" src="./images/icons8-minus-30.png" alt="deleteBtn"/></button></li>
+                    <li class="mb-1 positionRelative">${text} <button class="deleteBtnPosition btnClearStyle" id="${data.id}" onclick="deleteHPVaccination(this.id)"><img class="w-75" src="./images/icons8-minus-30.png" alt="deleteBtn"/></button></li>
                 `
 
             }
@@ -341,28 +350,38 @@ function submitHPForm(event) {
     var inputText = document.getElementById('textInput').value
     var type = document.getElementById('formType').value
 
-    var reqBody = JSON.stringify({
-        userid: loggedInUserID,
-        patientid: patientid,
-        user_role: loggedInUserType,
-        text: inputText
-    });
+    //input validation
+    if (inputText == "" || inputText == undefined || inputText == null || inputText == " " || inputText.length < 1) {
 
-    var endpointURL = 'insert' + type;
+        alert("invalid input!")
 
-    axios.post(`${baseUrl}/${endpointURL}`, reqBody, axiosConfigAuth)
-        .then((response) => {
-            // console.log(response)
-            alert("saved!")
-
-            //reload the specific part of the page
-            reloadfunctionName(type);
-
-            cancelBtn(type)
-        })
-        .catch((error) => {
-            console.log(error);
+    }
+    else {
+        var reqBody = JSON.stringify({
+            userid: loggedInUserID,
+            patientid: patientid,
+            user_role: loggedInUserType,
+            text: inputText
         });
+
+        var endpointURL = 'insert' + type;
+
+        axios.post(`${baseUrl}/${endpointURL}`, reqBody, axiosConfigAuth)
+            .then((response) => {
+                // console.log(response)
+                alert("saved!")
+
+                //reload the specific part of the page
+                reloadfunctionName(type);
+
+                cancelBtn(type)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    }
+
 }
 
 function reloadfunctionName(type) {
@@ -486,111 +505,115 @@ function submitHPGeneralEmptyForm(event) {
             var inputTextGender = ele[i].value;
     }
 
-    var inputTextDate = document.getElementById('textInputDob').value
-    var inputTextBlood = document.getElementById('textInputBlood').value
-    var inputTextWeight = parseFloat(document.getElementById('textInputWeight').value).toFixed(2)
-    var inputTextHeight = parseFloat(document.getElementById('textInputHeight').value).toFixed(2)
+    if (isNaN(document.getElementById('textInputWeight').value) || isNaN(document.getElementById('textInputHeight').value)) {
+        alert("please input numbers only")
 
+    }
 
-    // console.log("inputTextGender - " + inputTextGender)
-    // console.log("inputTextDate - " + inputTextDate)
-    // console.log("inputTextBlood - " + inputTextBlood)
-    // console.log("inputTextWeight - " + inputTextWeight)
-    // console.log("inputTextHeight - " + inputTextHeight)
+    else {
 
+        var inputTextDate = document.getElementById('textInputDob').value
+        var inputTextBlood = document.getElementById('textInputBlood').value
+        var inputTextWeight = parseFloat(document.getElementById('textInputWeight').value).toFixed(2)
+        var inputTextHeight = parseFloat(document.getElementById('textInputHeight').value).toFixed(2)
 
-    // validate input 
+        // validate input 
 
-    if (inputTextGender === undefined) {
+        if (inputTextGender === undefined) {
 
-        // check gender input
-        alert("invalid input - Gender - please choose a gender")
-
-    } else {
-        if (inputTextBlood.length > 3) {
-
-            // check blood type input
-            alert("invalid input - Blood Type - please ensure you type 3 letters or less")
+            // check gender input
+            alert("invalid input - Gender - please choose a gender")
 
         } else {
+            if (inputTextBlood.length > 3) {
 
-            if (inputTextWeight == "" || inputTextWeight == null || inputTextWeight.length < 1 || inputTextHeight == "" || inputTextHeight == null || inputTextHeight.length < 1) {
-
-                alert("invalid input - Blood Type - please input valid values")
+                // check blood type input
+                alert("invalid input - Blood Type - please ensure you type 3 letters or less")
 
             } else {
 
-                // passed all validation checks
-                // alert("submitted!")
+                if (inputTextWeight == "" || inputTextWeight == null || inputTextWeight.length < 1 || inputTextHeight == "" || inputTextHeight == null || inputTextHeight.length < 1 || inputTextHeight > 300 || inputTextWeight > 1000) {
 
-                var reqBody = JSON.stringify({
-                    userid: loggedInUserID, user_role: loggedInUserType, patientid: patientid,
-                    gender: inputTextGender,
-                    date_of_birth: inputTextDate,
-                    blood_type: inputTextBlood,
-                    weight: inputTextWeight,
-                    height: inputTextHeight
-                });
+                    alert("invalid input - Height / Weight - please input valid values")
 
-                axios.post(`${baseUrl}/insertHPGeneral`, reqBody, axiosConfigAuth)
-                    .then((response) => {
-                        // console.log(response)
-                        alert("saved!")
+                } else {
 
-                        //reload the specific part of the page
-                        getHPAllGeneral();
+                    // passed all validation checks
+                    // alert("submitted!")
 
-                        HPGeneralcancelBtn()
-                    })
-                    .catch((error) => {
-                        console.log(error);
+                    var reqBody = JSON.stringify({
+                        userid: loggedInUserID, user_role: loggedInUserType, patientid: patientid,
+                        gender: inputTextGender,
+                        date_of_birth: inputTextDate,
+                        blood_type: inputTextBlood,
+                        weight: inputTextWeight,
+                        height: inputTextHeight
                     });
+
+                    axios.post(`${baseUrl}/insertHPGeneral`, reqBody, axiosConfigAuth)
+                        .then((response) => {
+                            // console.log(response)
+                            alert("saved!")
+
+                            //reload the specific part of the page
+                            getHPAllGeneral();
+
+                            HPGeneralcancelBtn()
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                }
             }
         }
+
     }
+
 }
 
 function submitHPGeneralForm(event) {
 
     event.preventDefault();
 
-    //extract the input data text
-    var inputTextWeight = parseFloat(document.getElementById('textInputWeight').value).toFixed(2)
-    var inputTextHeight = parseFloat(document.getElementById('textInputHeight').value).toFixed(2)
+    if (isNaN(document.getElementById('textInputWeight').value) || isNaN(document.getElementById('textInputHeight').value)) {
+        alert("please input numbers only")
 
-    // console.log("inputTextWeight - " + document.getElementById('textInputWeight').value)
-    // console.log("inputTextWeight - " + document.getElementById('textInputHeight').value)
-
-    // console.log("inputTextWeight rounded - " + inputTextWeight)
-    // console.log("inputTextWeight rounded - " + inputTextHeight)
-
-
-    if (inputTextWeight == "" || inputTextWeight == null || inputTextWeight.length < 1 || inputTextHeight == "" || inputTextHeight == null || inputTextHeight.length < 1) {
-        alert("please input valid values")
     }
+
     else {
-        // alert("submitted!")
 
-        var reqBody = JSON.stringify({
-            userid: loggedInUserID, user_role: loggedInUserType, patientid: patientid,
-            weight: inputTextWeight,
-            height: inputTextHeight
-        });
+        //extract the input data text
+        var inputTextWeight = parseFloat(document.getElementById('textInputWeight').value).toFixed(2)
+        var inputTextHeight = parseFloat(document.getElementById('textInputHeight').value).toFixed(2)
 
-        axios.post(`${baseUrl}/editHPGeneral`, reqBody, axiosConfigAuth)
-            .then((response) => {
-                // console.log(response)
-                alert("saved!")
+        if (inputTextWeight == "" || inputTextWeight == null || inputTextWeight.length < 1 || inputTextHeight == "" || inputTextHeight == null || inputTextHeight.length < 1 || inputTextHeight > 300 || inputTextWeight > 1000) {
+            alert("please input valid values")
+        }
+        else {
+            // alert("submitted!")
 
-                //reload the specific part of the page
-                getHPAllGeneral();
-
-                HPGeneralcancelBtn()
-            })
-            .catch((error) => {
-                console.log(error);
+            var reqBody = JSON.stringify({
+                userid: loggedInUserID, user_role: loggedInUserType, patientid: patientid,
+                weight: inputTextWeight,
+                height: inputTextHeight
             });
+
+            axios.post(`${baseUrl}/editHPGeneral`, reqBody, axiosConfigAuth)
+                .then((response) => {
+                    // console.log(response)
+                    alert("saved!")
+
+                    //reload the specific part of the page
+                    getHPAllGeneral();
+
+                    HPGeneralcancelBtn()
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     }
+
 }
 
 function HPGeneralcancelBtn() {
@@ -617,4 +640,13 @@ function getAllInfo() {
     getAllHPSurgical();
     getAllHPVaccination();
     getHPAllGeneral();
+}
+
+function escape(htmlStr) {
+    return htmlStr.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
 }
