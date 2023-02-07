@@ -13,21 +13,26 @@ $(document).ready(function () {
             const { user_id, user_score, max_score, date_Taken, questionnaireID, name, risks } = response.data[i]
             console.log(response.data);
             var resultPercentage = (user_score / max_score) * 100
-            
+
+            let risksArray = risks.split(",");
+            console.log(risksArray);
+
+
+            let list = document.getElementById("riskList");
+
+
+            if (resultPercentage <= 33) {
+                $('#riskTitle').append(`
+                <strong class="text-danger">${name}</strong><br>
+                `)
+                risksArray.forEach((item) => {
+                    let li = document.createElement("li");
+                    li.innerText = item;
+                    list.appendChild(li);
+                });
+            }
         }
-        // if (resultPercentage <= 33) {
-        //     $('#riskList').append(`
-        //     <ol type="1">
-        //         <li>${risks}</li>
-        //     </ol>
-        //     `)
-        // } else {
-        //     $('#riskList').append(`
-        //     <p>
-        //         You're not in danger!
-        //     </p>
-        //     `)
-        // }
+
     })
 })
 
