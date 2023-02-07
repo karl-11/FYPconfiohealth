@@ -1,8 +1,26 @@
 //paste this line whenever we need api or endpoints
 const baseUrl = "http://localhost:3000";
 
+const loggedInUserID = localStorage.getItem("loggedInUserID")
+// console.log("printing loggedInUserID" + loggedInUserID)
+
+const loggedInUserType = localStorage.getItem("loggedInUserType")
+const token = localStorage.getItem("token")
+
+// console.log("printing loggedInUserID" + loggedInUserID)
+
+// requestconfig if endpoint needs authorization
+var axiosConfigAuth = {
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + token
+    }
+};
+
+
 $(document).ready(function () {
-    const loggedInUserType = localStorage.getItem('loggedInUserType')
+    // const loggedInUserType = localStorage.getItem('loggedInUserType')
+
     if (loggedInUserType == "patient") {
         console.log("patient user")
         loadAllData();
@@ -48,11 +66,13 @@ function loadAllData() {
             `)
 
         }
-        const user_id = localStorage.getItem('loggedInUserID')
+        // const user_id = localStorage.getItem('loggedInUserID')
         var requestBody = {
-            user_id: user_id
+            userid: loggedInUserID,
+            patientid: patientid, 
+            user_role: loggedInUserType 
         };
-        axios.post(`${baseUrl}/getQnrUserScoreByUser`, requestBody).then(function (response) {
+        axios.post(`${baseUrl}/getQnrUserScoreByUser`, requestBody, axiosConfigAuth).then(function (response) {
             console.log("replace")
             for (i = 0; i < response.data.length; i++) {
                 const { id, name, max_score, image_url, resultsID, questionnaireID, user_score, date_Taken, user_id } = response.data[i]
@@ -131,12 +151,14 @@ function loadPatientDataForDoctor() {
             `)
 
         }
-        const myUrl = new URL(window.location.toLocaleString()).searchParams;
-        var patientid = myUrl.get("patientid");
+        // const myUrl = new URL(window.location.toLocaleString()).searchParams;
+        // var patientid = myUrl.get("patientid");
         var requestBody = {
-            user_id: patientid
+            userid: loggedInUserID,
+            patientid: patientid, 
+            user_role: loggedInUserType 
         };
-        axios.post(`${baseUrl}/getQnrUserScoreByUser`, requestBody).then(function (response) {
+        axios.post(`${baseUrl}/getQnrUserScoreByUser`, requestBody, axiosConfigAuth).then(function (response) {
             console.log("replace")
             for (i = 0; i < response.data.length; i++) {
                 const { id, name, max_score, image_url, resultsID, questionnaireID, user_score, date_Taken, user_id } = response.data[i]

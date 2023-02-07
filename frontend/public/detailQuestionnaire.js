@@ -2,6 +2,22 @@
 const baseUrl = "http://localhost:3000";
 const windowUrl = "http://localhost:3001";
 
+const loggedInUserID = localStorage.getItem("loggedInUserID")
+// console.log("printing loggedInUserID" + loggedInUserID)
+
+const loggedInUserType = localStorage.getItem("loggedInUserType")
+const token = localStorage.getItem("token")
+
+// console.log("printing loggedInUserID" + loggedInUserID)
+
+// requestconfig if endpoint needs authorization
+var axiosConfigAuth = {
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + token
+    }
+};
+
 $(document).ready(function () {
     const questionnaireID = localStorage.getItem('SelectedQnr')
     console.log("the questionnaire id is: " + questionnaireID);
@@ -107,24 +123,27 @@ $(document).ready(function () {
         //insert
         var InsertRequestBody = {
             user_score: user_score,
-            user_id: user_id,
+            userid: user_id,
+            user_role: loggedInUserType,
             questionnaireID: questionnaireID
         };
         //update
         var requestBody = {
             resultsID: resultsID,
-            user_score: user_score
+            user_score: user_score,
+            userid: user_id,
+            user_role: loggedInUserType
         };
         // 2 axios, if results id is null run a pure insert sql , else run the regular code
         if (resultsID == null || isNaN(resultsID)) {
             //pure insert
-            axios.post(`${baseUrl}/insertScore`, InsertRequestBody).then(function (response) {
+            axios.post(`${baseUrl}/insertScore`, InsertRequestBody, axiosConfigAuth).then(function (response) {
 
             })
             console.log("null and inserted");
         } else {
             //update
-            axios.post(`${baseUrl}/updateScore`, requestBody).then(function (response) {
+            axios.post(`${baseUrl}/updateScore`, requestBody, axiosConfigAuth).then(function (response) {
 
             })
             console.log("not null and updated");

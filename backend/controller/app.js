@@ -1539,15 +1539,44 @@ app.get('/getAllQnr', function (req, res) {
 
 //endpoint to get user scores by specific user
 app.post('/getQnrUserScoreByUser', function (req, res) {
-    var user_id = req.body.user_id;
-    riskQuestionnaire.getQuestionnaireUserScoreByUserID(user_id, function (err, result) {
-        if (!err) {
-            res.status(200).send(result);
-        } else {
-            res.status(500);
-            console.log("error");
-        }
-    });
+
+    var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
+
+
+    if (!req.body.patientid) {
+
+        //default code here
+        riskQuestionnaire.getQuestionnaireUserScoreByUserID(userid, function (err, result) {
+            if (!err) {
+                res.status(200).send(result);
+            } else {
+                res.status(500);
+                console.log("error");
+            }
+        });
+    }
+
+    else {
+        var patientid = req.body.patientid
+
+        //use patientid instead of userid
+        riskQuestionnaire.getQuestionnaireUserScoreByUserID(patientid, function (err, result) {
+            if (!err) {
+                res.status(200).send(result);
+            } else {
+                res.status(500);
+                console.log("error");
+            }
+        });
+    }
+
 });
 
 
@@ -1580,6 +1609,16 @@ app.post('/getQnsByQnr', function (req, res) {
 app.post('/updateScore', function (req, res) {
     var user_score = req.body.user_score;
     var resultsID = req.body.resultsID;
+
+    var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
+
     riskQuestionnaire.submitScore(user_score, resultsID, function (err, result) {
         if (!err) {
             res.status(200).send(result);
@@ -1592,9 +1631,19 @@ app.post('/updateScore', function (req, res) {
 
 app.post('/insertScore', function (req, res) {
     var user_score = req.body.user_score;
-    var user_id = req.body.user_id;
+    var userid = req.body.userid;
     var questionnaireID = req.body.questionnaireID;
-    riskQuestionnaire.insertNewScore(user_score, user_id, questionnaireID, function (err, result) {
+
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
+
+    riskQuestionnaire.insertNewScore(user_score, userid, questionnaireID, function (err, result) {
         if (!err) {
             res.status(200).send(result);
         } else {
