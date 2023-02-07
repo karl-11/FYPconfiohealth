@@ -63,6 +63,7 @@ var urlEncodedParser = bodyParser.urlencoded({ extended: false });
 var jsonParser = bodyParser.json();
 var uploadFiles = require("../middleware/uploadFiles.js");
 const isLoggedInMiddleware = require("../middleware/isLogin.js");
+const bookingDB = require("../model/booking.js");
 
 //-----------------------------------------
 // MF Configurations
@@ -2124,5 +2125,26 @@ app.post('/sendMessages', printDebugInfo, function (req, res) {
 
 //-----------------------------------------
 // End of chat endpoints
+//-----------------------------------------
+
+
+//-----------------------------------------
+// Start of health risks endpoints
+//-----------------------------------------
+
+app.post('/getHealthRisks', function (req, res) {
+    userid = req.body.userid
+    bookingDB.getHealthRisks(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//-----------------------------------------
+// End of health risks endpoints
 //-----------------------------------------
 module.exports = app;

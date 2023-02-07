@@ -151,6 +151,29 @@ var bookingDB = {
             }
         });
     },
+
+    getHealthRisks: function (user_id, callback) {
+        var conn = db;
+
+        var sql = ` 
+        SELECT qr.user_id, qr.user_score, q.max_score, qr.date_Taken,  qr.questionnaireID, q.name, q.risks
+        FROM questionnaireResults qr
+        INNER JOIN questionnaire q ON qr.questionnaireID = q.id
+        WHERE qr.user_id = ?;
+                `;
+                
+        conn.query(sql, [user_id], function (err, result) {
+            if (err) {
+                console.log(err);
+                return callback(err, null);
+            } else {
+                return callback(null, result);
+            }
+        });
+    },
+
+
+
 }
 //-----------------------------------------
 // exports

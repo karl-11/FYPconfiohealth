@@ -19,6 +19,8 @@
     <!--JQuery-->
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <!--Include Header & Footer-->
     <script>
         $(function () {
@@ -33,68 +35,79 @@
 
     <section class="w-75 min-vh-100 mx-auto pb-170px">
         <span id="header"></span>
-    <!--Footer section-->
-    <span id="footer"></span>
+        <!--Footer section-->
+        <span id="footer"></span>
 
-    <!--Main section-->
-    <div class="flex-container">
-    <!--image section-->
-        <div class="flex-child">
-            <div  class="div1">  
-             <div  class="imagediv">    
-                <img src="./images/Remedy-bro 2.png" class ="Heart" alt="Heart" > 
+        <!--Main section-->
+        <div class="flex-container">
+            <!--image section-->
+            <div class="flex-child">
+                <div class="card" style="width: 24rem;">
+                    <div class="card-body row align-items-start">
+                        <div class="col-4">
+                            <img src="./images/Remedy-bro 2.png" class="Heart" alt="Heart">
+                        </div>
+                        <!--Health risks section-->
+                        <div class="col-8">
+                            <h3>Health Risks</h3>
+                            <div id="riskList">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Appointments section-->
+                <div class="div3">
+                    <button class="button" type="button" onclick="location.href='AppBook.html'"><a>Book
+                            Appointments</a></button>
+                    <button class="button" type="button" onclick="location.href='AppView.html'"><a>View
+                            Appointments</a></button>
+                </div>
             </div>
-    <!--Health risks section-->
-         <div class="div5">
-            <h1>Health Risks</h1>
-            <p>1. Vitamin deficiency</p>
-            <p>2. Dehydration</p>
-            <p>3. Stress</p>
-         </div>
-    <!--Appointments section-->
-    </div>
-        <div class="div3">
-          <button  class="button" type="button" onclick="location.href='AppBook.html'"><a>Book Appointments</a></button>
-          <button  class="button" type="button" onclick="location.href='AppView.html'"><a>View Appointments</a></button>
-        </div>
-    </div>
 
-    <!--Article section-->
-        <div class="flex-child">
-            <div class ="div4">
-            <h1>How to mitigate Health Risks</h1>
+            <!--Article section-->
+            <div class="flex-child">
+                <div class="div4">
+                    <h1>How to mitigate Health Risks</h1>
 
-            <p> Here are some general tips to help mitigate health risks:</p>
-        
-            <p> 1. Eat a balanced diet that is rich in fruits, vegetables, and whole grains, and low in saturated and trans fats.</p> 
-        
-            <p> 2. Exercise regularly. Aim for at least 30 minutes of moderate-intensity physical activity on most days of the week.</p> 
-                        
-            <p> 3.  Don't smoke, and avoid secondhand smoke.</p> 
-                
-            <p> 4. Limit your alcohol consumption.</p> 
-                
-            <p> 5.  Get enough sleep. Most adults need 7-8 hours of sleep per night.</p> 
-                
-            <p> 6. Manage stress. Try techniques such as meditation, yoga, or deep breathing.</p> 
-                
-            <p> 7.  Keep in regular touch with healthcare professional for screenings and checkups as recommended.</p> 
-                
-            <p> 8. Practice good hygiene and cleanliness</p> 
-                
-            <p> 9. Keep your surrounding clean and safe from environmental hazards like pollution.</p> 
-                
-            <p> 10. Develop a personal emergency action plan</p> 
-                
-            <p> 11. Avoid unnecessary exposure to hazardous materials and environment.</p>  
-        
-            <p>Keep in mind that the specific risks for your health may vary depending on a variety of factors, including your age, family history, and personal lifestyle choices. It's always a good idea to talk to your doctor about your individual health risks and what steps you can take to mitigate them.</p>
+                    <p> Here are some general tips to help mitigate health risks:</p>
+
+                    <p> 1. Eat a balanced diet that is rich in fruits, vegetables, and whole grains, and low in
+                        saturated and trans fats.</p>
+
+                    <p> 2. Exercise regularly. Aim for at least 30 minutes of moderate-intensity physical activity on
+                        most days of the week.</p>
+
+                    <p> 3. Don't smoke, and avoid secondhand smoke.</p>
+
+                    <p> 4. Limit your alcohol consumption.</p>
+
+                    <p> 5. Get enough sleep. Most adults need 7-8 hours of sleep per night.</p>
+
+                    <p> 6. Manage stress. Try techniques such as meditation, yoga, or deep breathing.</p>
+
+                    <p> 7. Keep in regular touch with healthcare professional for screenings and checkups as
+                        recommended.</p>
+
+                    <p> 8. Practice good hygiene and cleanliness</p>
+
+                    <p> 9. Keep your surrounding clean and safe from environmental hazards like pollution.</p>
+
+                    <p> 10. Develop a personal emergency action plan</p>
+
+                    <p> 11. Avoid unnecessary exposure to hazardous materials and environment.</p>
+
+                    <p>Keep in mind that the specific risks for your health may vary depending on a variety of factors,
+                        including your age, family history, and personal lifestyle choices. It's always a good idea to
+                        talk to your doctor about your individual health risks and what steps you can take to mitigate
+                        them.</p>
+                </div>
+            </div>
+
         </div>
-        </div>
-        
-      </div>
-<!--bootstrap bundle script-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!--bootstrap bundle script-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="optimisation.js"></script>
 </body>
 
 
