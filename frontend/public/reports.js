@@ -17,7 +17,7 @@ var axiosConfigAuth = {
     }
 };
 
-const myUrl = new URL(window.location.toLocaleString()).searchParams;
+var myUrl = new URL(window.location.toLocaleString()).searchParams;
 var patientid = myUrl.get("patientid");
 if (patientid != null && loggedInUserType != "patient") {
     var reqBodyUserID = JSON.stringify({ userid: loggedInUserID, patientid: patientid, user_role: loggedInUserType });
@@ -44,7 +44,7 @@ function getAllFolders() {
 
                 console.log("data is empty")
 
-                createThreeDefaultFolders();
+                // createThreeDefaultFolders();
 
                 //after looping thrice, refresh the page.
                 //getAllFolders();
@@ -58,6 +58,8 @@ function getAllFolders() {
 
                     var data = response.data[i];
 
+                    var folder_name = escape(data.folder_name)
+
                     var hrefTag = "folder.html?id=" + data.id + "&folder_name=" + data.folder_name
 
                     var reportFoldersHTML = reportFoldersHTML +
@@ -66,7 +68,7 @@ function getAllFolders() {
                                 <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                     <img src="./images/healthProfile.png" alt="Avatar Logo" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
-                                        <p class="text-center text-black p-0 m-0"><strong>${data.folder_name}</strong></p>
+                                        <p class="text-center text-black p-0 m-0"><strong>${folder_name}</strong></p>
                                     </div>
                                 </div>
                             </a>                    
@@ -146,6 +148,11 @@ function submitNewFolderForm(event) {
 
     //extract the input data text
     var folder_name = document.getElementById('folder_name').value
+
+    if (folder_name == "" || folder_name == null || folder_name.length < 1 || folder_name == " ") {
+        alert("upload failed! - invalid report name input.")
+        return;
+    }
 
     var reqBody = JSON.stringify({
         userid: loggedInUserID,
@@ -257,6 +264,8 @@ function viewFolder() {
                     // get the file type
                     var fileType = data.file_type.split('/')[0]
 
+                    var display_name = escape(data.display_name)
+
                     var hrefTag = "viewReport.html?id=" + data.id + "&file_name=" + data.display_name
 
                     // if file type is image, display the image inside the card
@@ -268,7 +277,7 @@ function viewFolder() {
                                     <img src="./uploads/${data.file_name}" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
-                                        <p class="text-center text-black p-0 m-0"><strong>${data.display_name}</strong></p>
+                                        <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
                                     </div>
                                 </div>
                             </a>               
@@ -283,7 +292,7 @@ function viewFolder() {
                                     <img src="./images/healthProfile.png" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
-                                        <p class="text-center text-black p-0 m-0"><strong>${data.display_name}</strong></p>
+                                        <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
                                     </div>
                                 </div>
                             </a>               
@@ -350,6 +359,8 @@ function viewFolder2() {
                     // get the file type
                     var fileType = data.file_type.split('/')[0]
 
+                    var display_name = escape(data.display_name)
+
                     var hrefTag = "viewReport.html?id=" + data.id + "&file_name=" + data.display_name
 
                     // if file type is image, display the image inside the card
@@ -361,7 +372,7 @@ function viewFolder2() {
                                     <img src="./uploads/${data.file_name}" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
-                                        <p class="text-center text-black p-0 m-0"><strong>${data.display_name}</strong></p>
+                                        <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
                                     </div>
                                 </div>
                             </a>               
@@ -376,7 +387,7 @@ function viewFolder2() {
                                     <img src="./images/healthProfile.png" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
-                                        <p class="text-center text-black p-0 m-0"><strong>${data.display_name}</strong></p>
+                                        <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
                                     </div>
                                 </div>
                             </a>               
@@ -500,6 +511,11 @@ function submitNewFileForm(event) {
         return;
     }
 
+    if (fileName == "" || fileName.length < 1 || fileName == null) {
+        alert("upload failed! - invalid report name input.")
+        return;
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     const folderid = urlParams.get('id');
 
@@ -566,21 +582,20 @@ function viewFile() {
 
                 var fileType = data.file_type.split('/')[0]
 
-                console.log(data)
-                console.log(fileType)
+                var file_name = escape(data.file_name)
 
                 var fileHTML = ""
 
                 if (fileType == 'image') {
                     fileHTML =
                         `
-                                <img style="max-width: 75%;" src="./uploads/${data.file_name}" alt="Avatar Logo">
+                                <img style="max-width: 75%;" src="./uploads/${file_name}" alt="Avatar Logo">
                             `
                 }
                 else {
                     fileHTML =
                         `
-                            <iframe class="w-75 vh-100" src="./uploads/${data.file_name}">
+                            <iframe class="w-75 vh-100" src="./uploads/${file_name}">
                         `
                 }
 
@@ -683,3 +698,11 @@ function getPatientName() {
         });
 
 };
+function escape(htmlStr) {
+    return htmlStr.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+}

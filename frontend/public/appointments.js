@@ -15,7 +15,7 @@ var axiosConfigAuth = {
 var patientid;
 
 // for doctor extracting patient id from url
-const myUrl = new URL(window.location.toLocaleString()).searchParams;
+var myUrl = new URL(window.location.toLocaleString()).searchParams;
 var patientid = myUrl.get("patientid");
 
 function viewbooking() {
