@@ -21,13 +21,12 @@
                 <a class="nav-link mx-1" href="#">Contact Us</a>
             </li>
 
-            <a href="" id="UserProfile"><img id="profileImage" src="./images/healthProfile.png" alt="Avatar Logo"
-                    class="ms-4" style="width:50px;"></a>
             <li class="nav-item my-auto">
                 <a class="nav-link mx-1 border text-white rounded-3" href="Login.html" id="Loginpage"
                     style="background-color: #43AEA1 ;">Sign in</a>
 
-                <button class="nav-link mx-1 border text-white rounded-3" id="logOutBtn" onclick="logOut()">Log
+                <button class="nav-link mx-1 border text-white rounded-3" id="logOutBtn" onclick="logOut()" style="
+                    background-color: #43AEA1;">Log
                     out</button>
             </li>
         </ul>
@@ -65,7 +64,7 @@
 
 <script>
     if (localStorage.getItem("loggedInUserType") === null) {
-        document.getElementById("UserProfile").style.display = "none";
+        // document.getElementById("UserProfile").style.display = "none";
         document.getElementById("logOutBtn").style.display = "none";
         document.getElementById("navbar2").style.display = "none";
 
@@ -100,6 +99,6 @@
 
     function logOut() {
         localStorage.clear();
-        location.reload()
+        window.location.href = '/'
     }
 </script>

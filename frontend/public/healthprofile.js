@@ -2,14 +2,17 @@
 const baseUrl = "http://localhost:3000";
 
 const loggedInUserID = localStorage.getItem("loggedInUserID")
-// console.log("printing loggedInUserID" + loggedInUserID)
+const loggedInUserType = localStorage.getItem("loggedInUserType")
+const token = localStorage.getItem("token")
+
+
 const myUrl = new URL(window.location.toLocaleString()).searchParams;
 var patientid = myUrl.get("patientid");
-if (patientid != null) {
-    var reqBodyUserID = JSON.stringify({ userid: patientid });
+if (patientid != null && loggedInUserType != "patient") {
+    var reqBodyUserID = JSON.stringify({ userid: patientid, user_role: loggedInUserType });
 } else {
     // data compilation
-    var reqBodyUserID = JSON.stringify({ userid: loggedInUserID });
+    var reqBodyUserID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType });
 }
 
 axiosConfig = {
@@ -18,15 +21,23 @@ axiosConfig = {
     }
 };
 
+axiosConfigAuth = {
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + token
+    }
+}
+
 var docacc = document.getElementById("doctoraccess")
 if (patientid != null) {
     console.log(docacc);
-    docacc.innerHTML= ""
+    docacc.innerHTML = ""
 }
 console.log(docacc)
 console.log(reqBodyUserID);
+
 function getHPAllGeneral() {
-    axios.post(`${baseUrl}/HPGeneral`, reqBodyUserID, axiosConfig)
+    axios.post(`${baseUrl}/HPGeneral`, reqBodyUserID, axiosConfigAuth)
         .then((response) => {
 
             // console.log("reponse - " + response);
@@ -69,7 +80,7 @@ function getHPAllGeneral() {
 
 function getAllHPMedical() {
 
-    axios.post(`${baseUrl}/HPMedical`, reqBodyUserID, axiosConfig)
+    axios.post(`${baseUrl}/HPMedical`, reqBodyUserID, axiosConfigAuth)
         .then((response) => {
 
             var HPMedicalHTML = ""
@@ -95,7 +106,7 @@ function getAllHPMedical() {
 }
 
 function getAllHPMedication() {
-    axios.post(`${baseUrl}/HPMedication`, reqBodyUserID, axiosConfig)
+    axios.post(`${baseUrl}/HPMedication`, reqBodyUserID, axiosConfigAuth)
         .then((response) => {
 
             var HPMedicationHTML = ""
@@ -122,7 +133,7 @@ function getAllHPMedication() {
 
 
 function getAllHPSurgical() {
-    axios.post(`${baseUrl}/HPSurgical`, reqBodyUserID, axiosConfig)
+    axios.post(`${baseUrl}/HPSurgical`, reqBodyUserID, axiosConfigAuth)
         .then((response) => {
 
             var HPSurgicalHTML = ""
@@ -149,7 +160,7 @@ function getAllHPSurgical() {
 
 function getAllHPDrug() {
 
-    axios.post(`${baseUrl}/HPDrug`, reqBodyUserID, axiosConfig)
+    axios.post(`${baseUrl}/HPDrug`, reqBodyUserID, axiosConfigAuth)
         .then((response) => {
 
             var HPDrugHTML = ""
@@ -176,7 +187,7 @@ function getAllHPDrug() {
 
 function getAllHPVaccination() {
 
-    axios.post(`${baseUrl}/HPVaccination`, reqBodyUserID, axiosConfig)
+    axios.post(`${baseUrl}/HPVaccination`, reqBodyUserID, axiosConfigAuth)
         .then((response) => {
 
             var HPVaccinationHTML = ""
@@ -203,11 +214,11 @@ function getAllHPVaccination() {
 
 function deleteHPMedical(clicked_id) {
 
-    var reqBodyClickedID = JSON.stringify({ id: clicked_id });
+    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType, id: clicked_id });
 
     // console.log(reqBodyClickedID);
 
-    axios.post(`${baseUrl}/deleteHPMedical`, reqBodyClickedID, axiosConfig)
+    axios.post(`${baseUrl}/deleteHPMedical`, reqBodyClickedID, axiosConfigAuth)
         .then((response) => {
             alert("Deleted!")
 
@@ -221,11 +232,11 @@ function deleteHPMedical(clicked_id) {
 
 function deleteHPMedication(clicked_id) {
 
-    var reqBodyClickedID = JSON.stringify({ id: clicked_id });
+    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType, id: clicked_id });
 
     // console.log(reqBodyClickedID);
 
-    axios.post(`${baseUrl}/deleteHPMedication`, reqBodyClickedID, axiosConfig)
+    axios.post(`${baseUrl}/deleteHPMedication`, reqBodyClickedID, axiosConfigAuth)
         .then((response) => {
             console.log(response)
             alert("deleted!")
@@ -240,11 +251,11 @@ function deleteHPMedication(clicked_id) {
 
 function deleteHPSurgical(clicked_id) {
 
-    var reqBodyClickedID = JSON.stringify({ id: clicked_id });
+    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType, id: clicked_id });
 
     // console.log(reqBodyClickedID);
 
-    axios.post(`${baseUrl}/deleteHPSurgical`, reqBodyClickedID, axiosConfig)
+    axios.post(`${baseUrl}/deleteHPSurgical`, reqBodyClickedID, axiosConfigAuth)
         .then((response) => {
             console.log(response)
             alert("deleted!")
@@ -259,11 +270,11 @@ function deleteHPSurgical(clicked_id) {
 
 function deleteHPDrug(clicked_id) {
 
-    var reqBodyClickedID = JSON.stringify({ id: clicked_id });
+    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType, id: clicked_id });
 
     // console.log(reqBodyClickedID);
 
-    axios.post(`${baseUrl}/deleteHPDrug`, reqBodyClickedID, axiosConfig)
+    axios.post(`${baseUrl}/deleteHPDrug`, reqBodyClickedID, axiosConfigAuth)
         .then((response) => {
             console.log(response)
             alert("deleted!")
@@ -278,11 +289,11 @@ function deleteHPDrug(clicked_id) {
 
 function deleteHPVaccination(clicked_id) {
 
-    var reqBodyClickedID = JSON.stringify({ id: clicked_id });
+    var reqBodyClickedID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType, id: clicked_id });
 
     // console.log(reqBodyClickedID);
 
-    axios.post(`${baseUrl}/deleteHPVaccination`, reqBodyClickedID, axiosConfig)
+    axios.post(`${baseUrl}/deleteHPVaccination`, reqBodyClickedID, axiosConfigAuth)
         .then((response) => {
             console.log(response)
             alert("deleted!")
@@ -332,12 +343,13 @@ function submitHPForm(event) {
 
     var reqBody = JSON.stringify({
         userid: loggedInUserID,
+        user_role: loggedInUserType,
         text: inputText
     });
 
     var endpointURL = 'insert' + type;
 
-    axios.post(`${baseUrl}/${endpointURL}`, reqBody, axiosConfig)
+    axios.post(`${baseUrl}/${endpointURL}`, reqBody, axiosConfigAuth)
         .then((response) => {
             // console.log(response)
             alert("saved!")
@@ -511,7 +523,7 @@ function submitHPGeneralEmptyForm(event) {
                 // alert("submitted!")
 
                 var reqBody = JSON.stringify({
-                    userid: loggedInUserID,
+                    userid: loggedInUserID, user_role: loggedInUserType,
                     gender: inputTextGender,
                     date_of_birth: inputTextDate,
                     blood_type: inputTextBlood,
@@ -519,7 +531,7 @@ function submitHPGeneralEmptyForm(event) {
                     height: inputTextHeight
                 });
 
-                axios.post(`${baseUrl}/insertHPGeneral`, reqBody, axiosConfig)
+                axios.post(`${baseUrl}/insertHPGeneral`, reqBody, axiosConfigAuth)
                     .then((response) => {
                         // console.log(response)
                         alert("saved!")
@@ -559,12 +571,12 @@ function submitHPGeneralForm(event) {
         // alert("submitted!")
 
         var reqBody = JSON.stringify({
-            userid: loggedInUserID,
+            userid: loggedInUserID, user_role: loggedInUserType,
             weight: inputTextWeight,
             height: inputTextHeight
         });
 
-        axios.post(`${baseUrl}/editHPGeneral`, reqBody, axiosConfig)
+        axios.post(`${baseUrl}/editHPGeneral`, reqBody, axiosConfigAuth)
             .then((response) => {
                 // console.log(response)
                 alert("saved!")
