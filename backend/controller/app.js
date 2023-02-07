@@ -192,7 +192,7 @@ app.post('/doctorsignup', printDebugInfo, function (req, res) {
     var full_name = req.body.full_name;
     var type = "doctor"
 
-    user.doctorsignUp(email, password, full_name,type, function (err, result) {
+    user.doctorsignUp(email, password, full_name, type, function (err, result) {
         if (!err) {
             var output = {
                 "inserted id": result.insertId
@@ -2167,8 +2167,8 @@ app.post('/deleteFile', printDebugInfo, isLoggedInMiddleware, function (req, res
 //-----------------------------------------
 
 // end point for getting patient name for doctor vitals 
-app.post('/getPatientName', function (req, res) {
-    var userid = req.body.userid
+app.post('/getPatientName', printDebugInfo, function (req, res) {
+    var userid = req.body.patientid
     vital.getPatientName(userid, function (err, result) {
         if (!err) {
             res.status(200).send(result);

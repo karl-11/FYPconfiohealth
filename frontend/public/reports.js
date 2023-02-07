@@ -27,7 +27,9 @@ if (patientid != null && loggedInUserType != "patient") {
 }
 
 // const reqBodyUserID = JSON.stringify({ userid: loggedInUserID, user_role });
-
+if (patientid != null) {
+    window.addEventListener('DOMContentLoaded', getPatientName());
+}
 const axiosConfig = {
     headers: {
         'Content-Type': 'application/json'
@@ -508,7 +510,7 @@ function submitNewFileForm(event) {
     bodyFormData.append('user_id', loggedInUserID);
     bodyFormData.append('user_role', loggedInUserType);
     bodyFormData.append('patientid', patientid);
-    
+
     axios.post(`${baseUrl}/uploadFile`, bodyFormData, { headers: { "Content-Type": "multipart/form-data", "Authorization": "Bearer " + token } })
         .then((response) => {
 
@@ -643,3 +645,41 @@ function deleteReport() {
             console.log(error);
         });
 }
+
+function getPatientName() {
+    if (patientid != null) {
+        var requestBody = {
+            userid: loggedInUserID,
+            patientid: patientid,
+        };
+    } else {
+        // data compilation
+        var requestBody = {
+            userid: loggedInUserID,
+        };
+    }
+
+    //console.log(requestBody);
+
+    axios.post(`${baseUrl}/getPatientName`, requestBody)
+        .then((response) => {
+
+            //console.log("add selected vital");
+            var data = response.data[0];
+            console.log(data);
+
+            var fullnamestring = `            
+        <h2>
+            Viewing results of: ${data.full_name} 
+        </h2>`
+
+            document.getElementById("patientnameplaceholder").innerHTML = fullnamestring;
+
+
+
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+};
