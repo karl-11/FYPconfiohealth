@@ -1,5 +1,17 @@
 const baseUrl = "http://localhost:3000";
 
+const loggedInUserID = localStorage.getItem("loggedInUserID")
+const loggedInUserType = localStorage.getItem("loggedInUserType")
+const token = localStorage.getItem("token")
+
+// requestconfig if endpoint needs authorization
+var axiosConfigAuth = {
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + token
+    }
+};
+
 var patientid;
 
 // for doctor extracting patient id from url
@@ -12,11 +24,12 @@ function viewbooking() {
     console.log(userid);
     // data compilation
     var requestBody = {
-        doctorid: userid
+        doctorid: userid,
+        user_role: loggedInUserType
     };
     console.log(requestBody)
 
-    axios.post(`${baseUrl}/viewmybooking`, requestBody)
+    axios.post(`${baseUrl}/viewmybooking`, requestBody, axiosConfigAuth)
         .then((response) => {
             console.log("view booking ")
             console.log(response.data)
@@ -103,11 +116,12 @@ function viewbooking() {
                     console.log(bookingid);
                     var requestBody = {
                         userid: userid,
-                        bookingid: bookingid
+                        bookingid: bookingid,
+                        user_role: loggedInUserType
                     };
                     if (pending == true) {
                         console.log(pending);
-                        axios.post(`${baseUrl}/acceptBooking`, requestBody)
+                        axios.post(`${baseUrl}/acceptBooking`, requestBody, axiosConfigAuth)
                             .then((response) => {
                                 console.log("data")
                                 console.log(response.data)
@@ -118,7 +132,7 @@ function viewbooking() {
                             });
                     } else {
                         console.log(pending);
-                        axios.post(`${baseUrl}/declineBooking`, requestBody)
+                        axios.post(`${baseUrl}/declineBooking`, requestBody, axiosConfigAuth)
                             .then((response) => {
                                 console.log("data")
                                 console.log(response.data)
@@ -136,11 +150,12 @@ function viewbooking() {
                     console.log(bookingid);
                     var requestBody = {
                         userid: userid,
-                        bookingid: bookingid
+                        bookingid: bookingid,
+                        user_role: loggedInUserType
                     };
                     if (pending == true) {
                         console.log(pending);
-                        axios.post(`${baseUrl}/acceptBooking`, requestBody)
+                        axios.post(`${baseUrl}/acceptBooking`, requestBody, axiosConfigAuth)
                             .then((response) => {
                                 console.log("data")
                                 console.log(response.data)
@@ -151,7 +166,7 @@ function viewbooking() {
                             });
                     } else {
                         console.log(pending);
-                        axios.post(`${baseUrl}/declineBooking`, requestBody)
+                        axios.post(`${baseUrl}/declineBooking`, requestBody, axiosConfigAuth)
                             .then((response) => {
                                 console.log("data")
                                 console.log(response.data)
