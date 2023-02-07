@@ -110,7 +110,34 @@ var userDB = {
                 });
             }
         });
-    }
+    },
+
+    doctorsignUp: function (email, password, full_name,type, callback) {
+        var conn = db;
+
+        bcrypt.hash(password, 10, async (err, hash) => {
+            if (err) {
+                console.log('Error on hashing password');
+                return res.status(500).json({ statusMessage: 'Unable to complete registration' });
+            } else {
+                var sql = `
+                INSERT INTO
+                users
+                (email, password, full_name,type)
+                VALUES 
+                (?, ?, ?, ?);
+                `;
+                conn.query(sql, [email, hash, full_name, type], function (err, result) {
+                    if (err) {
+                        console.log(err);
+                        return callback(err, null);
+                    } else {
+                        return callback(null, result);
+                    }
+                });
+            }
+        });
+    },
 }
 
 //-----------------------------------------

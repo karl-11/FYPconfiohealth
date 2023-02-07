@@ -1,4 +1,18 @@
+//paste this line whenever we need api or endpoints
 const baseUrl = "http://localhost:3000";
+
+const loggedInUserID = localStorage.getItem("loggedInUserID")
+const loggedInUserType = localStorage.getItem("loggedInUserType")
+const token = localStorage.getItem("token")
+
+// requestconfig if endpoint needs authorization
+var axiosConfigAuth = {
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + token
+    }
+};
+
 
 window.addEventListener('DOMContentLoaded', doctoroption());
 
@@ -8,22 +22,23 @@ function AddBooking() {
   const date = document.getElementById('bookdate').value;
   const time = document.getElementById('booktime').value;
   const location = document.getElementById('location').value;
-  const userid = localStorage.getItem('loggedInUserID');
+  // const userid = localStorage.getItem('loggedInUserID');
   const doctorid = document.getElementById('doctor').value;
   // data compilation
   const requestBody = {
     date: date,
     time: time,
     location: location,
-    userid: userid,
-    doctorid: doctorid,
+    userid: loggedInUserID,
+    user_role: loggedInUserType,
+    doctorid: doctorid
   };
 
   console.log(requestBody);
   if (requestBody.date == "" || requestBody.time == "") {
     alert("choose date and time");
   } else {
-    axios.post(`${baseUrl}/booking`, requestBody)
+    axios.post(`${baseUrl}/booking`, requestBody, axiosConfigAuth)
       .then((response) => {
         console.log("booking response")
         console.log(response.data)
@@ -72,11 +87,12 @@ function viewbooking() {
   console.log(userid);
   // data compilation
   const requestBody = {
-    userid: userid
+    userid: userid,
+    user_role: loggedInUserType
   };
 
 
-  axios.post(`${baseUrl}/viewbooking`, requestBody)
+  axios.post(`${baseUrl}/viewbooking`, requestBody, axiosConfigAuth)
     .then((response) => {
       console.log("view booking ")
       console.log(response.data)

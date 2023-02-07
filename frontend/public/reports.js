@@ -148,7 +148,8 @@ function submitNewFolderForm(event) {
     var reqBody = JSON.stringify({
         userid: loggedInUserID,
         user_role: loggedInUserType,
-        folderName: folder_name
+        folderName: folder_name,
+        patientid: patientid,
     });
 
     axios.post(`${baseUrl}/insertFolder`, reqBody, axiosConfigAuth)
@@ -506,7 +507,8 @@ function submitNewFileForm(event) {
     bodyFormData.append('folder_id', folderid);
     bodyFormData.append('user_id', loggedInUserID);
     bodyFormData.append('user_role', loggedInUserType);
-
+    bodyFormData.append('patientid', patientid);
+    
     axios.post(`${baseUrl}/uploadFile`, bodyFormData, { headers: { "Content-Type": "multipart/form-data", "Authorization": "Bearer " + token } })
         .then((response) => {
 
