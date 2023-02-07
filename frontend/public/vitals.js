@@ -3,20 +3,33 @@ const baseUrl = "http://localhost:3000";
 
 // Data extraction from localstorage
 const loggedinid = localStorage.getItem('loggedInUserID');
+const loggedInUserType = localStorage.getItem("loggedInUserType")
+const token = localStorage.getItem("token")
+
 // for doctor extracting patient id from url
 const myUrl = new URL(window.location.toLocaleString()).searchParams;
 var patientid = myUrl.get("patientid");
 //console.log(patientid);
 if (patientid != null) {
     var requestBody = {
-        userid: patientid
+        userid: patientid,
+        user_role: loggedInUserType
     };
 } else {
     // data compilation
     var requestBody = {
-        userid: loggedinid
+        userid: loggedinid,
+        user_role: loggedInUserType
     };
 }
+
+axiosConfigAuth = {
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + token
+    }
+}
+
 // console.log("---------------- compiled data -----------");
 //console.log(requestBody);
 
@@ -24,7 +37,7 @@ window.addEventListener('DOMContentLoaded', selectedvitals());
 window.addEventListener('DOMContentLoaded', notSelectedVitals());
 
 function selectedvitals() {
-    axios.post(`${baseUrl}/selectedvitals`, requestBody)
+    axios.post(`${baseUrl}/selectedvitals`, requestBody, axiosConfigAuth)
         .then((response) => {
 
             var vitalsStringSelected = "";
@@ -99,7 +112,7 @@ function selectedvitals() {
 }
 
 function notSelectedVitals() {
-    axios.post(`${baseUrl}/notSelectedVitals`, requestBody)
+    axios.post(`${baseUrl}/notSelectedVitals`, requestBody, axiosConfigAuth)
         .then((response) => {
 
             var vitalsStringNotSelected = "";
@@ -172,12 +185,14 @@ function addSelectedVital() {
             if (patientid != null) {
                 var requestBody = {
                     userid: patientid,
+                    user_role: loggedInUserType,
                     vitalid: vitalscheck[i].value
                 };
             } else {
                 // data compilation
                 var requestBody = {
                     userid: loggedinid,
+                    user_role: loggedInUserType,
                     vitalid: vitalscheck[i].value
                 };
             }
@@ -185,7 +200,7 @@ function addSelectedVital() {
     }
     //console.log(requestBody);
 
-    axios.post(`${baseUrl}/addSelectedVitals`, requestBody)
+    axios.post(`${baseUrl}/addSelectedVitals`, requestBody, axiosConfigAuth)
         .then((response) => {
 
             //console.log("add selected vital");
@@ -209,12 +224,14 @@ function removeSelectedVital() {
             if (patientid != null) {
                 var requestBody = {
                     userid: patientid,
+                    user_role: loggedInUserType,
                     vitalid: vitalscheck[i].value
                 };
             } else {
                 // data compilation
                 var requestBody = {
                     userid: loggedinid,
+                    user_role: loggedInUserType,
                     vitalid: vitalscheck[i].value
                 };
             }
@@ -222,7 +239,7 @@ function removeSelectedVital() {
     }
     //console.log(requestBody);
 
-    axios.post(`${baseUrl}/removeSelectedVitals`, requestBody)
+    axios.post(`${baseUrl}/removeSelectedVitals`, requestBody, axiosConfigAuth)
         .then((response) => {
             // console.log("Remove selected vitals");
             var data = response.data.affectedRows;
@@ -282,12 +299,14 @@ function loadchart() {
             if (patientid != null) {
                 var requestBody = {
                     userid: patientid,
+                    user_role: loggedInUserType,
                     vitalid: vitalsradio[i].value
                 };
                 //console.log(requestBody);
             } else {
                 var requestBody = {
                     userid: loggedinid,
+                    user_role: loggedInUserType,
                     vitalid: vitalsradio[i].value
                 };
                 //console.log(requestBody);
@@ -296,7 +315,7 @@ function loadchart() {
         }
     }
     if (requestBody.vitalid != 3) {
-        axios.post(`${baseUrl}/getVitalValue`, requestBody)
+        axios.post(`${baseUrl}/getVitalValue`, requestBody, axiosConfigAuth)
             .then((response) => {
                 //console.log("get vitals value");
                 var res = response.data;
@@ -448,7 +467,7 @@ function loadchart() {
             });
     }
     else {
-        axios.post(`${baseUrl}/getBloodPressureValue`, requestBody)
+        axios.post(`${baseUrl}/getBloodPressureValue`, requestBody, axiosConfigAuth)
             .then((response) => {
                 //console.log("get vitals value");
                 var res = response.data;

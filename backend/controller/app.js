@@ -61,6 +61,7 @@ var printDebugInfo = function (req, res, next) {
 var urlEncodedParser = bodyParser.urlencoded({ extended: false });
 var jsonParser = bodyParser.json();
 var uploadFiles = require("../middleware/uploadFiles.js");
+const isLoggedInMiddleware = require("../middleware/isLogin.js");
 
 //-----------------------------------------
 // MF Configurations
@@ -85,18 +86,18 @@ app.get('/', printDebugInfo, (req, res) => {
     res.end();
 });
 
-// end point for get all uesrs 
-app.get('/users', function (req, res) {
+// // end point for get all uesrs 
+// app.get('/users', function (req, res) {
 
-    user.getAllUsers(function (err, result) {
-        if (!err) {
-            res.status(200).send(result);
-        } else {
-            res.status(500);
-            console.log("error");
-        }
-    });
-});
+//     user.getAllUsers(function (err, result) {
+//         if (!err) {
+//             res.status(200).send(result);
+//         } else {
+//             res.status(500);
+//             console.log("error");
+//         }
+//     });
+// });
 
 // end point to login 
 app.post("/login", (req, res) => {
@@ -201,9 +202,17 @@ app.get('/vitals', printDebugInfo, function (req, res) {
 });
 
 // End point for get all Selected vitals
-app.post('/selectedVitals', printDebugInfo, function (req, res) {
+app.post('/selectedVitals', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
+    // var userid = req.body.userid;
 
     vital.getSelectedvitals(userid, function (err, result) {
         if (!err) {
@@ -216,9 +225,17 @@ app.post('/selectedVitals', printDebugInfo, function (req, res) {
 });
 
 // End point for get all Not Selected vitals
-app.post('/notSelectedVitals', printDebugInfo, function (req, res) {
+app.post('/notSelectedVitals', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
+    // var userid = req.body.userid;
     var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     vital.getNotSelectedvitals(userid, function (err, result) {
         if (!err) {
@@ -231,10 +248,18 @@ app.post('/notSelectedVitals', printDebugInfo, function (req, res) {
 });
 
 // End point for add Selected vitals
-app.post('/addSelectedVitals', printDebugInfo, function (req, res) {
+app.post('/addSelectedVitals', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
     var vitalid = req.body.vitalid;
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     vital.addSelectedVitals(userid, vitalid, function (err, result) {
         if (!err) {
@@ -247,10 +272,18 @@ app.post('/addSelectedVitals', printDebugInfo, function (req, res) {
 });
 
 // End point for renove Selected vitals
-app.post('/removeSelectedVitals', printDebugInfo, function (req, res) {
+app.post('/removeSelectedVitals', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
     var vitalid = req.body.vitalid;
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     vital.removeSelectedVitals(userid, vitalid, function (err, result) {
         if (!err) {
@@ -263,10 +296,18 @@ app.post('/removeSelectedVitals', printDebugInfo, function (req, res) {
 });
 
 // End point for renove Selected vitals
-app.post('/getVitalValue', printDebugInfo, function (req, res) {
+app.post('/getVitalValue', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
     var vitalid = req.body.vitalid;
+    var userid = req.body.userid;
+    // var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     vital.getVitalsValue(userid, vitalid, function (err, result) {
         if (!err) {
@@ -278,10 +319,18 @@ app.post('/getVitalValue', printDebugInfo, function (req, res) {
     });
 });
 
-app.post('/getBloodPressureValue', printDebugInfo, function (req, res) {
+app.post('/getBloodPressureValue', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
     var vitalid = req.body.vitalid;
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     vital.getBloodPressureValue(userid, vitalid, function (err, result) {
         if (!err) {
@@ -294,12 +343,20 @@ app.post('/getBloodPressureValue', printDebugInfo, function (req, res) {
 });
 
 // End point for add Vital Value
-app.post('/addVitalValue', printDebugInfo, function (req, res) {
+app.post('/addVitalValue', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
     var vitalid = req.body.vitalid;
     var vitalvalue = req.body.vital_value;
     var datetimecreated = req.body.datetime;
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     vital.addVitalValue(userid, vitalid, vitalvalue, datetimecreated, function (err, result) {
         if (!err) {
@@ -386,34 +443,43 @@ app.post('/declineBooking', printDebugInfo, function (req, res) {
     });
 });
 
-//  end point to insert new report 
-app.post('/report', printDebugInfo, function (req, res) {
+// //  end point to insert new report 
+// app.post('/report', printDebugInfo, function (req, res) {
 
-    //extract data from request body
-    var date = req.body.date;
-    var time = req.body.time;
-    var location = req.body.location;
+//     //extract data from request body
+//     var date = req.body.date;
+//     var time = req.body.time;
+//     var location = req.body.location;
 
-    booking.AddBooking(date, time, location, function (err, result) {
-        if (!err) {
-            var output = {
-                "inserted booking": result
-            };
-            res.status(201).send(output);
-        } else {
-            res.status(500);
-        }
-    });
-});
+//     booking.AddBooking(date, time, location, function (err, result) {
+//         if (!err) {
+//             var output = {
+//                 "inserted booking": result
+//             };
+//             res.status(201).send(output);
+//         } else {
+//             res.status(500);
+//         }
+//     });
+// });
 
 // End point for add blood pressure Value
-app.post('/addBloodPressureValue', printDebugInfo, function (req, res) {
+app.post('/addBloodPressureValue', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
     var vitalid = req.body.vitalid;
     var systolic = req.body.systolic;
     var diastolic = req.body.diastolic;
     var datetimecreated = req.body.datetime;
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
+
 
     vital.addBloodPressureValue(userid, vitalid, systolic, diastolic, datetimecreated, function (err, result) {
         if (!err) {
@@ -427,9 +493,16 @@ app.post('/addBloodPressureValue', printDebugInfo, function (req, res) {
 
 
 // end point for get all HealthProfile General 
-app.post('/HPGeneral', function (req, res) {
+app.post('/HPGeneral', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.getAllHPGeneral(userid, function (err, result) {
         if (!err) {
@@ -442,9 +515,16 @@ app.post('/HPGeneral', function (req, res) {
 });
 
 // end point for get all HealthProfile Medical 
-app.post('/HPMedical', function (req, res) {
+app.post('/HPMedical', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.getAllHPMedical(userid, function (err, result) {
         if (!err) {
@@ -457,9 +537,16 @@ app.post('/HPMedical', function (req, res) {
 });
 
 // end point for get all HealthProfile Medication 
-app.post('/HPMedication', function (req, res) {
+app.post('/HPMedication', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.getAllHPMedication(userid, function (err, result) {
         if (!err) {
@@ -472,9 +559,16 @@ app.post('/HPMedication', function (req, res) {
 });
 
 // end point for get all HealthProfile Surgical 
-app.post('/HPSurgical', function (req, res) {
+app.post('/HPSurgical', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.getAllHPSurgical(userid, function (err, result) {
         if (!err) {
@@ -487,9 +581,16 @@ app.post('/HPSurgical', function (req, res) {
 });
 
 // end point for get all HealthProfile Drug 
-app.post('/HPDrug', function (req, res) {
+app.post('/HPDrug', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.getAllHPDrug(userid, function (err, result) {
         if (!err) {
@@ -502,9 +603,16 @@ app.post('/HPDrug', function (req, res) {
 });
 
 // end point for get all HealthProfile Vaccination 
-app.post('/HPVaccination', function (req, res) {
+app.post('/HPVaccination',printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.getAllHPVaccination(userid, function (err, result) {
         if (!err) {
@@ -517,7 +625,7 @@ app.post('/HPVaccination', function (req, res) {
 });
 
 //end point to insert new health profile general record
-app.post('/insertHPGeneral', printDebugInfo, function (req, res) {
+app.post('/insertHPGeneral', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var userid = req.body.userid;
@@ -526,6 +634,15 @@ app.post('/insertHPGeneral', printDebugInfo, function (req, res) {
     var blood_type = req.body.blood_type;
     var weight = req.body.weight;
     var height = req.body.height;
+
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.insertHPGeneral(userid, gender, date_of_birth, blood_type, weight, height, function (err, result) {
         if (!err) {
@@ -541,12 +658,21 @@ app.post('/insertHPGeneral', printDebugInfo, function (req, res) {
 });
 
 //end point to edit existing health profile general record
-app.post('/editHPGeneral', printDebugInfo, function (req, res) {
+app.post('/editHPGeneral', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var userid = req.body.userid;
     var weight = req.body.weight;
     var height = req.body.height;
+
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.updateHPGeneral(weight, height, userid, function (err, result) {
         if (!err) {
@@ -563,11 +689,20 @@ app.post('/editHPGeneral', printDebugInfo, function (req, res) {
 });
 
 //end point to insert new health profile medical record
-app.post('/insertHPMedical', printDebugInfo, function (req, res) {
+app.post('/insertHPMedical', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var userid = req.body.userid;
     var text = req.body.text;
+
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.insertHPMedical(userid, text, function (err, result) {
         if (!err) {
@@ -583,10 +718,18 @@ app.post('/insertHPMedical', printDebugInfo, function (req, res) {
 });
 
 //end point to delete Medical record
-app.post('/deleteHPMedical', printDebugInfo, function (req, res) {
+app.post('/deleteHPMedical', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var id = req.body.id;
+    var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     console.log(id)
 
@@ -604,11 +747,20 @@ app.post('/deleteHPMedical', printDebugInfo, function (req, res) {
 });
 
 //end point to insert new health profile Medication record
-app.post('/insertHPMedication', printDebugInfo, function (req, res) {
+app.post('/insertHPMedication', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var userid = req.body.userid;
     var text = req.body.text;
+
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.insertHPMedication(userid, text, function (err, result) {
         if (!err) {
@@ -624,10 +776,18 @@ app.post('/insertHPMedication', printDebugInfo, function (req, res) {
 });
 
 //end point to delete Medication record
-app.post('/deleteHPMedication', printDebugInfo, function (req, res) {
+app.post('/deleteHPMedication', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var id = req.body.id;
+    var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.deleteHPMedication(id, function (err, result) {
         if (!err) {
@@ -643,11 +803,19 @@ app.post('/deleteHPMedication', printDebugInfo, function (req, res) {
 });
 
 //end point to insert new health profile Surgical record
-app.post('/insertHPSurgical', printDebugInfo, function (req, res) {
+app.post('/insertHPSurgical', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var userid = req.body.userid;
     var text = req.body.text;
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.insertHPSurgical(userid, text, function (err, result) {
         if (!err) {
@@ -663,10 +831,18 @@ app.post('/insertHPSurgical', printDebugInfo, function (req, res) {
 });
 
 //end point to delete Surgical record
-app.post('/deleteHPSurgical', printDebugInfo, function (req, res) {
+app.post('/deleteHPSurgical', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var id = req.body.id;
+    var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.deleteHPSurgical(id, function (err, result) {
         if (!err) {
@@ -682,11 +858,20 @@ app.post('/deleteHPSurgical', printDebugInfo, function (req, res) {
 });
 
 //end point to insert new health profile Drug record
-app.post('/insertHPDrug', printDebugInfo, function (req, res) {
+app.post('/insertHPDrug', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var userid = req.body.userid;
     var text = req.body.text;
+
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.insertHPDrug(userid, text, function (err, result) {
         if (!err) {
@@ -702,10 +887,18 @@ app.post('/insertHPDrug', printDebugInfo, function (req, res) {
 });
 
 // end point to delete a health profile drug allergy record
-app.post('/deleteHPDrug', printDebugInfo, function (req, res) {
+app.post('/deleteHPDrug', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var id = req.body.id;
+    var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.deleteHPDrug(id, function (err, result) {
         if (!err) {
@@ -721,11 +914,20 @@ app.post('/deleteHPDrug', printDebugInfo, function (req, res) {
 });
 
 //end point to insert new health profile Vaccination record
-app.post('/insertHPVaccination', printDebugInfo, function (req, res) {
+app.post('/insertHPVaccination', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var userid = req.body.userid;
     var text = req.body.text;
+
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.insertHPVaccination(userid, text, function (err, result) {
         if (!err) {
@@ -741,10 +943,18 @@ app.post('/insertHPVaccination', printDebugInfo, function (req, res) {
 });
 
 // end point to delete a health profile vaccination record
-app.post('/deleteHPVaccination', printDebugInfo, function (req, res) {
+app.post('/deleteHPVaccination', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var id = req.body.id;
+    var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     hp.deleteHPVaccination(id, function (err, result) {
         if (!err) {
@@ -918,11 +1128,20 @@ app.post('/insertScore', function (req, res) {
 
 
 // end point to add a new folder
-app.post('/insertFolder', printDebugInfo, function (req, res) {
+app.post('/insertFolder', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var userid = req.body.userid;
     var folderName = req.body.folderName;
+
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     reportsDB.insertFolder(folderName, userid, function (err, result) {
         if (!err) {
@@ -938,10 +1157,19 @@ app.post('/insertFolder', printDebugInfo, function (req, res) {
 });
 
 // end point to get all folders for a user
-app.post('/getAllFoldersForUser', printDebugInfo, function (req, res) {
+app.post('/getAllFoldersForUser', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var userid = req.body.userid;
+
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     reportsDB.getFoldersForUser(userid, function (err, result) {
         if (!err) {
@@ -954,10 +1182,19 @@ app.post('/getAllFoldersForUser', printDebugInfo, function (req, res) {
 });
 
 // end point to delete a folder
-app.post('/deleteFolder', printDebugInfo, function (req, res) {
+app.post('/deleteFolder', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var id = req.body.id;
+
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     reportsDB.deleteFolder(id, function (err, result) {
         if (!err) {
@@ -973,10 +1210,10 @@ app.post('/deleteFolder', printDebugInfo, function (req, res) {
 });
 
 // end point to upload image
-app.post('/uploadFile', printDebugInfo, function (req, res, next) {
+app.post('/uploadFile', printDebugInfo, isLoggedInMiddleware, function (req, res, next) {
 
-    console.log("here")
-    console.log(req.body.input_file)
+    // console.log("here")
+    // console.log(req.body.input_file)
 
     var upload = multer({
         storage: uploadFiles.image.storage(),
@@ -987,7 +1224,7 @@ app.post('/uploadFile', printDebugInfo, function (req, res, next) {
 
                 var msg = 'Error - Only images and pdf(s) are allowed'
                 var output = {
-                    errCode : "file type not supported",
+                    errCode: "file type not supported",
                     msg: msg
                 }
                 res.status(406).send(output);
@@ -1027,6 +1264,15 @@ app.post('/uploadFile', printDebugInfo, function (req, res, next) {
                 var file_size = req.file.size
                 var upload_path = req.file.path
 
+                // var userid = req.body.userid;
+                var user_role = req.body.user_role
+            
+                //check if user trying to post is actual logged in user
+                if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+                    res.status(401).send("Unauthorised!")
+                    return;
+                }
+
                 // call model
                 reportsDB.uploadFile(folder_id, file_name, file_type, userid, display_name, file_size, function (err, data) {
 
@@ -1065,10 +1311,19 @@ app.post('/uploadFile', printDebugInfo, function (req, res, next) {
 })
 
 // end point to get all files in a folder
-app.post('/getFilesInsideFolder', printDebugInfo, function (req, res) {
+app.post('/getFilesInsideFolder', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var folder_id = req.body.folder_id;
+
+    var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     reportsDB.getFilesInsideFolder(folder_id, function (err, result) {
         if (!err) {
@@ -1081,10 +1336,18 @@ app.post('/getFilesInsideFolder', printDebugInfo, function (req, res) {
 });
 
 // end point to get one file to view in detail
-app.post('/getFile', printDebugInfo, function (req, res) {
+app.post('/getFile', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var file_id = req.body.file_id;
+    var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     reportsDB.getFile(file_id, function (err, result) {
         if (!err) {
@@ -1097,10 +1360,18 @@ app.post('/getFile', printDebugInfo, function (req, res) {
 });
 
 // end point to delete a file 
-app.post('/deleteFile', printDebugInfo, function (req, res) {
+app.post('/deleteFile', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var file_id = req.body.id;
+    var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != userid && req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     reportsDB.getFile(file_id, function (err, result) {
 

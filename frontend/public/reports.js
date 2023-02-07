@@ -1,19 +1,32 @@
-// import FormData from 'https://cdn.jsdelivr.net/npm/form-data@4.0.0/src/index.js';
-// import fs from 'https://cdn.jsdelivr.net/npm/fs@0.0.1-security/index.min.js';
-
-// import { FormData } from 'https://cdn.jsdelivr.net/npm/form-data@4.0.0/lib/browser.min.js'
-
-// import fs from 'https://cdn.jsdelivr.net/npm/fs@0.0.1-security/+esm'
-
-// var fs = require ('fs')
-
 //paste this line whenever we need api or endpoints
 const baseUrl = "http://localhost:3000";
 
 const loggedInUserID = localStorage.getItem("loggedInUserID")
 // console.log("printing loggedInUserID" + loggedInUserID)
 
-const reqBodyUserID = JSON.stringify({ userid: loggedInUserID });
+const loggedInUserType = localStorage.getItem("loggedInUserType")
+const token = localStorage.getItem("token")
+
+// console.log("printing loggedInUserID" + loggedInUserID)
+
+// requestconfig if endpoint needs authorization
+var axiosConfigAuth = {
+    headers: {
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + token
+    }
+};
+
+const myUrl = new URL(window.location.toLocaleString()).searchParams;
+var patientid = myUrl.get("patientid");
+if (patientid != null && loggedInUserType != "patient") {
+    var reqBodyUserID = JSON.stringify({ userid: patientid, user_role: loggedInUserType });
+} else {
+    // data compilation
+    var reqBodyUserID = JSON.stringify({ userid: loggedInUserID, user_role: loggedInUserType });
+}
+
+// const reqBodyUserID = JSON.stringify({ userid: loggedInUserID, user_role });
 
 const axiosConfig = {
     headers: {
@@ -22,7 +35,7 @@ const axiosConfig = {
 };
 
 function getAllFolders() {
-    axios.post(`${baseUrl}/getAllFoldersForUser`, reqBodyUserID, axiosConfig)
+    axios.post(`${baseUrl}/getAllFoldersForUser`, reqBodyUserID, axiosConfigAuth)
         .then((response) => {
 
             if (response.data[0] === undefined) {
@@ -134,10 +147,11 @@ function submitNewFolderForm(event) {
 
     var reqBody = JSON.stringify({
         userid: loggedInUserID,
+        user_role: loggedInUserType,
         folderName: folder_name
     });
 
-    axios.post(`${baseUrl}/insertFolder`, reqBody, axiosConfig)
+    axios.post(`${baseUrl}/insertFolder`, reqBody, axiosConfigAuth)
         .then((response) => {
             // console.log(response)
             alert("saved!")
@@ -171,10 +185,11 @@ function createThreeDefaultFolders() {
 
         var reqBody = JSON.stringify({
             userid: loggedInUserID,
+            user_role: loggedInUserType,
             folderName: defaultFolderName
         });
 
-        axios.post(`${baseUrl}/insertFolder`, reqBody, axiosConfig)
+        axios.post(`${baseUrl}/insertFolder`, reqBody, axiosConfigAuth)
             .then((response) => {
                 // console.log(response)
                 // alert("saved!")
@@ -198,6 +213,8 @@ function viewFolder() {
     const folder_name = urlParams.get('folder_name')
 
     var reqBody = JSON.stringify({
+        userid: loggedInUserID,
+        user_role: loggedInUserType,
         folder_id: folder_id
     });
 
@@ -206,7 +223,7 @@ function viewFolder() {
 
     document.getElementById('folderName').innerText = folder_name
 
-    axios.post(`${baseUrl}/getFilesInsideFolder`, reqBody, axiosConfig)
+    axios.post(`${baseUrl}/getFilesInsideFolder`, reqBody, axiosConfigAuth)
         .then((response) => {
 
             if (response.data[0] === undefined) {
@@ -298,6 +315,8 @@ function viewFolder2() {
     const folder_name = urlParams.get('folder_name')
 
     var reqBody = JSON.stringify({
+        userid: loggedInUserID,
+        user_role: loggedInUserType,
         folder_id: folder_id
     });
 
@@ -306,7 +325,7 @@ function viewFolder2() {
 
     document.getElementById('folderName').innerText = folder_name
 
-    axios.post(`${baseUrl}/getFilesInsideFolder`, reqBody, axiosConfig)
+    axios.post(`${baseUrl}/getFilesInsideFolder`, reqBody, axiosConfigAuth)
         .then((response) => {
 
             if (response.data[0] === undefined) {
@@ -484,8 +503,9 @@ function submitNewFileForm(event) {
     bodyFormData.append('fileName', fileName);
     bodyFormData.append('folder_id', folderid);
     bodyFormData.append('user_id', loggedInUserID);
+    bodyFormData.append('user_role', loggedInUserType);
 
-    axios.post(`${baseUrl}/uploadFile`, bodyFormData, { headers: { "Content-Type": "multipart/form-data" } })
+    axios.post(`${baseUrl}/uploadFile`, bodyFormData, { headers: { "Content-Type": "multipart/form-data", "Authorization": "Bearer " + token } })
         .then((response) => {
 
             alert("saved!")
@@ -519,10 +539,12 @@ function viewFile() {
     document.getElementById('fileName').innerText = file_name
 
     var reqBody = JSON.stringify({
+        userid: loggedInUserID,
+        user_role: loggedInUserType,
         file_id: file_id
     });
 
-    axios.post(`${baseUrl}/getFile`, reqBody, axiosConfig)
+    axios.post(`${baseUrl}/getFile`, reqBody, axiosConfigAuth)
         .then((response) => {
 
             if (response.data[0] === undefined) {
@@ -575,10 +597,12 @@ function deleteFolder() {
     const folder_id = urlParams.get('id');
 
     var reqBody = JSON.stringify({
+        userid: loggedInUserID,
+        user_role: loggedInUserType,
         id: folder_id
     });
 
-    axios.post(`${baseUrl}/deleteFolder`, reqBody, axiosConfig)
+    axios.post(`${baseUrl}/deleteFolder`, reqBody, axiosConfigAuth)
         .then((response) => {
             alert("Folder Deleted!")
 
@@ -597,10 +621,12 @@ function deleteReport() {
     const file_id = urlParams.get('id');
 
     var reqBody = JSON.stringify({
+        userid: loggedInUserID,
+        user_role: loggedInUserType,
         id: file_id
     });
 
-    axios.post(`${baseUrl}/deleteFile`, reqBody, axiosConfig)
+    axios.post(`${baseUrl}/deleteFile`, reqBody, axiosConfigAuth)
         .then((response) => {
             alert("File Deleted!")
 
