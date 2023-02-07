@@ -189,7 +189,7 @@ app.post('/doctorsignup', printDebugInfo, function (req, res) {
     var full_name = req.body.full_name;
     var type = "doctor"
 
-    user.doctorsignUp(email, password, full_name,type, function (err, result) {
+    user.doctorsignUp(email, password, full_name, type, function (err, result) {
         if (!err) {
             var output = {
                 "inserted id": result.insertId
@@ -572,7 +572,7 @@ app.post('/booking', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 });
 
 // end point for get user booking 
-app.post('/viewbooking', printDebugInfo, isLoggedInMiddleware,function (req, res) {
+app.post('/viewbooking', printDebugInfo, isLoggedInMiddleware, function (req, res) {
     //extract data from request body
     var userid = req.body.userid;
 
@@ -619,7 +619,7 @@ app.post('/viewmybooking', printDebugInfo, isLoggedInMiddleware, function (req, 
 });
 
 // end point for get All user booking 
-app.post('/acceptBooking', printDebugInfo, isLoggedInMiddleware,function (req, res) {
+app.post('/acceptBooking', printDebugInfo, isLoggedInMiddleware, function (req, res) {
     //extract data from request body
     var bookingid = req.body.bookingid;
 
@@ -1822,7 +1822,7 @@ app.post('/deleteFolder', printDebugInfo, isLoggedInMiddleware, function (req, r
     //extract data from request body
     var id = req.body.id;
 
-     var userid = req.body.userid;
+    var userid = req.body.userid;
     var user_role = req.body.user_role
 
     //check if user trying to post is actual logged in user
@@ -2121,8 +2121,8 @@ app.post('/deleteFile', printDebugInfo, isLoggedInMiddleware, function (req, res
 //-----------------------------------------
 
 // end point for getting patient name for doctor vitals 
-app.post('/getPatientName', function (req, res) {
-    var userid = req.body.userid
+app.post('/getPatientName', printDebugInfo, function (req, res) {
+    var userid = req.body.patientid
     vital.getPatientName(userid, function (err, result) {
         if (!err) {
             res.status(200).send(result);

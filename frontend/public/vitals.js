@@ -275,7 +275,7 @@ function getPatientName() {
         };
     }
 
-    //console.log(requestBody);
+    console.log(requestBody);
 
     axios.post(`${baseUrl}/getPatientName`, requestBody)
         .then((response) => {
@@ -290,8 +290,6 @@ function getPatientName() {
         </h2>`
 
             document.getElementById("patientnameplaceholder").innerHTML = fullnamestring;
-
-
 
         })
         .catch((error) => {
