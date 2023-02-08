@@ -7,10 +7,10 @@ const token = localStorage.getItem("token")
 
 // requestconfig if endpoint needs authorization
 var axiosConfigAuth = {
-    headers: {
-        'Content-Type': 'application/json',
-        "Authorization": "Bearer " + token
-    }
+  headers: {
+    'Content-Type': 'application/json',
+    "Authorization": "Bearer " + token
+  }
 };
 
 
@@ -33,6 +33,23 @@ function AddBooking() {
     user_role: loggedInUserType,
     doctorid: doctorid
   };
+
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+
+  today = yyyy + '-' + mm + '-' + dd;
+
+  var gottendate = new Date(date);
+  var todaydate = new Date(today)
+
+
+  if (gottendate < todaydate) {
+    alert("Do not select a past date")
+    return
+  }
 
   console.log(requestBody);
   if (requestBody.date == "" || requestBody.time == "") {
