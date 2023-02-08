@@ -99,14 +99,25 @@
                         //console.log("Not selected vitals");
                         var data = response.data[i];
                         //console.log(data);
-                        var patientStringList = patientStringList +
+                        if (response.data.length - 1 == i) {
+                            var patientStringList = patientStringList +
+                                `
+                            <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-5">
+                                <a href="./doctorpage.html?patientid=${data.patientid}" id="${data.full_name}" class="text-decoration-none text-black" onclick = "sendName(this.id)">
+                                    ${data.full_name}
+                                </a>
+                            </p>
                             `
+                        } else {
+                            var patientStringList = patientStringList +
+                                `
                             <p class="card shadow-bottom bg-cards border rounded-4 p-2 ps-3 m-0 mb-2">
                                 <a href="./doctorpage.html?patientid=${data.patientid}" id="${data.full_name}" class="text-decoration-none text-black" onclick = "sendName(this.id)">
                                     ${data.full_name}
                                 </a>
                             </p>
                             `
+                        }
                     }
                     document.getElementById("patientlist").innerHTML = patientStringList;
                 })

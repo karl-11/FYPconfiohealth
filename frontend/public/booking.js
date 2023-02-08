@@ -14,8 +14,6 @@ var axiosConfigAuth = {
 };
 
 
-window.addEventListener('DOMContentLoaded', doctoroption());
-
 
 function AddBooking() {
   // data extraction
@@ -87,7 +85,6 @@ function doctoroption() {
 
       document.getElementById("doctor").innerHTML = doctoroptionstring
 
-
     })
     .catch((error) => {
       console.log(error);
@@ -121,7 +118,7 @@ function viewbooking() {
         var t = data.date.split(/[- : T Z]/);
 
         // Apply each element to the Date function
-        var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3] - 8, t[4]));
+        var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
         console.log(t);
         console.log(d);
 
@@ -141,7 +138,7 @@ function viewbooking() {
 
         // console.log(year);
         // console.log(month);
-        // console.log(day);
+        console.log(day);
 
         var date = year + '-' + month + '-' + day;
         //console.log(date);
@@ -151,14 +148,14 @@ function viewbooking() {
           datetimestring = datetimestring +
             `
           <div class="row justify-content-between my-5 mx-1 align-items-center">
-          <div class="text-decoration-none col-7 p-0 m-0 text-center">
+          <div class="text-decoration-none col-md-7 col-sm-10 p-0 m-0 mb-1 text-center">
               <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                   ${"Date: " + date + " | Time: " + time} <br>
                   ${"Location: " + data.location} <br>
                   ${"Doctor: Dr " + data.full_name}
               </p>
           </div>
-          <div class="text-decoration-none col-4 p-0 m-0 text-center">
+          <div class="text-decoration-none col-md-4 col-sm-8 p-0 m-0 text-center">
               <p class="card flex-column shadow-bottom bg-warning border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
           </div>
       </div>
@@ -169,14 +166,14 @@ function viewbooking() {
           datetimestring = datetimestring +
             `
           <div class="row justify-content-between my-5 mx-1 align-items-center">
-          <div class="text-decoration-none col-7 p-0 m-0 text-center">
+          <div class="text-decoration-none col-md-7 col-sm-10 p-0 m-0 mb-1 text-center">
               <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                   ${"Date: " + date + " | Time: " + time} <br>
                   ${"Location: " + data.location} <br>
                   ${"Doctor: Dr " + data.full_name}
               </p>
           </div>
-          <div class="text-decoration-none col-4 p-0 m-0 text-center">
+          <div class="text-decoration-none col-md-4 col-sm-8 p-0 m-0 text-center">
               <p class="card flex-column shadow-bottom bg-success border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
           </div>
       </div>
@@ -186,15 +183,15 @@ function viewbooking() {
           datetimestring = datetimestring +
             `
         <div class="row justify-content-between my-5 mx-1 align-items-center">
-        <div class="text-decoration-none col-7 p-0 m-0 text-center">
-            <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+        <div class="text-decoration-none col-md-7 col-sm-10 p-0 m-0 mb-1 text-center">
+        <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                 ${"Date: " + date + " | Time: " + time} <br>
                 ${"Location: " + data.location} <br>
                 ${"Doctor: Dr " + data.full_name}
             </p>
         </div>
-        <div class="text-decoration-none col-4 p-0 m-0 text-center">
-            <p class="card flex-column shadow-bottom bg-danger border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
+        <div class="text-decoration-none col-md-4 col-sm-8 p-0 m-0 text-center">
+        <p class="card flex-column shadow-bottom bg-danger border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
         </div>
     </div>
   `

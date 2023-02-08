@@ -41,7 +41,7 @@ function viewbooking() {
                 var t = data.date.split(/[- : T Z]/);
 
                 // Apply each element to the Date function
-                var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3] - 8, t[4]));
+                var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
                 console.log(t);
                 console.log(d);
 
@@ -71,14 +71,14 @@ function viewbooking() {
                     datetimestring = datetimestring +
                         `
                     <div class="row justify-content-evenly my-5 mx-1 align-items-center">
-                        <div class="text-decoration-none col-5 p-0 m-0 text-center">
+                        <div class="text-decoration-none col-md-5 col-sm-5 p-0 m-0 mb-1 text-center">
                             <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                 ${"Name: " + data.full_name} <br>
                                 ${"Date: " + date + " | Time: " + time} <br>
                                 ${"Location: " + data.location}
                             </p>
                         </div>
-                        <div class = "col-2">
+                        <div class = "col-md-2 col-sm-5">
                             <div class="text-decoration-none col p-0 m-0 pb-2 text-center">
                                 <p id="${"accept" + data.bookingid}" class="btn bg-success card flex-column shadow-bottom border rounded-4 p-0 m-0"><strong>Accept</strong></p>
                             </div>
@@ -92,15 +92,17 @@ function viewbooking() {
                     datetimestring = datetimestring +
                         `
                 <div class="row justify-content-evenly my-5 mx-1 align-items-center">
-                    <div class="text-decoration-none col-5 p-0 m-0 text-center">
+                    <div class="text-decoration-none col-md-5 col-sm-5 p-0 m-0 mb-1 text-center">
                         <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                             ${"Name: " + data.full_name} <br>
                             ${"Date: " + date + " | Time: " + time} <br>
                             ${"Location: " + data.location}
                         </p>
                     </div>
-                    <div class="text-decoration-none col-2 p-0 m-0 text-center">
-                        <p class="card flex-column shadow-bottom bg-cards border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
+                    <div class = "col-md-2 col-sm-5">
+                        <div class="text-decoration-none p-0 m-0 text-center">
+                            <p class="card flex-column shadow-bottom bg-cards border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
+                        </div>
                     </div>
                 </div>
                 `
