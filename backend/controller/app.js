@@ -605,18 +605,13 @@ app.post('/viewmybooking', printDebugInfo, isLoggedInMiddleware, function (req, 
     // var userid = req.body.userid;
     var user_role = req.body.user_role
 
-    console.log(doctorid)
-    console.log(user_role)
-    console.log(req.decodedToken.user_id)
-    console.log(req.decodedToken.user_role)
 
     //check if user trying to post is actual logged in user
     if (req.decodedToken.user_id != doctorid || req.decodedToken.user_role != user_role) {
         res.status(401).send("Unauthorised!")
         return;
     }
-
-    console.log(doctorid);
+    
     booking.viewmybooking(doctorid, function (err, result) {
         if (!err) {
             res.status(200).send(result);
@@ -1518,7 +1513,7 @@ app.post('/getAllSelectedDoctor', printDebugInfo, isLoggedInMiddleware, function
     var user_role = req.body.user_role
 
     //check if user trying to post is actual logged in user
-    if (req.decodedToken.user_id != userid || req.decodedToken.user_role != user_role) {
+    if (req.decodedToken.user_id != patientid || req.decodedToken.user_role != user_role) {
         res.status(401).send("Unauthorised!")
         return;
     }
@@ -1542,7 +1537,7 @@ app.post('/getNotSelectedDoctor', printDebugInfo, isLoggedInMiddleware, function
     var user_role = req.body.user_role
 
     //check if user trying to post is actual logged in user
-    if (req.decodedToken.user_id != userid || req.decodedToken.user_role != user_role) {
+    if (req.decodedToken.user_id != patientid || req.decodedToken.user_role != user_role) {
         res.status(401).send("Unauthorised!")
         return;
     }
@@ -1562,11 +1557,11 @@ app.post('/getSelectedPatient', printDebugInfo, isLoggedInMiddleware, function (
     //extract data from request body
     var doctorid = req.body.doctorid;
 
-    var patientid = req.body.patientid;
+    //var patientid = req.body.patientid;
     var user_role = req.body.user_role
 
     //check if user trying to post is actual logged in user
-    if (req.decodedToken.user_id != patientid || req.decodedToken.user_role != user_role) {
+    if (req.decodedToken.user_id != doctorid || req.decodedToken.user_role != user_role) {
         res.status(401).send("Unauthorised!")
         return;
     }
