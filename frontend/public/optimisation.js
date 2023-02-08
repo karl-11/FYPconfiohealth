@@ -23,7 +23,7 @@ $(document).ready(function () {
 
             if (resultPercentage <= 33) {
                 $('#riskTitle').append(`
-                <strong class="text-danger">${name}</strong><br>
+                <strong class="text-danger h6">${name}</strong><br>
                 `)
                 risksArray.forEach((item) => {
                     let li = document.createElement("li");
