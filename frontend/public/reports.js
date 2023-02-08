@@ -2,12 +2,8 @@
 const baseUrl = "http://localhost:3000";
 
 const loggedInUserID = localStorage.getItem("loggedInUserID")
-// console.log("printing loggedInUserID" + loggedInUserID)
-
 const loggedInUserType = localStorage.getItem("loggedInUserType")
 const token = localStorage.getItem("token")
-
-// console.log("printing loggedInUserID" + loggedInUserID)
 
 // requestconfig if endpoint needs authorization
 var axiosConfigAuth = {
@@ -43,12 +39,18 @@ function getAllFolders() {
             if (response.data[0] === undefined) {
 
                 console.log("data is empty")
+                var addNewFolderPlaceholderHTML =
+                    `
+            <div id="addNewFolderBtnPlaceholder" class="col-2 p-0 m-3">
 
-                // createThreeDefaultFolders();
+            </div>
+            `
 
-                //after looping thrice, refresh the page.
-                //getAllFolders();
-                //addNewFolderCard();
+                reportFoldersHTML = addNewFolderPlaceholderHTML
+
+                document.getElementById("reports-main-section").innerHTML = reportFoldersHTML
+
+                addNewFolderCard();
             }
             else {
 
@@ -173,47 +175,6 @@ function submitNewFolderForm(event) {
         .catch((error) => {
             console.log(error);
         });
-}
-
-function createThreeDefaultFolders() {
-
-    // loop thrice
-    for (i = 0; i < 3; i++) {
-
-        var defaultFolderName
-
-        switch (i) {
-            case 0:
-                defaultFolderName = "Medical Checkups"
-                break;
-            case 1:
-                defaultFolderName = "Blood Tests"
-                break;
-            case 2:
-                defaultFolderName = "X-Rays"
-        }
-
-        var reqBody = JSON.stringify({
-            userid: loggedInUserID,
-            user_role: loggedInUserType,
-            folderName: defaultFolderName
-        });
-
-        axios.post(`${baseUrl}/insertFolder`, reqBody, axiosConfigAuth)
-            .then((response) => {
-                // console.log(response)
-                // alert("saved!")
-
-                //reload the whole page
-                // getAllFolders();
-
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-
-    location.reload();
 }
 
 function viewFolder() {
@@ -500,8 +461,6 @@ function submitNewFileForm(event) {
 
     event.preventDefault();
 
-    // new FormData(document.getElementById('addNewFileForm'))
-
     //extract the input data text
     var file = document.getElementById('input_file').files[0]
     var fileName = document.getElementById('fileName').value
@@ -599,11 +558,6 @@ function viewFile() {
                         `
                 }
 
-                // var fileHTML =
-                //     `
-                //                 <img style="max-width: 75%;" src="./uploads/${data.file_name}" alt="Avatar Logo">
-                //             `
-
                 document.getElementById("fileplaceholder").innerHTML = fileHTML
 
             }
@@ -628,9 +582,8 @@ function deleteFolder() {
         .then((response) => {
             alert("Folder Deleted!")
 
-            history.go(-1)
+            window.location.href = "reports.html"
 
-            //viewFolder();
         })
         .catch((error) => {
             console.log(error);
@@ -654,7 +607,7 @@ function deleteReport() {
 
             history.go(-1)
 
-            //viewFolder();
+            viewFolder2();
         })
         .catch((error) => {
             console.log(error);
