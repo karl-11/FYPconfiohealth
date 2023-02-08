@@ -552,7 +552,7 @@ form.addEventListener('submit', (event) => {
             }
 
 
-            axios.post(`${baseUrl}/addBloodPressureValue`, requestBody, axiosConfig)
+            axios.post(`${baseUrl}/addBloodPressureValue`, requestBody, axiosConfigAuth)
                 .then((response) => {
                     console.log("========= Add Vital Value response ==========")
                     console.log(response.data)

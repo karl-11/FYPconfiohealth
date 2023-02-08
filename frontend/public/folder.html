@@ -43,19 +43,22 @@
         <!-- Page Header Section to put the back button and page header in the same row -->
         <div class="container-fluid">
             <div class="row just-content-evenly my-2">
-
-                <button class="col-2 button rounded-3 p-2 m-0" type="button" >
-                    <img style="max-width: 10%;" class="" src="./images/icons8-back-30.png" alt="">
-                    <a class="text-decoration-none text-black" href="Javascript:history.go ( -1)"><Strong>Back</Strong></a></button>
-
+                <a class="col-2 text-decoration-none text-black rounded-3 p-2 m-0 button d-flex"
+                    href="Javascript:history.go ( -1)">
+                    <span class="mx-auto align-self-center"><img src="./images/icons8-back-30.png" class=""
+                            alt=""><Strong class="">Back</Strong></span>
+                </a>
                 <!-- Page Header Title-->
                 <h3 id="folderName" class="col-8 text-center font-pageheader p-2 pb-0 ">
                     <strong></strong>
                 </h3>
 
-                <button id="deleteBtn" class="col-2 button rounded-3 p-2 m-0" type="button" onclick="deleteFolder()"><img class=""
-                    style="max-width: 10%;" src="./images/icons8-minus-30.png" alt="">
-                <Strong>Delete Folder</Strong></button>
+                <button id="deleteBtn" class="col-2 button rounded-3 p-2 m-0 d-flex" type="button"
+                    onclick="deleteFolder()">
+                    <span class="mx-auto align-self-center">
+                        <img class="" src="./images/icons8-minus-30.png" alt="">
+                        <Strong>Delete Folder</Strong> </span>
+                </button>
 
             </div>
         </div>
