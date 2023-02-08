@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000";
+const baseUrl = "http://34.224.225.183:3000";
 
 const form = document.getElementById('login-form');
 

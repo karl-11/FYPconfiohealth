@@ -3,8 +3,8 @@ const messageInput = document.querySelector('#message-input');
 const sendButton = document.querySelector('#send-button');
 
 //paste this line whenever we need api or endpoints
-const baseUrl = "http://localhost:3000";
-const windowUrl = "http://localhost:3001";
+const baseUrl = "http://34.224.225.183:3000";
+const windowUrl = "http://34.224.225.183:3001";
 
 sendButton.addEventListener('click', (event) => {
     // event.preventDefault();

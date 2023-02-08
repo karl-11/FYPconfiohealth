@@ -1,5 +1,5 @@
 // Get vitals from table and put into html
-const baseUrl = "http://localhost:3000";
+const baseUrl = "http://34.224.225.183:3000";
 
 // Data extraction from localstorage
 const loggedinid = localStorage.getItem('loggedInUserID');

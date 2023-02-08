@@ -1,5 +1,5 @@
 //paste this line whenever we need api or endpoints
-const baseUrl = "http://localhost:3000";
+const baseUrl = "http://34.224.225.183:3000";
 
 const loggedInUserID = localStorage.getItem("loggedInUserID")
 
