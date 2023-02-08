@@ -18,7 +18,8 @@
                 <a class="nav-link px-2 text-muted" data-bs-toggle="modal" data-bs-target="#aboutUsModal">About Us</a>
             </li>
             <li class="nav-item my-auto">
-                <a class="nav-link px-2 text-muted" data-bs-toggle="modal" data-bs-target="#contactUsModal">Contact Us</a>
+                <a class="nav-link px-2 text-muted" data-bs-toggle="modal" data-bs-target="#contactUsModal">Contact
+                    Us</a>
             </li>
 
             <li class="nav-item my-auto">
@@ -102,3 +103,60 @@
         window.location.href = '/'
     }
 </script>
+
+<!-- Modal for header + footer -->
+<div class="modal fade" id="clinicModal" tabindex="-1" aria-labelledby="clinicModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Our Clinic Address</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Located in: Depot Heights Shopping Centre <br>
+                Address: 108 Depot Rd, #01-10, Singapore 100108
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="contactUsModal" tabindex="-1" aria-labelledby="contactUsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Contact Us</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Phone:
+                <a href="tel:6278 0088">6278 0088</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="aboutUsModal" tabindex="-1" aria-labelledby="aboutUsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">About Us</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Started by doctors who witness their patient daily struggles, the Confio team aims to empower
+                    patients to live better through personalisation around their lives.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
