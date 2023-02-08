@@ -36,7 +36,7 @@ form.addEventListener('submit', (event) => {
             if (loggedInUserType == "doctor") {
                 window.location.href = "/doctorpage.html";
             } else if (loggedInUserType == "admin") {
-                window.location.href = "/doctorsignup.html"
+                window.location.href = "/doctorSignup.html"
             }
             else {
                 window.location.href = "/";
