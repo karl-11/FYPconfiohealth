@@ -38,31 +38,31 @@ $(document).ready(function () {
                 var activeStatusClass = "carousel-item"
             }
             $('#questionContent').append(`
-                        <div class="${activeStatusClass}">
-                            <div class="d-flex flex-nowrap my-5">
-                                <div class="col-md-1">
-                                </div>
-                                <div class="col-md-10 mx-5 py-5 pe-5 align-self-center">
-                                    <!-- question number -->
-                                    <div id="questionNumbers">
-                                        <h5 id="totalCount" class="m-3 position-absolute top-0" style="right: 18px;">
-                                            <strong>${i + 1}</strong></h5>
-                                        <h5 id="currentQnNumber" class="m-3 position-absolute top-0 end-0">
-                                            <strong>/${questionCount}</strong></h5>
-                                    </div>
-                                    <!-- question -->
-                                    <h4 class="m-0 pb-3"><strong>${content}</strong></h4>
-                                    <!-- 1-10 ranking buttons -->
-                                    <div class="btn-toolbar mb-3" role="toolbar"
-                                        aria-label="Toolbar with button groups">
-                                        <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <div id="${buttonID}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="${activeStatusClass} carousel-item">
+            <div class="d-flex flex-column align-items-center my-5">
+              <div class="col-lg-10 col-md-10 col-sm-12 mx-5 py-5 pe-5 align-self-center">
+                <!-- question number -->
+                <div id="questionNumbers">
+                  <h5 id="totalCount" class="m-3 position-absolute top-0" style="right: 18px;">
+                    <strong>${i + 1}</strong>
+                  </h5>
+                  <h5 id="currentQnNumber" class="m-3 position-absolute top-0 end-0">
+                    <strong>/${questionCount}</strong>
+                  </h5>
+                </div>
+                <!-- question -->
+                <h4 class="m-0 pb-3"><strong>${content}</strong></h4>
+                <!-- 1-10 ranking buttons -->
+                <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                  <div class="btn-group mr-2" role="group" aria-label="First group">
+                    <div id="${buttonID}">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
             `)
         }
         for (i = 0; i < response.data.length; i++) {

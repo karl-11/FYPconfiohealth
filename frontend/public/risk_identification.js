@@ -45,32 +45,28 @@ function loadAllData() {
             console.log("the qnrID is: " + qnrID);
             //progress bar is loaded in as 0/max_score with no values, if there is content, .html() function will replace those values
             $('#questionnaireContent').append(`
-            <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0 mb-4"
-                style="width: 290px; height:310px;">
-                <a href="detailQuestionnaire.html" id=${qnrID} class="text-decoration-none stretched-link" onclick="sendID(this.id)">
-                </a>
-                <p class="text-start text-black p-0 mx-3 mt-3 mb-0 fs-5">${name}</p>
-                <img src="${image_url}" alt="questionnaire image"
-                    class="img-fluid align-self-center p-3 mt-0" style="height:200px;">
-                <div id="${resultDataID}" class="card-body p-0 m-0 mb-2">
-    
-                <p class="text-start text-black p-0 mx-3 mb-2 fw-light">Result:0/${max_score}</p>
-                <div class="progress mx-3 mb-2">
-                    <div class="progress-bar  progress-bar-striped progress-bar-animated" role="progressbar"
-                    aria-valuenow="" aria-valuemin="0" aria-valuemax="" style="width: %">
-                    </div>
+            <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0 mb-4" style="width: 290px; height:310px;">
+            <a href="detailQuestionnaire.html" id=${qnrID} class="text-decoration-none stretched-link" onclick="sendID(this.id)"></a>
+            <p class="text-start text-black p-0 mx-3 mt-3 mb-0 fs-5">${name}</p>
+            <img src="${image_url}" alt="questionnaire image" class="img-fluid align-self-center p-3 mt-0" style="height:200px;">
+            <div id="${resultDataID}" class="card-body p-0 m-0 mb-2">
+              <p class="text-start text-black p-0 mx-3 mb-2 font-weight-light">Result: 0/${max_score}</p>
+              <div class="progress mx-3 mb-2">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                  aria-valuenow="" aria-valuemin="0" aria-valuemax="" style="width: %">
                 </div>
-    
-                </div>
+              </div>
             </div>
+          </div>
+          
             `)
 
         }
         // const user_id = localStorage.getItem('loggedInUserID')
         var requestBody = {
             userid: loggedInUserID,
-            patientid: patientid, 
-            user_role: loggedInUserType 
+            patientid: patientid,
+            user_role: loggedInUserType
         };
         axios.post(`${baseUrl}/getQnrUserScoreByUser`, requestBody, axiosConfigAuth).then(function (response) {
             console.log("replace")
@@ -155,8 +151,8 @@ function loadPatientDataForDoctor() {
         // var patientid = myUrl.get("patientid");
         var requestBody = {
             userid: loggedInUserID,
-            patientid: patientid, 
-            user_role: loggedInUserType 
+            patientid: patientid,
+            user_role: loggedInUserType
         };
         axios.post(`${baseUrl}/getQnrUserScoreByUser`, requestBody, axiosConfigAuth).then(function (response) {
             console.log("replace")
