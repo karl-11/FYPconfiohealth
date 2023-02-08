@@ -71,15 +71,26 @@
         const baseUrl = "http://localhost:3000";
 
         const loggedinid = localStorage.getItem('loggedInUserID');
+        const loggedintype = localStorage.getItem('loggedInUserType');
+        const token = localStorage.getItem('token');
+
+        // requestconfig if endpoint needs authorization
+        var axiosConfigAuth = {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + token
+            }
+        };
         var doctorid;
         var requestBody = {
-            doctorid: loggedinid
+            doctorid: loggedinid,
+            user_role: loggedintype,
         };
 
         SelectedPatient();
 
         function SelectedPatient() {
-            axios.post(`${baseUrl}/getSelectedPatient`, requestBody)
+            axios.post(`${baseUrl}/getSelectedPatient`, requestBody, axiosConfigAuth)
                 .then((response) => {
                     console.log(response.data);
                     var patientStringList = "";
