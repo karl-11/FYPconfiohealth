@@ -177,7 +177,44 @@ app.post('/signup', printDebugInfo, function (req, res) {
             var output = {
                 "inserted id": result.insertId
             };
+
+            const userid = result.insertId
+
+            // after inserting a new user record to the database,
+            // create three default folders for the newly signed up user
+            
+            var defaultFolderName =""
+            // loop thrice
+            for (i = 0; i < 3; i++) {
+
+
+                switch (i) {
+                    case 0:
+                        defaultFolderName = "Medical Checkups"
+                        break;
+                    case 1:
+                        defaultFolderName = "Blood Tests"
+                        break;
+                    case 2:
+                        defaultFolderName = "X-Rays"
+                }
+
+                reportsDB.insertFolder(defaultFolderName, userid, function (err, result) {
+                    if (!err) {
+                        // var output = {
+                        //     "inserted id": result.insertId
+                        // };
+                        // res.status(201).send(output);
+                    } else {
+                        res.status(500);
+                        console.log("error");
+                    }
+                });
+            }
+
+            // send response as 200
             res.status(201).send(output);
+
         } else {
             res.status(500);
         }
