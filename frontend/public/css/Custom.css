@@ -285,3 +285,67 @@
 }
 
 /* end padding styles */
+/* x-small - portrait phones */
+@media (min-width: 100px) {
+    body {
+        font-size: 0.75rem;
+    }
+
+    .font-size-xsm {
+        font-size: 0.75rem;
+    }
+
+    .img-mw-100 {
+        max-width: 100%
+    }
+}
+
+/* small - landscape phones  */
+@media (min-width:768px) {
+    body {
+        font-size: 0.8rem;
+    }
+}
+
+/* medium - tablets */
+@media (min-width:992px) {
+    body {
+        font-size: 0.9rem;
+    }
+
+    .w-md-75 {
+        width: 75% !important
+    }
+
+    .font-size-md {
+        font-size: 0.9rem;
+    }
+
+    .img-mw-md-75 {
+        max-width: 75%
+    }
+}
+
+/* xl - computers */
+@media (min-width:1200px) {
+    body {
+        font-size: 1rem;
+    }
+}
+
+.iframe {
+    min-height: 75%;
+    min-width: 75%;
+
+}
+
+.display-table {
+    display: table;
+    /* Make the container element behave like a table */
+    /* Set full-width to expand the whole page */
+}
+
+.display-tablecells {
+    display: table-cell;
+    /* Make elements inside the container behave like table cells */
+}

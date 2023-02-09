@@ -35,19 +35,18 @@
 <body class="font-montserrat body" onload="viewFile()">
 
     <!--Body section-->
-    <section class="w-75 min-vh-100 mx-auto pb-170px">
+    <section class="w-md-75 min-vh-100 mx-auto pb-170px">
 
         <!--Header section-->
         <span id="header"></span>
 
         <!-- Page Header Section to put the back button and page header in the same row -->
-        <div class="container-fluid">
-            <div class="row just-content-evenly my-2">
+        <div class="row g-0 p-2">
 
-                <a class="col-2 text-decoration-none text-black rounded-3 p-2 m-0 button d-flex"
+                <a class="col-2 text-decoration-none text-black rounded-3 p-2  m-0 button d-flex"
                     href="Javascript:history.go ( -1)">
-                    <span class="mx-auto align-self-center"><img src="./images/icons8-back-30.png" class=""
-                            alt=""><Strong class="">Back</Strong></span>
+                    <span class="mx-auto align-self-center font-size-xsm font-size-md"><img style="max-width: 100%;" src="./images/icons8-back-30.png" class=""
+                            alt=""><Strong class="d-none d-md-inline">Back</Strong></span>
                 </a>
 
                 <!-- Page Header Title-->
@@ -57,16 +56,15 @@
 
                 <button id="deleteReportBtn" class="col-2 button rounded-3 p-2 m-0 d-flex" type="button"
                     onclick="deleteReport()">
-                    <span class="mx-auto align-self-center">
-                        <img class="" src="./images/icons8-minus-30.png" alt="">
-                        <Strong>Delete report</Strong> </span>
+                    <span class="mx-auto align-self-center font-size-xsm font-size-md">
+                        <img class="" style="max-width: 100%;" src="./images/icons8-minus-30.png" alt="">
+                        <Strong  class="d-none d-md-inline">Delete report</Strong> </span>
                 </button>
-            </div>
         </div>
 
         <!--Main section-->
         <div id="main-section" class="text-center" onclick="viewFile()">
-            <div id="fileplaceholder" class="mx-5 p-3">
+            <div id="fileplaceholder" class="mx-md-5 p-md-3">
                 <!-- <img style="max-width: 75%;" src="./images/47lfuu03aak31-userid9-1675481450101-632196698.jpg" alt="Avatar Logo"> -->
             </div>
         </div>
