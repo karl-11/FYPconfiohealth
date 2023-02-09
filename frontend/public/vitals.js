@@ -1,5 +1,5 @@
 // Get vitals from table and put into html
-const baseUrl = "http://34.224.225.183:3000";
+const baseUrl = "http://localhost:3000";
 
 // Data extraction from localstorage
 const loggedinid = localStorage.getItem('loggedInUserID');
@@ -69,11 +69,11 @@ function selectedvitals() {
 
                 var vitalsStringSelected = vitalsStringSelected +
                     `
-                     <div class="form-check col-lg-3 col-md-4 m-0 p-0">
+                     <div class="form-check col-lg-3 col-md-4 col-6 m-0 p-0 align-items-center">
                          <input class="form-check-input" type="checkbox" value="${data.vitalsid}" name="vitalscheck" id="${data.selectedVitals.toLowerCase()}">
                          <label class="form-check-label text-center" for="${data.selectedVitals.toLowerCase()}">
                               <img src="${data.vital_sign_img}" class="align-self-center" alt="">
-                              <p>
+                              <p class = "font-size-xsm font-size-md">
                                ${data.selectedVitals}
                               </p>
                          </label>
@@ -82,11 +82,11 @@ function selectedvitals() {
 
                 var vitalsStringNav = vitalsStringNav +
                     `
-                     <div class="form-check form-check-inline">
+                     <div class="form-check form-check-inline text-center">
                          <input class="form-check-input" type="radio" name="vitalsradio" id="${data.selectedVitals.toLowerCase() + "selected"}" value="${data.vitalsid}">
-                         <label class="form-check-label card border-0 p-2 text-center" style = "height: 145px" for="${data.selectedVitals.toLowerCase() + "selected"}">
-                             <img src="${data.vital_sign_img}" class="align-self-center" alt="">
-                             <p class = "p-0 m-0" style="white-space: normal;">
+                         <label class="form-check-label card border-0 text-center" for="${data.selectedVitals.toLowerCase() + "selected"}">
+                             <img src="${data.vital_sign_img}" class="align-self-center" alt="" >
+                             <p class = "p-0 m-0 font-size-xsm font-size-md" style="white-space: normal;">
                                ${data.selectedVitals}
                              </p>                 
                          </label>
@@ -107,7 +107,7 @@ function selectedvitals() {
             $(document).ready(function () {
                 $('.form-check-inline>label').click(function () {
                     $('label').removeClass(' shadow-bottom bg-cards border rounded-4');
-                    $(this).addClass(' shadow-bottom bg-cards border rounded-4');
+                    $(this).addClass(' shadow-bottom bg-cards border rounded-4');                    
                 });
             });
 
@@ -132,7 +132,7 @@ function notSelectedVitals() {
 
                 var vitalsStringNotSelected = vitalsStringNotSelected +
                     `
-                         <div class="form-check col-lg-3 col-md-4 m-0 p-0">
+                         <div class="form-check col-lg-3 col-md-4 col-6 m-0 p-0">
                              <input class="form-check-input" type="checkbox" value="${data.id}" name="vitalscheck" id="${data.vital_sign_type.toLowerCase()}">
                                  <label class="form-check-label text-center" for="${data.vital_sign_type.toLowerCase()}">
                                      <img src="${data.vital_sign_img}" class="align-self-center" alt="">
@@ -483,18 +483,18 @@ function loadchart() {
                     if (patientid != null) {
                         var valuebtn =
                             `
-                        <div class="text-center">
-                            <button type="button" class="btn bg-beige ">
-                                <a class= "text-decoration-none text-dark" href="http://34.224.225.183:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
+                        <div class="text-center mb-5">
+                            <button type="button" class="btn bg-beige">
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
                             </button>
                         </div>
                         `
                     } else {
                         var valuebtn =
                             `
-                        <div class="text-center">
-                            <button type="button" class="btn bg-beige ">
-                                <a class= "text-decoration-none text-dark" href="http://34.224.225.183:3001/vitalinput.html">Add Value</a>
+                        <div class="text-center mb-5">
+                            <button type="button" class="btn bg-beige mb-5">
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
                             </button>
                         </div>
                         `
@@ -637,18 +637,18 @@ function loadchart() {
                     if (patientid != null) {
                         var valuebtn =
                             `
-                        <div class="text-center">
+                        <div class="text-center mb-5">
                             <button type="button" class="btn bg-beige ">
-                                <a class= "text-decoration-none text-dark" href="http://34.224.225.183:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
                             </button>
                         </div>
                         `
                     } else {
                         var valuebtn =
                             `
-                        <div class="text-center">
+                        <div class="text-center mb-5">
                             <button type="button" class="btn bg-beige ">
-                                <a class= "text-decoration-none text-dark" href="http://34.224.225.183:3001/vitalinput.html">Add Value</a>
+                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
                             </button>
                         </div>
                         `

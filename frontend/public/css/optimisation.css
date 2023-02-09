@@ -23,7 +23,7 @@
 
 .flex-child {
   flex: 1;
-  height: 1000px;  
+
 }  
 
 .flex-child:first-child {
