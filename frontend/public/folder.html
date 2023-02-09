@@ -35,29 +35,30 @@
 <body class="font-montserrat body" onload="viewFolder()">
 
     <!--Body section-->
-    <section class="w-md-75 min-vh-100 mx-auto pb-170px">
+    <section class="w-md-75 min-vh-100 mx-auto pb-md-170px pb-100px">
 
         <!--Header section-->
         <span id="header"></span>
 
         <!-- Page Header Section to put the back button and page header in the same row -->
         <div class="row g-0 p-2">
-                <a class="col-2 text-decoration-none text-black rounded-3 p-2  m-0 button d-flex"
-                    href="Javascript:history.go ( -1)">
-                    <span class="mx-auto align-self-center font-size-xsm font-size-md"><img style="max-width: 100%;" src="./images/icons8-back-30.png" class=""
-                            alt=""><Strong class="d-none d-md-inline">Back</Strong></span>
-                </a>
-                <!-- Page Header Title-->
-                <h3 id="folderName" class="col-8 text-center font-pageheader p-2 pb-0 ">
-                    <strong></strong>
-                </h3>
+            <a class="col-2 text-decoration-none text-black rounded-3 p-2  m-0 button d-flex"
+                href="Javascript:history.go ( -1)">
+                <span class="mx-auto align-self-center font-size-xsm font-size-md"><img style="max-width: 100%;"
+                        src="./images/icons8-back-30.png" class="" alt=""><Strong
+                        class="d-none d-md-inline">Back</Strong></span>
+            </a>
+            <!-- Page Header Title-->
+            <h3 id="folderName" class="col-8 text-center font-pageheader p-2 pb-0 ">
+                <strong></strong>
+            </h3>
 
-                <button id="deleteBtn" class="col-2 button rounded-3 p-2 m-0 font-size-xsm font-size-md d-flex" type="button"
-                    onclick="deleteFolder()">
-                    <span class="mx-auto align-self-center font-size-xsm font-size-md">
-                        <img class="" style="max-width: 100%;" src="./images/icons8-minus-30.png" alt="">
-                        <Strong class="d-none d-md-inline">Delete Folder</Strong> </span>
-                </button>
+            <button id="deleteBtn" class="col-2 button rounded-3 p-2 m-0 font-size-xsm font-size-md d-flex"
+                type="button" onclick="deleteFolder()">
+                <span class="mx-auto align-self-center font-size-xsm font-size-md">
+                    <img class="" style="max-width: 100%;" src="./images/icons8-minus-30.png" alt="">
+                    <Strong class="d-none d-md-inline">Delete Folder</Strong> </span>
+            </button>
 
         </div>
 
@@ -66,21 +67,12 @@
 
         </div>
 
-        <!--Footer section-->
-        <span id="footer"></span>
 
     </section>
 
-
-    <!-- <form action="/uploadImage" method="POST" enctype="multipart/form-data">
-        <label>Store Image</label><br><br>
-        <p>
-            alert message
-        </p>
-        <input type="file" name="image" multiple>
-        <button type="submit">Upload</button>
-    </form> -->
-
+    <!--Footer section-->
+    <span id="footer"></span>
+    
     <script src="./reports.js"></script>
 
     <!--bootstrap bundle script-->

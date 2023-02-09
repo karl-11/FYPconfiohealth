@@ -60,7 +60,7 @@
 
 .footerposition {
     position: absolute;
-    left: 0;
+    /* left: 0; */
     bottom: 0;
     min-width: 100%;
     padding-left: 0%;
@@ -77,8 +77,9 @@
     bottom: 3rem;
 }
 
-.pb-170px {
-    padding-bottom: 170px;
+
+.pb-100px {
+    padding-bottom: 100px;
 }
 
 .pt-170px {
@@ -314,7 +315,7 @@
 /* medium - tablets */
 @media (min-width:992px) {
     body {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 
     .w-md-75 {
@@ -322,7 +323,7 @@
     }
 
     .font-size-md {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 
     .img-mw-md-75 {
@@ -331,6 +332,10 @@
     .text-md-left{
         text-align: left !important
     }
+    .pb-md-170px {
+        padding-bottom: 170px;
+    }
+    
 }
 
 /* xl - computers */

@@ -72,7 +72,7 @@ function getAllFolders() {
                         <div class="col-md-3 p-3 col-6">
 
                             <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none">
-                                <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+                                <div class="card h-100 flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                     <img src="./images/healthProfile.png" alt="Avatar Logo" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
                                         <p class="text-center text-black p-0 m-0"><strong>${folder_name}</strong></p>
@@ -113,7 +113,7 @@ function addNewFolderCard() {
         <a id="" class="feature text-decoration-none"
             onclick="displayAddNewFolderForm()">
             <div id="addBtnCard" class="btnClearStyle">
-                <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+                <div class="card  h-100  flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                     <img src="./images/icons8-plus.png" alt="Avatar Logo"
                         class="card-img-top align-self-center p-2">
                     <div class="card-body p-0 m-0 mb-2">
@@ -131,7 +131,7 @@ function displayAddNewFolderForm() {
 
     var addNewFolderFormHTML =
         `
-            <div class="card flex-column shadow-bottom bg-cards border rounded-4">
+            <div class="card  h-100  flex-column shadow-bottom bg-cards border rounded-4">
                 <img src="./images/healthProfile.png" alt="Avatar Logo" class="card-img-top align-self-center p-2">
                 <div class="card-body p-0 m-0">
                     <form id="addNewFolderForm" class="p-2 m-2">
@@ -248,11 +248,11 @@ function viewFolder() {
                             `
                             <div class="col-md-3 p-3 col-6">
                             <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none">
-                                <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+                                <div class=" h-100 card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                     <img src="./uploads/${data.file_name}" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
-                                    <div class="card-body p-0 m-0 mb-2">
-                                        <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
+                                    <div class="card-body d-flex p-0 m-0 mb-2">
+                                        <p class="text-center text-black p-0 m-0 mx-auto mt-auto"><strong class="">${display_name}</strong></p>
                                     </div>
                                 </div>
                             </a> 
@@ -266,7 +266,7 @@ function viewFolder() {
                             `
                             <div class="col-md-3 p-3 col-6">
                             <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none">
-                                <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+                                <div class="card h-100  flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                     <img src="./images/healthProfile.png" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
@@ -365,7 +365,7 @@ function viewFolder2() {
                             `
                             <div class="col-md-3 p-3 col-6">
                             <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none">
-                                <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+                                <div class="card h-100  flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                     <img src="./uploads/${data.file_name}" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
@@ -383,7 +383,7 @@ function viewFolder2() {
                             `
                             <div class="col-md-3 p-3 col-6">
                             <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none">
-                                <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+                                <div class="card h-100  flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                     <img src="./images/healthProfile.png" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
@@ -429,7 +429,7 @@ function addNewFileCard() {
         <a id="" class="feature text-decoration-none "
             onclick="displayAddNewFileForm()">
             <div id="addFileBtnCard" class="btnClearStyle">
-                <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+                <div class="card h-100 flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                     <img src="./images/icons8-plus.png" alt="Avatar Logo"
                         class="card-img-top align-self-center p-2">
                     <div class="card-body p-0 m-0 mb-2">
@@ -452,7 +452,7 @@ function displayAddNewFileForm() {
 
     var addNewFileFormHTML =
         `
-            <div class="card flex-column shadow-bottom bg-cards border rounded-4">
+            <div class="card h-100  flex-column shadow-bottom bg-cards border rounded-4">
                 <img src="./images/healthProfile.png" alt="Avatar Logo" class="card-img-top align-self-center p-2">
                 <div class="card-body p-0 m-0">
                     <form id="addNewFileForm" class="p-2 m-2" enctype="multipart/form-data">

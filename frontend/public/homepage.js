@@ -26,13 +26,13 @@ axios.get(`${baseUrl}/faqs`)
             var
 
                 FAQsCardsHTMLString = FAQsCardsHTMLString +
-                    `<div class="card rounded-2 mb-4 border-0 shadow-bottom">
+                    `<div class="card rounded-2 mb-md-4 mb-2 border-0 shadow-bottom">
                     <div class="card-header bg-cards">
-                        <a class="collapsed btn accordion-button" data-bs-toggle="collapse" href="#${collapsableitemID}">
+                        <a class="collapsed btn accordion-button font-size-xsm font-size-md" data-bs-toggle="collapse" href="#${collapsableitemID}">
                             ${data.question}
                         </a>
                     </div>
-                <div id="${collapsableitemID}" class="collapse" data-bs-parent="#accordion">
+                <div id="${collapsableitemID}" class="collapse font-size-xsm font-size-md" data-bs-parent="#accordion">
                     <div class="card-body">
                             ${data.answer}
                     </div>
