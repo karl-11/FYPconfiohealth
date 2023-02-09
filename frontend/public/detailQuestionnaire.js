@@ -138,23 +138,28 @@ $(document).ready(function () {
         if (resultsID == null || isNaN(resultsID)) {
             //pure insert
             axios.post(`${baseUrl}/insertScore`, InsertRequestBody, axiosConfigAuth).then(function (response) {
-
+                if (totalScore.length == 0) {
+                    window.location.replace(`${windowUrl}/risk_identification.html`);
+                } else {
+                    window.location.replace(`${windowUrl}/risk_identification.html`);
+                }
             })
             console.log("null and inserted");
         } else {
             //update
             axios.post(`${baseUrl}/updateScore`, requestBody, axiosConfigAuth).then(function (response) {
-
+                if (totalScore.length == 0) {
+                    window.location.replace(`${windowUrl}/risk_identification.html`);
+                } else {
+                    window.location.replace(`${windowUrl}/risk_identification.html`);
+                }
+                console.log("not null and updated");
             })
-            console.log("not null and updated");
+
 
         }
         // So it will not crash if the user did not answer any questions, automatically sets the user_score to 0 
-        if (totalScore.length == 0) {
-            window.location.replace(`${windowUrl}/risk_identification.html`);
-        } else {
-            window.location.replace(`${windowUrl}/risk_identification.html`);
-        }
+
     })
 
 })
