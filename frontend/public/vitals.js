@@ -380,14 +380,14 @@ function loadchart() {
 
                     if (res.length != 0) {
                         for (i = 0; i < res.length; i++) {
+                            console.log(res[i])
+                            // Split timestamp into [ Y, M, D, h, m, s ]
+                            var t = res[i].datetimecreated.split(/[- : T Z]/);
 
-                            // // Split timestamp into [ Y, M, D, h, m, s ]
-                            // var t = res[i].datetimecreated.split(/[- : T Z]/);
+                            // Apply each element to the Date function
+                            var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
 
-                            // // Apply each element to the Date function
-                            // var d = new Date(t[0], t[1] - 1, t[2], t[3], t[4]);
-
-                            var d = new Date(res[i].datetimecreated);
+                            //var d = new Date(res[i].datetimecreated);
 
                             number = res[0].vital_value;
                             test.push([d, res[i].vitalvalue]);
@@ -537,18 +537,18 @@ function loadchart() {
 
                     if (res.length != 0) {
                         for (i = 0; i < res.length; i++) {
+                            console.log(res[i]);
+                            // Split timestamp into [ Y, M, D, h, m, s ]
+                            var t = res[i].datetimecreated.split(/[- : T Z]/);
 
-                            // // Split timestamp into [ Y, M, D, h, m, s ]
-                            // var t = res[i].datetimecreated.split(/[- : T Z]/);
+                            // Apply each element to the Date function
+                            var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
 
-                            // // Apply each element to the Date function
-                            // var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
-
-                            var d = new Date(res[i].datetimecreated);
+                            // var d = new Date(res[i].datetimecreated);
                             number = res[0].vital_value;
                             test.push([d, res[i].diastolic, res[i].systolic]);
                             //console.log(t);
-                            //console.log(d);
+                            console.log(d);
                             //console.log(res[i]);
                         }
                         // console.log(test);
