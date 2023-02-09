@@ -1,5 +1,5 @@
 // Get vitals from table and put into html
-const baseUrl = "http://localhost:3000";
+const baseUrl = "http://34.224.225.183:3000";
 
 // Data extraction from localstorage
 const loggedinid = localStorage.getItem('loggedInUserID');
@@ -385,7 +385,7 @@ function loadchart() {
                             var t = res[i].datetimecreated.split(/[- : T Z]/);
 
                             // Apply each element to the Date function
-                            var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
+                            var d = new Date(t[0], t[1] - 1, t[2], t[3], t[4]);
 
                             //var d = new Date(res[i].datetimecreated);
 
@@ -485,7 +485,7 @@ function loadchart() {
                             `
                         <div class="text-center">
                             <button type="button" class="btn bg-beige ">
-                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
+                                <a class= "text-decoration-none text-dark" href="http://34.224.225.183:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
                             </button>
                         </div>
                         `
@@ -494,7 +494,7 @@ function loadchart() {
                             `
                         <div class="text-center">
                             <button type="button" class="btn bg-beige ">
-                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
+                                <a class= "text-decoration-none text-dark" href="http://34.224.225.183:3001/vitalinput.html">Add Value</a>
                             </button>
                         </div>
                         `
@@ -542,7 +542,7 @@ function loadchart() {
                             var t = res[i].datetimecreated.split(/[- : T Z]/);
 
                             // Apply each element to the Date function
-                            var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
+                            var d = new Date(t[0], t[1] - 1, t[2], t[3], t[4]);
 
                             // var d = new Date(res[i].datetimecreated);
                             number = res[0].vital_value;
@@ -639,7 +639,7 @@ function loadchart() {
                             `
                         <div class="text-center">
                             <button type="button" class="btn bg-beige ">
-                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
+                                <a class= "text-decoration-none text-dark" href="http://34.224.225.183:3001/vitalinput.html?patientid=${patientid}">Add Value</a>
                             </button>
                         </div>
                         `
@@ -648,7 +648,7 @@ function loadchart() {
                             `
                         <div class="text-center">
                             <button type="button" class="btn bg-beige ">
-                                <a class= "text-decoration-none text-dark" href="http://localhost:3001/vitalinput.html">Add Value</a>
+                                <a class= "text-decoration-none text-dark" href="http://34.224.225.183:3001/vitalinput.html">Add Value</a>
                             </button>
                         </div>
                         `
