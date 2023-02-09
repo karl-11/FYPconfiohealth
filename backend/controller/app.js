@@ -1617,9 +1617,9 @@ app.post('/deleteSelectedDoctor', printDebugInfo, isLoggedInMiddleware, function
 
     //extract data from request body
     var doctorid = req.body.doctorid;
-
-    var patientid = req.body.userid;
+    var patientid = req.body.patientid;
     var user_role = req.body.user_role
+
 
     //check if user trying to post is actual logged in user
     if (req.decodedToken.user_id != patientid || req.decodedToken.user_role != user_role) {
