@@ -1,63 +1,68 @@
 <!-- top navbar 1 (non-sticky)-->
-<nav class="navbar navbar-expand-sm bg-white">
+<nav class="bg-white mt-md-3">
 
-    <div class="container-fluid ">
-        <div>
+    <div class="row g-0">
+        <div class="col-12 col-md-5 text-center text-md-left">
             <a id="logo" href="homepage.html"><img src="./images/logo.png" alt="Avatar Logo" style="width:50px;"></a>
             <a id="logoname" class="navbar-brand align-middle font-logo" href="homepage.html">Confio Health</a>
         </div>
 
-        <ul class="navbar-nav">
-            <li class="nav-item my-auto">
-                <a class="nav-link mx-1" data-bs-toggle="modal" data-bs-target="#clinicModal">Clinic</a>
-            </li>
-            <li class="nav-item my-auto">
-                <a class="nav-link mx-1" href="#">Pricing</a>
-            </li>
-            <li class="nav-item my-auto">
-                <a class="nav-link px-2 text-muted" data-bs-toggle="modal" data-bs-target="#aboutUsModal">About Us</a>
-            </li>
-            <li class="nav-item my-auto">
-                <a class="nav-link px-2 text-muted" data-bs-toggle="modal" data-bs-target="#contactUsModal">Contact
-                    Us</a>
-            </li>
+        <ul class="navbar-nav col-md-7 col-12 my-auto justify-content-center">
+            <div class="row g-0">
+                <li class="nav-item my-auto col text-center">
+                    <a class="nav-link " href="#" data-bs-toggle="modal" data-bs-target="#clinicModal">Clinic</a>
+                </li>
+                <li class="nav-item my-auto col text-center">
+                    <a class="nav-link " href="#">Pricing</a>
+                </li>
+                <li class="nav-item my-auto col text-center">
+                    <a class="nav-link text-muted" href="#" data-bs-toggle="modal" data-bs-target="#aboutUsModal">About
+                    </a>
+                </li>
+                <li class="nav-item my-auto col text-center">
+                    <a class="nav-link text-muted" href="#" data-bs-toggle="modal"
+                        data-bs-target="#contactUsModal">Contact
+                    </a>
+                </li>
 
-            <li class="nav-item my-auto">
-                <a class="nav-link mx-1 border text-white rounded-3" href="Login.html" id="Loginpage"
-                    style="background-color: #43AEA1 ;">Sign in</a>
+                <div class="d-flex col w-100">
+                    <li class="nav-item my-auto mx-auto p-2">
+                        <a class="nav-link border text-white rounded-3 p-2" href="Login.html" id="Loginpage"
+                            style="background-color: #43AEA1 ;">Sign in</a>
 
-                <button class="nav-link mx-1 border text-white rounded-3" id="logOutBtn" onclick="logOut()" style="
-                    background-color: #43AEA1;">Log
-                    out</button>
-            </li>
+                        <button class="nav-link border text-white rounded-3 p-2" id="logOutBtn" onclick="logOut()"
+                            style="
+                        background-color: #43AEA1;">Logout</button>
+                    </li>
+                </div>
+
+            </div>
+
         </ul>
     </div>
 </nav>
 
 
 <!-- top navbar 2 (sticky)-->
-<nav id="navbar2" class="navbar navbar-expand-sm bg-white sticky-top border-bottom border-3 border-beige">
+<nav id="navbar2" class=" py-2 bg-white sticky-top border-bottom border-3 border-beige">
 
-    <div class="container-fluid justify-content-center">
+    <div class="row g-0">
+        <div class="col-3 text-center px-2 my-auto">
+            <a class="nav-link text-black" id="profilenav" href="profile.html"><strong>Health
+                    Profile</strong></a>
+        </div>
+        <div class="col-3 text-center px-2 my-auto">
+            <a class="nav-link text-black" id="vitalsnav" href="vitals.html"><strong>Vital Signs</strong></a>
+        </div>
+        <div class="col-3 text-center px-2 my-auto">
+            <a class="nav-link text-black" id="reportsnav" href="reports.html"><strong>Investigation
+                    Reports</strong></a>
+        </div>
+        <div class="col-3 text-center px-2 my-auto">
+            <a class="nav-link text-black" id="risknav" href="risk_identification.html"><strong>Risk
+                    Identification</strong></a>
+        </div>
 
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-black mx-3" id="profilenav" href="profile.html"><strong>Health
-                        Profile</strong></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-black mx-3" id="vitalsnav" href="vitals.html"><strong>Vital Signs</strong></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-black mx-3" id="reportsnav" href="reports.html"><strong>Investigation
-                        Reports</strong></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-black mx-3" id="risknav" href="risk_identification.html"><strong>Risk
-                        Identification</strong></a>
-            </li>
-
-        </ul>
     </div>
 </nav>
 

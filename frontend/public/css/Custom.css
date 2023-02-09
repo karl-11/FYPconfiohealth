@@ -81,6 +81,10 @@
     padding-bottom: 170px;
 }
 
+.pt-170px {
+    padding-top: 170px;
+}
+
 .shadow-bottom {
     box-shadow: 0 4px 4px -2px gray;
 }
@@ -324,6 +328,9 @@
     .img-mw-md-75 {
         max-width: 75%
     }
+    .text-md-left{
+        text-align: left !important
+    }
 }
 
 /* xl - computers */
@@ -354,6 +361,10 @@
     height: 80px;
     width: 80px;
 }
+.logo {
+    height: 30px;
+    width: 30px;
+}
 
 @media (min-width: 720px) {
     .qnrImages {
@@ -362,9 +373,14 @@
     }
 }
 
+/* // md */
 @media (min-width: 992px) {
     .qnrImages {
         height: 120px;
         width: 120px;
+    }
+    .logo {
+        height: 50px;
+        width: 50px;
     }
 }
