@@ -285,3 +285,22 @@
 }
 
 /* end padding styles */
+
+.qnrImages {
+    height: 80px;
+    width: 80px;
+}
+
+@media (min-width: 720px) {
+    .qnrImages {
+        height: 100px;
+        width: 100px;
+    }
+}
+
+@media (min-width: 992px) {
+    .qnrImages {
+        height: 120px;
+        width: 120px;
+    }
+}
