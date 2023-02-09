@@ -7,14 +7,12 @@ const token = localStorage.getItem("token")
 
 // requestconfig if endpoint needs authorization
 var axiosConfigAuth = {
-    headers: {
-        'Content-Type': 'application/json',
-        "Authorization": "Bearer " + token
-    }
+  headers: {
+    'Content-Type': 'application/json',
+    "Authorization": "Bearer " + token
+  }
 };
 
-
-window.addEventListener('DOMContentLoaded', doctoroption());
 
 
 function AddBooking() {
@@ -34,6 +32,23 @@ function AddBooking() {
     doctorid: doctorid
   };
 
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+
+  today = yyyy + '-' + mm + '-' + dd;
+
+  var gottendate = new Date(date);
+  var todaydate = new Date(today)
+
+
+  if (gottendate < todaydate) {
+    alert("Do not select a past date")
+    return
+  }
+
   console.log(requestBody);
   if (requestBody.date == "" || requestBody.time == "") {
     alert("choose date and time");
@@ -43,7 +58,7 @@ function AddBooking() {
         console.log("booking response")
         console.log(response.data)
         alert('Booking Successful!');
-        window.location.href = "/appview.html";
+        window.location.href = "/AppView.html";
       })
       .catch((error) => {
         console.log(error);
@@ -69,7 +84,6 @@ function doctoroption() {
       }
 
       document.getElementById("doctor").innerHTML = doctoroptionstring
-
 
     })
     .catch((error) => {
@@ -104,7 +118,7 @@ function viewbooking() {
         var t = data.date.split(/[- : T Z]/);
 
         // Apply each element to the Date function
-        var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3] - 8, t[4]));
+        var d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4]));
         console.log(t);
         console.log(d);
 
@@ -124,7 +138,7 @@ function viewbooking() {
 
         // console.log(year);
         // console.log(month);
-        // console.log(day);
+        console.log(day);
 
         var date = year + '-' + month + '-' + day;
         //console.log(date);
@@ -134,14 +148,14 @@ function viewbooking() {
           datetimestring = datetimestring +
             `
           <div class="row justify-content-between my-5 mx-1 align-items-center">
-          <div class="text-decoration-none col-7 p-0 m-0 text-center">
+          <div class="text-decoration-none col-md-7 col-sm-10 p-0 m-0 mb-1 text-center">
               <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                   ${"Date: " + date + " | Time: " + time} <br>
                   ${"Location: " + data.location} <br>
                   ${"Doctor: Dr " + data.full_name}
               </p>
           </div>
-          <div class="text-decoration-none col-4 p-0 m-0 text-center">
+          <div class="text-decoration-none col-md-4 col-sm-8 p-0 m-0 text-center">
               <p class="card flex-column shadow-bottom bg-warning border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
           </div>
       </div>
@@ -152,14 +166,14 @@ function viewbooking() {
           datetimestring = datetimestring +
             `
           <div class="row justify-content-between my-5 mx-1 align-items-center">
-          <div class="text-decoration-none col-7 p-0 m-0 text-center">
+          <div class="text-decoration-none col-md-7 col-sm-10 p-0 m-0 mb-1 text-center">
               <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                   ${"Date: " + date + " | Time: " + time} <br>
                   ${"Location: " + data.location} <br>
                   ${"Doctor: Dr " + data.full_name}
               </p>
           </div>
-          <div class="text-decoration-none col-4 p-0 m-0 text-center">
+          <div class="text-decoration-none col-md-4 col-sm-8 p-0 m-0 text-center">
               <p class="card flex-column shadow-bottom bg-success border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
           </div>
       </div>
@@ -169,15 +183,15 @@ function viewbooking() {
           datetimestring = datetimestring +
             `
         <div class="row justify-content-between my-5 mx-1 align-items-center">
-        <div class="text-decoration-none col-7 p-0 m-0 text-center">
-            <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+        <div class="text-decoration-none col-md-7 col-sm-10 p-0 m-0 mb-1 text-center">
+        <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                 ${"Date: " + date + " | Time: " + time} <br>
                 ${"Location: " + data.location} <br>
                 ${"Doctor: Dr " + data.full_name}
             </p>
         </div>
-        <div class="text-decoration-none col-4 p-0 m-0 text-center">
-            <p class="card flex-column shadow-bottom bg-danger border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
+        <div class="text-decoration-none col-md-4 col-sm-8 p-0 m-0 text-center">
+        <p class="card flex-column shadow-bottom bg-danger border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
         </div>
     </div>
   `

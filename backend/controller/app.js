@@ -63,6 +63,7 @@ var urlEncodedParser = bodyParser.urlencoded({ extended: false });
 var jsonParser = bodyParser.json();
 var uploadFiles = require("../middleware/uploadFiles.js");
 const isLoggedInMiddleware = require("../middleware/isLogin.js");
+const bookingDB = require("../model/booking.js");
 
 //-----------------------------------------
 // MF Configurations
@@ -139,7 +140,10 @@ app.post("/login", (req, res) => {
             //(2) Secret key
             JWT_SECRET,
             //(3) Signing Algorithm
-            { algorithm: "HS256" },
+            {
+                algorithm: "HS256",
+                expiresIn: '2h'
+            },
             //(4) Response handler (callback function)
             (error, token) => {
                 if (error) {
@@ -173,13 +177,70 @@ app.post('/signup', printDebugInfo, function (req, res) {
             var output = {
                 "inserted id": result.insertId
             };
+
+            const userid = result.insertId
+
+            // after inserting a new user record to the database,
+            // create three default folders for the newly signed up user
+            
+            var defaultFolderName =""
+            // loop thrice
+            for (i = 0; i < 3; i++) {
+
+
+                switch (i) {
+                    case 0:
+                        defaultFolderName = "Medical Checkups"
+                        break;
+                    case 1:
+                        defaultFolderName = "Blood Tests"
+                        break;
+                    case 2:
+                        defaultFolderName = "X-Rays"
+                }
+
+                reportsDB.insertFolder(defaultFolderName, userid, function (err, result) {
+                    if (!err) {
+                        // var output = {
+                        //     "inserted id": result.insertId
+                        // };
+                        // res.status(201).send(output);
+                    } else {
+                        res.status(500);
+                        console.log("error");
+                    }
+                });
+            }
+
+            // send response as 200
             res.status(201).send(output);
+
         } else {
             res.status(500);
         }
     });
 });
 
+//  end point to insert new user record
+app.post('/doctorsignup', printDebugInfo, function (req, res) {
+
+    //extract data from request body
+    var email = req.body.email;
+    var password = req.body.password;
+    var full_name = req.body.full_name;
+    var type = "doctor"
+
+    user.doctorsignUp(email, password, full_name, type, function (err, result) {
+        if (!err) {
+            var output = {
+                "inserted id": result.insertId
+            };
+            res.status(201).send(output);
+        } else {
+            res.status(500);
+        }
+    });
+});
 //-----------------------------------------
 // VITAL SIGNS
 //-----------------------------------------
@@ -552,7 +613,7 @@ app.post('/booking', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 });
 
 // end point for get user booking 
-app.post('/viewbooking', printDebugInfo, isLoggedInMiddleware,function (req, res) {
+app.post('/viewbooking', printDebugInfo, isLoggedInMiddleware, function (req, res) {
     //extract data from request body
     var userid = req.body.userid;
 
@@ -581,13 +642,13 @@ app.post('/viewmybooking', printDebugInfo, isLoggedInMiddleware, function (req, 
     // var userid = req.body.userid;
     var user_role = req.body.user_role
 
+
     //check if user trying to post is actual logged in user
     if (req.decodedToken.user_id != doctorid || req.decodedToken.user_role != user_role) {
         res.status(401).send("Unauthorised!")
         return;
     }
-
-    console.log(doctorid);
+    
     booking.viewmybooking(doctorid, function (err, result) {
         if (!err) {
             res.status(200).send(result);
@@ -599,7 +660,7 @@ app.post('/viewmybooking', printDebugInfo, isLoggedInMiddleware, function (req, 
 });
 
 // end point for get All user booking 
-app.post('/acceptBooking', printDebugInfo, isLoggedInMiddleware,function (req, res) {
+app.post('/acceptBooking', printDebugInfo, isLoggedInMiddleware, function (req, res) {
     //extract data from request body
     var bookingid = req.body.bookingid;
 
@@ -1481,10 +1542,18 @@ app.post('/deleteHPVaccination', printDebugInfo, isLoggedInMiddleware, function 
 // DOCTOR ACCESS
 //-----------------------------------------
 
-app.post('/getAllSelectedDoctor', printDebugInfo, function (req, res) {
+app.post('/getAllSelectedDoctor', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var patientid = req.body.patientid;
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != patientid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     access.getAllSelectedDoctor(patientid, function (err, result) {
         if (!err) {
@@ -1496,10 +1565,19 @@ app.post('/getAllSelectedDoctor', printDebugInfo, function (req, res) {
     });
 });
 
-app.post('/getNotSelectedDoctor', printDebugInfo, function (req, res) {
+app.post('/getNotSelectedDoctor', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var patientid = req.body.patientid;
+
+    // var userid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != patientid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     access.getNotSelectedDoctor(patientid, function (err, result) {
         if (!err) {
@@ -1511,10 +1589,19 @@ app.post('/getNotSelectedDoctor', printDebugInfo, function (req, res) {
     });
 });
 
-app.post('/getSelectedPatient', printDebugInfo, function (req, res) {
+app.post('/getSelectedPatient', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var doctorid = req.body.doctorid;
+
+    //var patientid = req.body.patientid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != doctorid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     access.getSelectedPatient(doctorid, function (err, result) {
         if (!err) {
@@ -1526,11 +1613,19 @@ app.post('/getSelectedPatient', printDebugInfo, function (req, res) {
     });
 });
 
-app.post('/deleteSelectedDoctor', printDebugInfo, function (req, res) {
+app.post('/deleteSelectedDoctor', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
-    var patientid = req.body.patientid;
     var doctorid = req.body.doctorid;
+
+    var patientid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != patientid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     access.deleteSelectedDoctor(patientid, doctorid, function (err, result) {
         if (!err) {
@@ -1542,11 +1637,20 @@ app.post('/deleteSelectedDoctor', printDebugInfo, function (req, res) {
     });
 });
 
-app.post('/addSelectedDoctor', printDebugInfo, function (req, res) {
+app.post('/addSelectedDoctor', printDebugInfo, isLoggedInMiddleware, function (req, res) {
 
     //extract data from request body
     var patientid = req.body.patientid;
     var doctorid = req.body.doctorid;
+
+    // var patientid = req.body.userid;
+    var user_role = req.body.user_role
+
+    //check if user trying to post is actual logged in user
+    if (req.decodedToken.user_id != patientid || req.decodedToken.user_role != user_role) {
+        res.status(401).send("Unauthorised!")
+        return;
+    }
 
     access.addSelectedDoctor(patientid, doctorid, function (err, result) {
         if (!err) {
@@ -1802,7 +1906,7 @@ app.post('/deleteFolder', printDebugInfo, isLoggedInMiddleware, function (req, r
     //extract data from request body
     var id = req.body.id;
 
-    // var userid = req.body.userid;
+    var userid = req.body.userid;
     var user_role = req.body.user_role
 
     //check if user trying to post is actual logged in user
@@ -2101,8 +2205,8 @@ app.post('/deleteFile', printDebugInfo, isLoggedInMiddleware, function (req, res
 //-----------------------------------------
 
 // end point for getting patient name for doctor vitals 
-app.post('/getPatientName', function (req, res) {
-    var userid = req.body.userid
+app.post('/getPatientName', printDebugInfo, function (req, res) {
+    var userid = req.body.patientid
     vital.getPatientName(userid, function (err, result) {
         if (!err) {
             res.status(200).send(result);
@@ -2169,5 +2273,26 @@ app.post('/sendMessages', printDebugInfo, function (req, res) {
 
 //-----------------------------------------
 // End of endpoints
+//-----------------------------------------
+
+
+//-----------------------------------------
+// Start of health risks endpoints
+//-----------------------------------------
+
+app.post('/getHealthRisks', function (req, res) {
+    userid = req.body.userid
+    bookingDB.getHealthRisks(userid, function (err, result) {
+        if (!err) {
+            res.status(200).send(result);
+        } else {
+            res.status(500);
+            console.log("error");
+        }
+    });
+});
+
+//-----------------------------------------
+// End of health risks endpoints
 //-----------------------------------------
 module.exports = app;

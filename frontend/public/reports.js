@@ -2,12 +2,8 @@
 const baseUrl = "http://localhost:3000";
 
 const loggedInUserID = localStorage.getItem("loggedInUserID")
-// console.log("printing loggedInUserID" + loggedInUserID)
-
 const loggedInUserType = localStorage.getItem("loggedInUserType")
 const token = localStorage.getItem("token")
-
-// console.log("printing loggedInUserID" + loggedInUserID)
 
 // requestconfig if endpoint needs authorization
 var axiosConfigAuth = {
@@ -17,7 +13,7 @@ var axiosConfigAuth = {
     }
 };
 
-const myUrl = new URL(window.location.toLocaleString()).searchParams;
+var myUrl = new URL(window.location.toLocaleString()).searchParams;
 var patientid = myUrl.get("patientid");
 if (patientid != null && loggedInUserType != "patient") {
     var reqBodyUserID = JSON.stringify({ userid: loggedInUserID, patientid: patientid, user_role: loggedInUserType });
@@ -27,7 +23,9 @@ if (patientid != null && loggedInUserType != "patient") {
 }
 
 // const reqBodyUserID = JSON.stringify({ userid: loggedInUserID, user_role });
-
+if (patientid != null) {
+    window.addEventListener('DOMContentLoaded', getPatientName());
+}
 const axiosConfig = {
     headers: {
         'Content-Type': 'application/json'
@@ -41,12 +39,18 @@ function getAllFolders() {
             if (response.data[0] === undefined) {
 
                 console.log("data is empty")
+                var addNewFolderPlaceholderHTML =
+                    `
+            <div id="addNewFolderBtnPlaceholder" class="col-2 p-0 m-3">
 
-                createThreeDefaultFolders();
+            </div>
+            `
 
-                //after looping thrice, refresh the page.
-                //getAllFolders();
-                //addNewFolderCard();
+                reportFoldersHTML = addNewFolderPlaceholderHTML
+
+                document.getElementById("reports-main-section").innerHTML = reportFoldersHTML
+
+                addNewFolderCard();
             }
             else {
 
@@ -56,6 +60,8 @@ function getAllFolders() {
 
                     var data = response.data[i];
 
+                    var folder_name = escape(data.folder_name)
+
                     var hrefTag = "folder.html?id=" + data.id + "&folder_name=" + data.folder_name
 
                     var reportFoldersHTML = reportFoldersHTML +
@@ -64,7 +70,7 @@ function getAllFolders() {
                                 <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                     <img src="./images/healthProfile.png" alt="Avatar Logo" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
-                                        <p class="text-center text-black p-0 m-0"><strong>${data.folder_name}</strong></p>
+                                        <p class="text-center text-black p-0 m-0"><strong>${folder_name}</strong></p>
                                     </div>
                                 </div>
                             </a>                    
@@ -145,10 +151,16 @@ function submitNewFolderForm(event) {
     //extract the input data text
     var folder_name = document.getElementById('folder_name').value
 
+    if (folder_name == "" || folder_name == null || folder_name.length < 1 || folder_name == " ") {
+        alert("upload failed! - invalid report name input.")
+        return;
+    }
+
     var reqBody = JSON.stringify({
         userid: loggedInUserID,
         user_role: loggedInUserType,
-        folderName: folder_name
+        folderName: folder_name,
+        patientid: patientid,
     });
 
     axios.post(`${baseUrl}/insertFolder`, reqBody, axiosConfigAuth)
@@ -163,47 +175,6 @@ function submitNewFolderForm(event) {
         .catch((error) => {
             console.log(error);
         });
-}
-
-function createThreeDefaultFolders() {
-
-    // loop thrice
-    for (i = 0; i < 3; i++) {
-
-        var defaultFolderName
-
-        switch (i) {
-            case 0:
-                defaultFolderName = "Medical Checkups"
-                break;
-            case 1:
-                defaultFolderName = "Blood Tests"
-                break;
-            case 2:
-                defaultFolderName = "X-Rays"
-        }
-
-        var reqBody = JSON.stringify({
-            userid: loggedInUserID,
-            user_role: loggedInUserType,
-            folderName: defaultFolderName
-        });
-
-        axios.post(`${baseUrl}/insertFolder`, reqBody, axiosConfigAuth)
-            .then((response) => {
-                // console.log(response)
-                // alert("saved!")
-
-                //reload the whole page
-                // getAllFolders();
-
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-
-    location.reload();
 }
 
 function viewFolder() {
@@ -254,6 +225,8 @@ function viewFolder() {
                     // get the file type
                     var fileType = data.file_type.split('/')[0]
 
+                    var display_name = escape(data.display_name)
+
                     var hrefTag = "viewReport.html?id=" + data.id + "&file_name=" + data.display_name
 
                     // if file type is image, display the image inside the card
@@ -265,7 +238,7 @@ function viewFolder() {
                                     <img src="./uploads/${data.file_name}" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
-                                        <p class="text-center text-black p-0 m-0"><strong>${data.display_name}</strong></p>
+                                        <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
                                     </div>
                                 </div>
                             </a>               
@@ -280,7 +253,7 @@ function viewFolder() {
                                     <img src="./images/healthProfile.png" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
-                                        <p class="text-center text-black p-0 m-0"><strong>${data.display_name}</strong></p>
+                                        <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
                                     </div>
                                 </div>
                             </a>               
@@ -347,6 +320,8 @@ function viewFolder2() {
                     // get the file type
                     var fileType = data.file_type.split('/')[0]
 
+                    var display_name = escape(data.display_name)
+
                     var hrefTag = "viewReport.html?id=" + data.id + "&file_name=" + data.display_name
 
                     // if file type is image, display the image inside the card
@@ -358,7 +333,7 @@ function viewFolder2() {
                                     <img src="./uploads/${data.file_name}" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
-                                        <p class="text-center text-black p-0 m-0"><strong>${data.display_name}</strong></p>
+                                        <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
                                     </div>
                                 </div>
                             </a>               
@@ -373,7 +348,7 @@ function viewFolder2() {
                                     <img src="./images/healthProfile.png" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
-                                        <p class="text-center text-black p-0 m-0"><strong>${data.display_name}</strong></p>
+                                        <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
                                     </div>
                                 </div>
                             </a>               
@@ -486,14 +461,17 @@ function submitNewFileForm(event) {
 
     event.preventDefault();
 
-    // new FormData(document.getElementById('addNewFileForm'))
-
     //extract the input data text
     var file = document.getElementById('input_file').files[0]
     var fileName = document.getElementById('fileName').value
 
     if (file.size > (3 * 1024 * 1024)) {
         alert("upload failed! - file size exceeds 3MB.")
+        return;
+    }
+
+    if (fileName == "" || fileName.length < 1 || fileName == null) {
+        alert("upload failed! - invalid report name input.")
         return;
     }
 
@@ -506,6 +484,7 @@ function submitNewFileForm(event) {
     bodyFormData.append('folder_id', folderid);
     bodyFormData.append('user_id', loggedInUserID);
     bodyFormData.append('user_role', loggedInUserType);
+    bodyFormData.append('patientid', patientid);
 
     axios.post(`${baseUrl}/uploadFile`, bodyFormData, { headers: { "Content-Type": "multipart/form-data", "Authorization": "Bearer " + token } })
         .then((response) => {
@@ -562,28 +541,22 @@ function viewFile() {
 
                 var fileType = data.file_type.split('/')[0]
 
-                console.log(data)
-                console.log(fileType)
+                var file_name = escape(data.file_name)
 
                 var fileHTML = ""
 
                 if (fileType == 'image') {
                     fileHTML =
                         `
-                                <img style="max-width: 75%;" src="./uploads/${data.file_name}" alt="Avatar Logo">
+                                <img style="max-width: 75%;" src="./uploads/${file_name}" alt="Avatar Logo">
                             `
                 }
                 else {
                     fileHTML =
                         `
-                            <iframe class="w-75 vh-100" src="./uploads/${data.file_name}">
+                            <iframe class="w-75 vh-100" src="./uploads/${file_name}">
                         `
                 }
-
-                // var fileHTML =
-                //     `
-                //                 <img style="max-width: 75%;" src="./uploads/${data.file_name}" alt="Avatar Logo">
-                //             `
 
                 document.getElementById("fileplaceholder").innerHTML = fileHTML
 
@@ -609,9 +582,8 @@ function deleteFolder() {
         .then((response) => {
             alert("Folder Deleted!")
 
-            history.go(-1)
+            window.location.href = "reports.html"
 
-            //viewFolder();
         })
         .catch((error) => {
             console.log(error);
@@ -635,9 +607,55 @@ function deleteReport() {
 
             history.go(-1)
 
-            //viewFolder();
+            viewFolder2();
         })
         .catch((error) => {
             console.log(error);
         });
+}
+
+function getPatientName() {
+    if (patientid != null) {
+        var requestBody = {
+            userid: loggedInUserID,
+            patientid: patientid,
+        };
+    } else {
+        // data compilation
+        var requestBody = {
+            userid: loggedInUserID,
+        };
+    }
+
+    //console.log(requestBody);
+
+    axios.post(`${baseUrl}/getPatientName`, requestBody)
+        .then((response) => {
+
+            //console.log("add selected vital");
+            var data = response.data[0];
+            console.log(data);
+
+            var fullnamestring = `            
+        <h2>
+            Viewing results of: ${data.full_name} 
+        </h2>`
+
+            document.getElementById("patientnameplaceholder").innerHTML = fullnamestring;
+
+
+
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+};
+function escape(htmlStr) {
+    return htmlStr.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
 }

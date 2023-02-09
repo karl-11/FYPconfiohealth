@@ -37,7 +37,10 @@ form.addEventListener('submit', (event) => {
                 window.location.href = "/doctorpage.html";
             } else if (loggedInUserType == "admin"){
                 window.location.href = "/adminpage.html";
-            } else {
+            } else if (loggedInUserType == "admin") {
+                window.location.href = "/doctorSignup.html"
+            }
+            else {
                 window.location.href = "/";
             }
 
