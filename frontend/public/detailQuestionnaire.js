@@ -43,19 +43,19 @@ $(document).ready(function () {
               <div class="col-lg-10 col-md-10 col-sm-12 mx-5 py-5 pe-5 align-self-center">
                 <!-- question number -->
                 <div id="questionNumbers">
-                  <h5 id="totalCount" class="m-3 position-absolute top-0" style="right: 18px;">
+                  <h5 id="totalCount" class="m-3 position-absolute top-0 font-size-xsm font-size-md" style="right: 14px;">
                     <strong>${i + 1}</strong>
                   </h5>
-                  <h5 id="currentQnNumber" class="m-3 position-absolute top-0 end-0">
+                  <h5 id="currentQnNumber" class="m-3 position-absolute top-0 end-0 font-size-xsm font-size-md">
                     <strong>/${questionCount}</strong>
                   </h5>
                 </div>
                 <!-- question -->
-                <h4 class="m-0 pb-3"><strong>${content}</strong></h4>
+                <h4 class="m-0 pb-3 font-size-xsm font-size-md"><strong>${content}</strong></h4>
                 <!-- 1-10 ranking buttons -->
                 <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
                   <div class="btn-group mr-2" role="group" aria-label="First group">
-                    <div id="${buttonID}">
+                    <div id="${buttonID}" class="d-grid-2 gap-2 d-md-flex justify-content-md-end">
                     </div>
                   </div>
                 </div>

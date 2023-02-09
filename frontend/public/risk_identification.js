@@ -68,10 +68,10 @@ function loadAllData() {
                     <div class="card flex-column shadow-bottom bg-cards border rounded-4 mb-4">
                         <a href="detailQuestionnaire.html" id=${qnrID} class="text-decoration-none stretched-link"
                             onclick="sendID(this.id)"></a>
-                        <p class="text-start text-black p-0 mx-3 mt-3 mb-0 fs-5">${name}</p>
+                        <p class="text-start text-black p-0 mx-3 mt-3 mb-0 fs-5 font-size-xsm font-size-md">${name}</p>
                         <img src="${image_url}" alt="questionnaire image" class="qnrImages img-fluid align-self-center p-3 mt-0">
                         <div id="${resultDataID}" class="card-body p-0 m-0 mb-2">
-                            <p class="text-start text-black p-0 mx-3 mb-2 font-weight-light">Result: 0/${max_score}</p>
+                            <p class="text-start text-black p-0 mx-3 mb-2 font-weight-light font-size-xsm font-size-md">Result: 0/${max_score}</p>
                             <div class="progress mx-3 mb-2">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                                     aria-valuenow="" aria-valuemin="0" aria-valuemax="" style="width: %">
