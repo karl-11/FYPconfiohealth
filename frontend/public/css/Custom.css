@@ -289,6 +289,7 @@
     padding-bottom: 210px;
 }
 
+
 /* end padding styles */
 /* x-small - portrait phones */
 @media (min-width: 100px) {
@@ -303,6 +304,8 @@
     .img-mw-100 {
         max-width: 100%
     }
+
+
 }
 
 /* small - landscape phones  */
@@ -310,6 +313,8 @@
     body {
         font-size: 0.8rem;
     }
+
+
 }
 
 /* medium - tablets */
@@ -329,13 +334,15 @@
     .img-mw-md-75 {
         max-width: 75%
     }
-    .text-md-left{
+
+    .text-md-left {
         text-align: left !important
     }
+
     .pb-md-170px {
         padding-bottom: 170px;
     }
-    
+
 }
 
 /* xl - computers */
@@ -366,15 +373,21 @@
     height: 80px;
     width: 80px;
 }
+
 .logo {
     height: 30px;
     width: 30px;
 }
 
+
+
 @media (min-width: 720px) {
     .qnrImages {
         height: 100px;
         width: 100px;
+    }
+    .h-md-100 {
+        height: 100%;
     }
 }
 
@@ -384,8 +397,10 @@
         height: 120px;
         width: 120px;
     }
+
     .logo {
         height: 50px;
         width: 50px;
     }
 }
+
