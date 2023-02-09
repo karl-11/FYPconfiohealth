@@ -275,4 +275,13 @@
 .backBtn:hover {
     border: 2px solid #f1f1f1;
 }
+
 /* end of back button styles */
+
+/* padding */
+
+.pb-6 {
+    padding-bottom: 210px;
+}
+
+/* end padding styles */
