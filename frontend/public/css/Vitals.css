@@ -19,19 +19,57 @@ div.scrollmenu {
 }
 
 label>img {
-    width: 80px;
-    height: 80px;
+    height: 40px;
+    width: 40px;
+}
+
+@media (min-width: 720px) {
+    label>img {
+        height: 60px;
+        width: 60px;
+    }
+}
+
+@media (min-width: 992px) {
+    label>img {
+        height: 80px;
+        width: 80px;
+    }
 }
 
 button>img {
-    width: 80px;
-    height: 80px;
+    height: 40px;
+    width: 40px;
 }
 
+@media (min-width: 720px) {
+    button>img {
+        height: 60px;
+        width: 60px;
+    }
+}
+
+@media (min-width: 992px) {
+    button>img {
+        height: 80px;
+        width: 80px;
+    }
+}
+/* 
 label.form-check-label {
     width: 125px;
     margin-top: 10px;
+} */
+
+.displaytable {
+    display: table;
+    width: 100%;
 }
+
+.tablecell {
+    display: table-cell;
+}
+
 
 #overlay {
     height: 100%;
