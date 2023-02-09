@@ -80,10 +80,10 @@ function viewbooking() {
                         </div>
                         <div class = "col-md-2 col-sm-5">
                             <div class="text-decoration-none col p-0 m-0 pb-2 text-center">
-                                <p id="${"accept" + data.bookingid}" class="btn bg-success card flex-column shadow-bottom border rounded-4 p-0 m-0"><strong>Accept</strong></p>
+                                <p id="${"accept" + data.bookingid}" class="btn bg-success card flex-column shadow-bottom border rounded-4 p-0 m-0 font-size-xsm font-size-md"><strong>Accept</strong></p>
                             </div>
                             <div class="text-decoration-none col p-0 m-0 text-center">
-                                <p id="${"decline" + data.bookingid}" class="btn bg-danger card flex-column shadow-bottom border rounded-4 p-0 m-0"><strong>Decline</strong></p>
+                                <p id="${"decline" + data.bookingid}" class="btn bg-danger card flex-column shadow-bottom border rounded-4 p-0 m-0 font-size-xsm font-size-md"><strong>Decline</strong></p>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@ function viewbooking() {
                         `
                 <div class="row justify-content-evenly my-5 mx-1 align-items-center">
                     <div class="text-decoration-none col-md-5 col-sm-5 p-0 m-0 mb-1 text-center">
-                        <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+                        <p class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0 font-size-xsm font-size-md">
                             ${"Name: " + data.full_name} <br>
                             ${"Date: " + date + " | Time: " + time} <br>
                             ${"Location: " + data.location}
@@ -101,7 +101,7 @@ function viewbooking() {
                     </div>
                     <div class = "col-md-2 col-sm-5">
                         <div class="text-decoration-none p-0 m-0 text-center">
-                            <p class="card flex-column shadow-bottom bg-cards border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
+                            <p class="card flex-column shadow-bottom bg-cards border btn rounded-4 p-0 m-0 font-size-xsm font-size-md"><strong>${data.acceptance}</strong></p>
                         </div>
                     </div>
                 </div>

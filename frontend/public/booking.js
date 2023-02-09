@@ -156,7 +156,7 @@ function viewbooking() {
               </p>
           </div>
           <div class="text-decoration-none col-md-4 col-sm-8 p-0 m-0 text-center">
-              <p class="card flex-column shadow-bottom bg-warning border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
+              <p class="card flex-column shadow-bottom bg-warning border btn rounded-4 p-0 m-0 font-size-xsm font-size-md"><strong>${data.acceptance}</strong></p>
           </div>
       </div>
     `
@@ -174,7 +174,7 @@ function viewbooking() {
               </p>
           </div>
           <div class="text-decoration-none col-md-4 col-sm-8 p-0 m-0 text-center">
-              <p class="card flex-column shadow-bottom bg-success border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
+              <p class="card flex-column shadow-bottom bg-success border btn rounded-4 p-0 m-0 font-size-xsm font-size-md"><strong>${data.acceptance}</strong></p>
           </div>
       </div>
     `
@@ -191,7 +191,7 @@ function viewbooking() {
             </p>
         </div>
         <div class="text-decoration-none col-md-4 col-sm-8 p-0 m-0 text-center">
-        <p class="card flex-column shadow-bottom bg-danger border btn rounded-4 p-0 m-0"><strong>${data.acceptance}</strong></p>
+        <p class="card flex-column shadow-bottom bg-danger border btn rounded-4 p-0 m-0 font-size-xsm font-size-md"><strong>${data.acceptance}</strong></p>
         </div>
     </div>
   `

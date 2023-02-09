@@ -136,7 +136,7 @@ function notSelectedVitals() {
                              <input class="form-check-input" type="checkbox" value="${data.id}" name="vitalscheck" id="${data.vital_sign_type.toLowerCase()}">
                                  <label class="form-check-label text-center" for="${data.vital_sign_type.toLowerCase()}">
                                      <img src="${data.vital_sign_img}" class="align-self-center" alt="">
-                                     <p>
+                                     <p class = "font-size-xsm font-size-md">
                                       ${data.vital_sign_type}
                                      </p>
                                  </label>

@@ -40,24 +40,12 @@
         <!--Header section-->
         <span id="header"></span>
 
-        <div class="scrollmenu hidescroll" id="vitalnav" onchange="displayRadioValue(),getAllVitals()">
+        <div class="scrollmenu hidescroll mb-5" id="vitalnav" onchange="displayRadioValue(),getAllVitals()">
 
         </div>
 
         <form id="inputvalue">
-            <!-- <form id="login-form">
-                <div class="m-3 form-group">
-                    <label for="value" class="form-label">value</label>
-                    <input type="text" class="form-control" id="value" placeholder="value" name="value">
-                </div>
-                <div class="text-center">
-                    <button type="button" class="btn bg-beige rounded-3 px-5">
-                        <a class="text-decoration-none text-dark" href="vitals.html">Back</a>
-                    </button>
-                    <button type="submit" class="btn text-white rounded-3 px-5" style="background-color: #43AEA1 ;">
-                        Login
-                    </button>
-            </form> -->
+ 
         </form>
 
 
@@ -70,12 +58,12 @@
                 <div>
                     <div class="container">
                         <h3>Selected</h3>
-                        <div id="selected" class="row" onchange="removeSelectedVital()">
+                        <div id="selected" class="row text-center" onchange="removeSelectedVital()">
 
                         </div>
 
                         <h3>Not Selected</h3>
-                        <div id="notselected" class="row" onchange="addSelectedVital()">
+                        <div id="notselected" class="row text-center" onchange="addSelectedVital()">
 
                         </div>
                     </div>
