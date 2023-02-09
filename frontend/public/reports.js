@@ -41,9 +41,12 @@ function getAllFolders() {
                 console.log("data is empty")
                 var addNewFolderPlaceholderHTML =
                     `
-            <div id="addNewFolderBtnPlaceholder" class="col-2 p-0 m-3">
+                    <div class="col-md-3 p-3 col-6">
+            <div id="addNewFolderBtnPlaceholder" class="">
 
             </div>
+            </div>               
+
             `
 
                 reportFoldersHTML = addNewFolderPlaceholderHTML
@@ -66,23 +69,29 @@ function getAllFolders() {
 
                     var reportFoldersHTML = reportFoldersHTML +
                         `
-                            <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none col-2 p-0 m-3">
+                        <div class="col-md-3 p-3 col-6">
+
+                            <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none">
                                 <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                     <img src="./images/healthProfile.png" alt="Avatar Logo" class="card-img-top align-self-center p-2">
                                     <div class="card-body p-0 m-0 mb-2">
                                         <p class="text-center text-black p-0 m-0"><strong>${folder_name}</strong></p>
                                     </div>
                                 </div>
-                            </a>                    
+                            </a>     
+                            </div>               
                         `
 
                 }
 
                 var addNewFolderPlaceholderHTML =
                     `
-                <div id="addNewFolderBtnPlaceholder" class="col-2 p-0 m-3">
+                    <div class="col-md-3 p-3 col-6 mb-4 mb-md-0">
+                <div id="addNewFolderBtnPlaceholder" class="">
 
                 </div>
+                </div>               
+
                 `
 
                 reportFoldersHTML = reportFoldersHTML + addNewFolderPlaceholderHTML
@@ -101,7 +110,7 @@ function addNewFolderCard() {
 
     var addReportFolderHTML =
         `
-        <a id="" class="feature text-decoration-none "
+        <a id="" class="feature text-decoration-none"
             onclick="displayAddNewFolderForm()">
             <div id="addBtnCard" class="btnClearStyle">
                 <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
@@ -122,14 +131,16 @@ function displayAddNewFolderForm() {
 
     var addNewFolderFormHTML =
         `
-            <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+            <div class="card flex-column shadow-bottom bg-cards border rounded-4">
                 <img src="./images/healthProfile.png" alt="Avatar Logo" class="card-img-top align-self-center p-2">
                 <div class="card-body p-0 m-0">
                     <form id="addNewFolderForm" class="p-2 m-2">
                         <input id="folder_name" type="text" required class="form-control-plaintext"
                             placeholder="folder name">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <input type="button" class="btn btn-danger" onClick="addNewFolderCard()" value="Cancel">
+                            <div class="row g-0">
+                            <button type="submit" class="btn btn-success font-size-xsm font-size-md col-6">Save</button>
+                            <input type="button" class="btn btn-danger font-size-xsm font-size-md col-6" onClick="addNewFolderCard()" value="Cancel">
+                            </div>
                     </form>
                 </div>
             </div>
@@ -204,7 +215,9 @@ function viewFolder() {
 
                 var addNewFilePlaceholderHTML =
                     `
-                <div id="addNewFileBtnPlaceholder" class="col-2 p-0 m-3">
+                    <div class="col-md-3 p-3 col-6">
+                <div id="addNewFileBtnPlaceholder" class="">
+                </div>
 
                 </div>
                 `
@@ -233,7 +246,8 @@ function viewFolder() {
                     if (fileType == 'image') {
                         var insideFolderHTML = insideFolderHTML +
                             `
-                            <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none col-2 p-0 m-3">
+                            <div class="col-md-3 p-3 col-6">
+                            <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none">
                                 <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                     <img src="./uploads/${data.file_name}" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
@@ -241,14 +255,17 @@ function viewFolder() {
                                         <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
                                     </div>
                                 </div>
-                            </a>               
+                            </a> 
+                            </div>
+              
                         `
                     }
                     // else if file type is pdf, display the default report image inside the card
                     else {
                         var insideFolderHTML = insideFolderHTML +
                             `
-                            <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none col-2 p-0 m-3">
+                            <div class="col-md-3 p-3 col-6">
+                            <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none">
                                 <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                     <img src="./images/healthProfile.png" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
@@ -256,7 +273,9 @@ function viewFolder() {
                                         <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
                                     </div>
                                 </div>
-                            </a>               
+                            </a>    
+                            </div>
+           
                         `
                     }
 
@@ -264,9 +283,13 @@ function viewFolder() {
 
                 var addNewFilePlaceholderHTML =
                     `
-                <div id="addNewFileBtnPlaceholder" class="col-2 p-0 m-3">
+                    <div class="col-md-3 p-3 col-6">
+
+                <div id="addNewFileBtnPlaceholder" class="">
 
                 </div>
+                </div>
+
                 `
 
                 insideFolderHTML = insideFolderHTML + addNewFilePlaceholderHTML
@@ -307,7 +330,19 @@ function viewFolder2() {
 
                 console.log("data is empty")
 
-                // displayHPGeneralEmptyForm();
+                var addNewFilePlaceholderHTML =
+                    `
+                    <div class="col-md-3 p-3 col-6">
+                <div id="addNewFileBtnPlaceholder" class="">
+                </div>
+
+                </div>
+                `
+
+                document.getElementById("folder-main-section").innerHTML = addNewFilePlaceholderHTML
+
+                addNewFileCard();
+
             }
             else {
 
@@ -328,7 +363,8 @@ function viewFolder2() {
                     if (fileType == 'image') {
                         var insideFolderHTML = insideFolderHTML +
                             `
-                            <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none col-2 p-0 m-3">
+                            <div class="col-md-3 p-3 col-6">
+                            <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none">
                                 <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                     <img src="./uploads/${data.file_name}" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
@@ -336,14 +372,17 @@ function viewFolder2() {
                                         <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
                                     </div>
                                 </div>
-                            </a>               
+                            </a> 
+                            </div>
+              
                         `
                     }
                     // else if file type is pdf, display the default report image inside the card
                     else {
                         var insideFolderHTML = insideFolderHTML +
                             `
-                            <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none col-2 p-0 m-3">
+                            <div class="col-md-3 p-3 col-6">
+                            <a href="${hrefTag}" id="${data.id}" class="feature text-decoration-none">
                                 <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
                                     <img src="./images/healthProfile.png" alt="Avatar Logo" style="max-width: 100%; max-height: 100%;
                                     height: auto;" class="card-img-top align-self-center p-2">
@@ -351,7 +390,9 @@ function viewFolder2() {
                                         <p class="text-center text-black p-0 m-0"><strong>${display_name}</strong></p>
                                     </div>
                                 </div>
-                            </a>               
+                            </a>    
+                            </div>
+           
                         `
                     }
 
@@ -359,9 +400,13 @@ function viewFolder2() {
 
                 var addNewFilePlaceholderHTML =
                     `
-                <div id="addNewFileBtnPlaceholder" class="col-2 p-0 m-3">
+                    <div class="col-md-3 p-3 col-6">
+
+                <div id="addNewFileBtnPlaceholder" class="">
 
                 </div>
+                </div>
+
                 `
 
                 insideFolderHTML = insideFolderHTML + addNewFilePlaceholderHTML
@@ -398,51 +443,29 @@ function addNewFileCard() {
 
 }
 
-function addNewFileCard2() {
-
-    document.getElementById("addNewFileBtnPlaceholder").classList.remove("col-3")
-
-    document.getElementById("addNewFileBtnPlaceholder").classList.add("col-2")
-
-    var addReportHTML =
-        `
-        <a id="" class="feature text-decoration-none "
-            onclick="displayAddNewFileForm()">
-            <div id="addFileBtnCard" class="btnClearStyle">
-                <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
-                    <img src="./images/icons8-plus.png" alt="Avatar Logo"
-                        class="card-img-top align-self-center p-2">
-                    <div class="card-body p-0 m-0 mb-2">
-                        <p class="text-center text-black p-0 m-0"><strong>Upload report</strong></p>
-                    </div>
-                </div>
-            </div>
-        </a>
-        `
-    document.getElementById("addNewFileBtnPlaceholder").innerHTML = addReportHTML
-
-}
-
 function displayAddNewFileForm() {
 
-    document.getElementById("addNewFileBtnPlaceholder").classList.remove("col-2")
+    // document.getElementById("addNewFileBtnPlaceholder").classList.remove("col-2")
 
-    document.getElementById("addNewFileBtnPlaceholder").classList.add("col-3")
+    // document.getElementById("addNewFileBtnPlaceholder").classList.add("col-3")
 
 
     var addNewFileFormHTML =
         `
-            <div class="card flex-column shadow-bottom bg-cards border rounded-4 p-0 m-0">
+            <div class="card flex-column shadow-bottom bg-cards border rounded-4">
                 <img src="./images/healthProfile.png" alt="Avatar Logo" class="card-img-top align-self-center p-2">
                 <div class="card-body p-0 m-0">
                     <form id="addNewFileForm" class="p-2 m-2" enctype="multipart/form-data">
                     
-                        <input id="input_file" class="form-control" type="file" required name="input_file">
+                        <input id="input_file" class="form-control  font-size-xsm font-size-md" type="file" required name="input_file">
 
-                        <input id="fileName" type="text" required class="form-control text-center"
+                        <input id="fileName" type="text" required class="form-control text-center  font-size-xsm font-size-md"
                             placeholder="report name">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <input type="button" class="btn btn-danger" onClick="addNewFileCard2()" value="Cancel">
+                            <div class="row g-0">
+                        <button type="submit" class="btn btn-success font-size-xsm font-size-md col-6">Save</button>
+                        <input type="button" class="btn btn-danger font-size-xsm font-size-md col-6" onClick="addNewFileCard()" value="Cancel">
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -531,7 +554,7 @@ function viewFile() {
 
             if (response.data[0] === undefined) {
 
-                console.log("data is empty")
+                // console.log("data is empty")
 
                 // displayHPGeneralEmptyForm();
             }
@@ -548,13 +571,20 @@ function viewFile() {
                 if (fileType == 'image') {
                     fileHTML =
                         `
-                                <img style="max-width: 75%;" src="./uploads/${file_name}" alt="Avatar Logo">
+                                <img class="img-mw-md-75 img-mw-100"  src="./uploads/${file_name}" alt="Avatar Logo">
+                                
                             `
+
                 }
                 else {
                     fileHTML =
+
                         `
-                            <iframe class="w-75 vh-100" src="./uploads/${file_name}">
+                        <object data='./uploads/${file_name}' class="iframe w-75 vh-100">
+                        <p>Oops! Your browser doesn't support PDFs!</p>
+                        <p><a href="./uploads/${file_name}" target="_blank">Download Instead</a></p>
+                    </object>
+                            
                         `
                 }
 

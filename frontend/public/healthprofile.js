@@ -93,7 +93,7 @@ function getAllHPMedical() {
 
                 var HPMedicalHTML = HPMedicalHTML +
                     `
-                    <li class="mb-1 positionRelative">${text} <button class="deleteBtnPosition btnClearStyle" id="${data.id}" onclick="deleteHPMedical(this.id)"><img class="w-75" src="./images/icons8-minus-30.png" alt="deleteBtn"/></button></li>
+                    <li class="mb-1 positionRelative">${text} <button class="deleteBtnPosition btnClearStyle" style="max-width: 100%;" id="${data.id}" onclick="deleteHPMedical(this.id)"><img class="w-75" src="./images/icons8-minus-30.png" alt="deleteBtn"/></button></li>
                 `
 
             }
@@ -435,7 +435,7 @@ function displayHPGeneralEditForm() {
 
     var HPGeneralHTML =
         `
-        <form id="editHPGeneralForm" class="col p-0 pe-5 m-0">
+        <form id="editHPGeneralForm" class="col p-0 m-0">
             <p id="fullName" class="mb-1">${fullname}</p>
             <p id="gender" class="mb-1">${gender}</p>
             <p id="dob" class="mb-1">${dob}</p>
@@ -445,8 +445,10 @@ function displayHPGeneralEditForm() {
             <input id="textInputHeight" type="text" class="form-control-plaintext p-0 m-0 mb-1 " value="${height}">
             <p id="bmi" class="mb-1">${bmi}</p>
             <input type="hidden" id="formType" name="formType" value="">
-            <button type="submit" class="btn btn-success">Save</button>
-            <input type="button" class="btn btn-danger" onClick="HPGeneralcancelBtn()" value="Cancel">
+            <div class="row g-0">
+                <button type="submit" class="btn btn-success font-size-xsm font-size-md col-6">Save</button>
+                <input type="button" class="btn btn-danger font-size-xsm font-size-md col-6" onClick="HPGeneralcancelBtn()" value="Cancel">
+            </div>
         </form>
             `
 
