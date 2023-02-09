@@ -9,6 +9,25 @@ const token = localStorage.getItem("token")
 
 // console.log("printing loggedInUserID" + loggedInUserID)
 
+
+const myUrl = new URL(window.location.toLocaleString()).searchParams;
+var patientid = myUrl.get("patientid");
+//console.log(patientid);
+
+if (patientid != null && loggedInUserType != "patient") {
+    var requestBody = {
+        userid: loggedInUserID,
+        patientid: patientid,
+        user_role: loggedInUserType
+    };
+} else {
+    // data compilation
+    var requestBody = {
+        userid: loggedInUserID,
+        user_role: loggedInUserType
+    };
+}
+
 // requestconfig if endpoint needs authorization
 var axiosConfigAuth = {
     headers: {
@@ -63,11 +82,11 @@ function loadAllData() {
 
         }
         // const user_id = localStorage.getItem('loggedInUserID')
-        var requestBody = {
-            userid: loggedInUserID,
-            patientid: patientid,
-            user_role: loggedInUserType
-        };
+        // var requestBody = {
+        //     userid: loggedInUserID,
+        //     patientid: patientid,
+        //     user_role: loggedInUserType
+        // };
         axios.post(`${baseUrl}/getQnrUserScoreByUser`, requestBody, axiosConfigAuth).then(function (response) {
             console.log("replace")
             for (i = 0; i < response.data.length; i++) {
@@ -148,12 +167,12 @@ function loadPatientDataForDoctor() {
 
         }
         // const myUrl = new URL(window.location.toLocaleString()).searchParams;
-        // var patientid = myUrl.get("patientid");
-        var requestBody = {
-            userid: loggedInUserID,
-            patientid: patientid,
-            user_role: loggedInUserType
-        };
+        // // var patientid = myUrl.get("patientid");
+        // var requestBody = {
+        //     userid: loggedInUserID,
+        //     patientid: patientid,
+        //     user_role: loggedInUserType
+        // };
         axios.post(`${baseUrl}/getQnrUserScoreByUser`, requestBody, axiosConfigAuth).then(function (response) {
             console.log("replace")
             for (i = 0; i < response.data.length; i++) {
